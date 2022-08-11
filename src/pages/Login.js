@@ -1,17 +1,7 @@
-import sessionService from '../services/SessionService'
-import { useNavigate } from 'react-router-dom'
 export default function Login(props) {
-  const navigate = useNavigate()
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    let response = await sessionService.newSession(e.target.email.value, e.target.password.value)
-    props.handleLogIn(response)
-    e.target.email.value = ""
-    e.target.password.value = ""
-    navigate("/")
-  }
+  const { handleLogIn } = props
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleLogIn}>
       <label>
         Email:
         <input type="text" name="email"></input>

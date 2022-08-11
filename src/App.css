@@ -4,15 +4,20 @@
   --hue-rotation: hue-rotate(-15deg);
 }
 
-nav {
-  justify-content: start;
-}
+header {
+  width: 100%;
 
+}
+nav {
+  display: flex;
+  width: 100%;
+}
 nav ul {
   display: flex;
   width: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
   list-style: none;
-  justify-content: start;
   margin: 1rem 0;
   padding: 0;
   gap: 4rem;
@@ -49,4 +54,20 @@ nav ul {
 .main {
   width: 100%;
   min-height: 100vh;
+}
+@media screen and (min-width: 1100px) {
+  header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  nav ul {
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    gap: 4rem;
+  }
+  .ml-auto {
+    margin-left: auto;
+  }
 }

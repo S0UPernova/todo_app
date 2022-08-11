@@ -10,7 +10,7 @@ export default function Teams(props) {
         .then(res => setTeams(res))
         .catch(err => console.error(err))
     }
-  }, [user])
+  }, [user, token])
 
 
   return (

@@ -24,12 +24,12 @@ export default function Nav(props) {
             <button className='btn primary hover'>Teams</button>
           </Link>
         </li>
-        {props.user && <li>
+        {props.user && <li className='ml-auto'>
           <Link to={`/profile`}>
             <button className='btn primary hover'>Profile</button>
           </Link>
         </li>}
-        {!props.user && <li>
+        {!props.user && <li className='ml-auto'>
           <Link to="/login">
             <button className='btn primary hover'>Log In</button>
           </Link>

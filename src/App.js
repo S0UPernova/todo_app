@@ -1,28 +1,40 @@
-import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import {Route, Routes, useNavigate } from 'react-router-dom'
 import React, { useState } from 'react'
+
+import Nav from "./layout/Nav"
+import Footer from './layout/Footer'
+
 import Home from './pages/Home'
 import Login from './pages/Login'
+import Team from './pages/Team'
+import Teams from './pages/Teams'
 import Profile from './pages/Profile'
-import Nav from "./layout/Nav"
+import sessionService from './services/SessionService'
+import './App.css';
 
-import Footer from './layout/Footer'
-import Teams from './pages/Teams';
-import Team from './pages/Team';
 export default function App() {
-  let [token, setToken] = useState(null)
-  let [user, setUser] = useState(null)
-  const handleLogIn = (response) => {
-    response && setToken(`${response['token']}`)
-    response && setUser(response['user'])
+  const [token, setToken] = useState(null)
+  const [user, setUser] = useState(null)
+
+  const navigate = useNavigate()
+  const handleLogIn = (e) => {
+    e.preventDefault()
+    sessionService.newSession(e.target.email.value, e.target.password.value)
+    .then(res => {
+      setToken(`${res['token']}`)
+      setUser(res['user'])
+    })
+    e.target.email.value = ""
+    e.target.password.value = ""
+    navigate("/")
   }
+  
   const handleLogOut = () => {
     setToken(null)
     setUser(null)
   }
   return (
     <div className='container'>
-      <Router>
         <header>
           <Nav user={user} token={token} handleLogOut={handleLogOut} />
         </header>
@@ -34,7 +46,6 @@ export default function App() {
           <Route path="/teams/:teamId" element={<Team user={user} token={token} />} />
         </Routes>
         <Footer />
-      </Router>
     </div>
   )
 }

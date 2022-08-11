@@ -11,7 +11,7 @@ export default function CompletedTasks(props) {
           const due_at = task.duedate && new Date(task.duedate)
           const dueAt = task.duedate && new Intl.DateTimeFormat('en-US').format(due_at)
 
-          return task && task.completed == true &&
+          return task && task.completed === true &&
             <li key={"task index number " + i}>
               {task.name && <h4 key={"name" + i}>{task.name}</h4>}
               {task.duedate !== null && <h5 key={"duedate " + i}>Due by: {dueAt}</h5>}
