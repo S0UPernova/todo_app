@@ -1,22 +1,38 @@
 import './App.css';
-import {BrowserRouter as Router} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import React, { useState } from 'react'
-import Header from './layout/header'
-import Content from './layout/content'
-import Footer from './layout/footer'
-export default function App(){
-  const todoURL = "http://localhost:3000"
-  let [token, setToken] = useState("")
-  let [user, setUser] = useState("")
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Profile from './pages/Profile'
+import Nav from "./layout/Nav"
+
+import Footer from './layout/Footer'
+import Teams from './pages/Teams';
+import Team from './pages/Team';
+export default function App() {
+  let [token, setToken] = useState(null)
+  let [user, setUser] = useState(null)
   const handleLogIn = (response) => {
     response && setToken(`${response['token']}`)
     response && setUser(response['user'])
   }
+  const handleLogOut = () => {
+    setToken(null)
+    setUser(null)
+  }
   return (
-    <div>
+    <div className='container'>
       <Router>
-        <Header user={user} token={token}/>
-        <Content user={user} handleLogIn={handleLogIn} todoURL={todoURL} token={token}/>
+        <header>
+          <Nav user={user} token={token} handleLogOut={handleLogOut} />
+        </header>
+        <Routes>
+          <Route path="/" element={<Home user={user} token={token} />} />
+          <Route path="/login" element={<Login handleLogIn={handleLogIn} user={user} />} />
+          <Route path="/profile" element={<Profile token={token} user={user} />} />
+          <Route exaxt path="/teams" element={<Teams user={user} token={token} />} />
+          <Route path="/teams/:teamId" element={<Team user={user} token={token} />} />
+        </Routes>
         <Footer />
       </Router>
     </div>

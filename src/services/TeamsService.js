@@ -3,8 +3,8 @@ import { baseUrl } from "../utilities/Statics";
 
 class TeamService {
 
-  getTeams = async (user_id, token) => {
-    return fetch(`${baseUrl}/users/${user_id}/teams`, {
+  getTeams = async (token) => {
+    return fetch(`${baseUrl}/teams`, {
       "method": "GET",
       "headers": {
         "Content-Type": "application/json",
@@ -19,8 +19,8 @@ class TeamService {
       })
   }
 
-  getTeam = async (user_id, team_id, token) => {
-    return fetch(`${baseUrl}/users/${user_id}teams/${team_id}`, {
+  getTeam = async (team_id, token) => {
+    return fetch(`${baseUrl}/teams/${team_id}`, {
       "method": "GET",
       "headers": {
         "Content-Type": "application/json",
@@ -35,8 +35,8 @@ class TeamService {
       })
   }
 
-  updateTeam = async (user_id, team_id, params, token) => {
-    return fetch(`${baseUrl}/users/${user_id}/teams/${team_id}`, {
+  updateTeam = async (team_id, params, token) => {
+    return fetch(`${baseUrl}/teams/${team_id}`, {
       "method": "PATCH",
       "headers": {
         "Content-Type": "application/json",
@@ -52,8 +52,8 @@ class TeamService {
       })
   }
 
-  deleteTeam = async (user_id, team_id, token) => {
-    return fetch(`${baseUrl}/users/${user_id}/teams/${team_id}`, {
+  deleteTeam = async (team_id, token) => {
+    return fetch(`${baseUrl}/teams/${team_id}`, {
       "method": "DELETE",
       "headers": {
         "Content-Type": "application/json",

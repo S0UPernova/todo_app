@@ -1,0 +1,52 @@
+:root {
+  --gradient: linear-gradient(45deg, #8fc7ddbd, #7f9eeea8);
+  --inverted-gradient: linear-gradient(225deg, #8fc7ddbd, #7f9eeea8);
+  --hue-rotation: hue-rotate(-15deg);
+}
+
+nav {
+  justify-content: start;
+}
+
+nav ul {
+  display: flex;
+  width: 100%;
+  list-style: none;
+  justify-content: start;
+  margin: 1rem 0;
+  padding: 0;
+  gap: 4rem;
+}
+
+.btn {
+  padding: 1rem;
+  transition-duration: 0.4s;
+  border-radius: 5%;
+  font-size: large;
+  width: 8rem;
+}
+
+.primary {
+  color: black;
+  background-image: var(--gradient)
+}
+
+.hover:hover {
+  filter: var(--hue-rotation)
+}
+
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.main {
+  width: 100%;
+  min-height: 100vh;
+}

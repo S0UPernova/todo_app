@@ -1,4 +1,3 @@
-import Form from '../components/form'
 import sessionService from '../services/SessionService'
 import { useNavigate } from 'react-router-dom'
 export default function Login(props) {
@@ -13,7 +12,14 @@ export default function Login(props) {
   }
   return (
     <form onSubmit={handleSubmit}>
-      <Form />
+      <label>
+        Email:
+        <input type="text" name="email"></input>
+      </label>
+      <label>
+        Password:
+        <input type="text" name="password"></input>
+      </label>
       <button type="submit">Log In</button>
 
     </form>
