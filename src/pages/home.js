@@ -7,7 +7,7 @@ import PendingTasks from '../components/PendingTasks'
 import CompletedTasks from '../components/CompletedTasks'
 
 
-import '../styles/home.css'
+import '../styles/home.scss'
 import TeamDropdowns from '../components/Dropdowns'
 export default function Home(props) {
   const [selectedTeam, setSelectedTeam] = useState("")
@@ -106,9 +106,11 @@ export default function Home(props) {
         teams={teams}
       />
       <PendingTasks
+        token={props.token}
         tasks={tasks}
         selectedTeam={selectedTeam}
         selectedProject={selectedProject}
+        getTasks={getTasks}
       />
       <CompletedTasks tasks={tasks}
         selectedTeam={selectedTeam}

@@ -1,0 +1,112 @@
+:root {
+  --gradient: linear-gradient(45deg, #8fc7ddbd, #7f9eeea8);
+  --inverted-gradient: linear-gradient(225deg, #8fc7ddbd, #7f9eeea8);
+  --hue-rotation: hue-rotate(-15deg);
+  --select-border: #777;
+}
+
+select {
+  transition-duration: 0.4s;
+  width: 50%;
+  min-width: 20ch;
+  height: 4rem;
+  border: 1px solid var(--select-border);
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+  font-size: 1.25rem;
+  cursor: pointer;
+  // line-height: 1.1;
+  background-image: var(--gradient);
+
+  &::after {
+    content: "";
+    width: 0.8em;
+    height: 0.5em;
+
+    /* not sure what this does */
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+  }
+
+  &::-ms-expand {
+    display: none;
+  }
+
+  &:focus {
+    outline: #7f9eeea8 auto 1px;
+  }
+}
+
+
+
+.main {
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 4rem auto;
+  gap: 1rem;
+  grid-template-areas:
+    "selects selects selects selects"
+    "completed pending pending pending"
+  ;
+}
+
+.completed {
+  /* width: 100%; */
+  grid-area: completed;
+  background-color: rgba(189, 210, 210, 0.5);
+  background: blur(1px);
+  border-radius: 10px;
+}
+
+.pending {
+  /* width: 100%; */
+  grid-area: pending;
+  background-color: rgba(160, 209, 209, 0.5);
+  background: blur(1px);
+  border-radius: 10px;
+}
+
+.pending div,
+.completed div {
+  padding: 1rem;
+  height: 100%;
+}
+
+.selects {
+  /* width: 100%; */
+  grid-area: selects;
+}
+.add {
+  display: flex;
+  position: fixed;
+  background-color: rgba(189, 210, 210, 0.95);
+  background: blur(3px);
+  border-radius: 10px;
+  border: 1px solid black;
+  padding: 1rem;
+  width: 20%;
+  left: 40%;
+  top: 50%;
+  gap: 1rem;
+  flex-direction: column;
+  button {
+    width: 4rem;
+  }
+  input {
+    margin-left: auto;
+    width: 50ch;
+  }
+  textarea {
+    margin-left: auto;
+    width: 50ch;
+    height: 3rem;
+  }
+  label {
+    display: flex;
+  }
+}
+.addButton {
+  padding: 1rem;
+  float: right;
+}

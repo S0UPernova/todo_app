@@ -2,7 +2,7 @@ export default function TeamDropdowns(props) {
   const {handleChange, teams, memberships, projects} = props
 
   return (
-    <>
+    <div className="selects">
       <select className='hover' data-dropdown="team" onChange={handleChange}>
         <option value="">Select a team</option>
         <optgroup label='Your teams'>
@@ -22,6 +22,6 @@ export default function TeamDropdowns(props) {
           return <option value={project.id} key={k}>{project.name}</option>
         })}
       </select>
-    </>
+    </div>
   )
 }
