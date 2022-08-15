@@ -93,19 +93,28 @@ select {
   button {
     width: 4rem;
   }
-  input {
-    margin-left: auto;
-    width: 50ch;
-  }
-  textarea {
-    margin-left: auto;
-    width: 50ch;
-    height: 3rem;
-  }
-  label {
-    display: flex;
-  }
 }
+  form {
+    label {
+      display: flex;
+      input {
+        margin-left: 1rem;
+        width: 50ch;
+      }
+      textarea {
+        margin-left: 1rem;
+        width: 50ch;
+        height: 3rem;
+      }
+      pointer-events: none;
+    }
+    .completed {
+      width: 1rem;
+      margin-left: 1rem;
+      margin-right: auto;
+      pointer-events: all;
+    }
+  }
 .addButton {
   padding: 1rem;
   float: right;

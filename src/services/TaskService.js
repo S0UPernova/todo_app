@@ -1,9 +1,11 @@
 import { baseUrl } from "../utilities/Statics"
+import FilterParams from "../utilities/FilterParams"
 
 
 class TaskService {
-
+  // filters out null fields from params
   postTask = async (team_id, project_id, params, token) => {
+    const justFilledFields = FilterParams(params)
     return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}/tasks`, {
       "method": "POST",
       "headers": {
@@ -11,11 +13,7 @@ class TaskService {
         "Authorization": token
       },
       "body": JSON.stringify({
-        "task": {
-          name: params.name,
-          description: params.description ? params.description : null,
-          duedate: params.duedate ? params.duedate : null
-        }
+        "task": {...justFilledFields}
       })
     })
       .then(
@@ -59,13 +57,14 @@ class TaskService {
   }
 
   updateTask = async (team_id, project_id, task_id, params, token) => {
+    const justFilledFields = FilterParams(params)
     return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}/tasks/${task_id}`, {
       "method": "PATCH",
       "headers": {
         "Content-Type": "application/json",
         "Authorization": token
       },
-      "body": { ...params }
+      "body": { ...justFilledFields }
     })
       .then(
         response => response.json()

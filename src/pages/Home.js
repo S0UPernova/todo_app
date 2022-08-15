@@ -112,7 +112,10 @@ export default function Home(props) {
         selectedProject={selectedProject}
         getTasks={getTasks}
       />
-      <CompletedTasks tasks={tasks}
+      <CompletedTasks
+        tasks={tasks}
+        token={props.token}
+        getTasks={getTasks}
         selectedTeam={selectedTeam}
         selectedProject={selectedProject}
       />

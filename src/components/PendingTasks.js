@@ -1,54 +1,49 @@
 import { useState } from "react"
 import taskService from "../services/TaskService"
+import AddEditAndRemoveForm from "./AddAndEditForm"
 
 export default function PendingTasks(props) {
-  const initialForm = {
-    name: "",
-    description: null,
-    duedate: null
-  }
-  const { tasks, selectedTeam, selectedProject, token } = props
+  const { tasks, selectedTeam, selectedProject, token, getTasks } = props
   const [hidden, setHidden] = useState(true)
-  const [formInput, setFormInput] = useState(initialForm)
 
 
-  const handleForm = (e) => {
-    e.preventDefault()
-    const params = {
-      name: formInput.name,
-      description: formInput.description ? formInput.description : null,
-      duedate: formInput.duedate ? formInput.duedate : null
-    }
-    taskService.postTask(selectedTeam, selectedProject, params, token)
-      .then(() => {
-        setHidden(true)
-        setFormInput(initialForm)
-        props.getTasks()
-      })
-      .catch(err => console.error(err))
-  }
+  // const handleForm = (e) => {
+  //   e.preventDefault()
+  //   const params = {
+  //     name: formInput.name,
+  //     description: formInput.description ? formInput.description : null,
+  //     duedate: formInput.duedate ? formInput.duedate : null
+  //   }
+  //   taskService.postTask(selectedTeam, selectedProject, params, token)
+  //     .then(() => {
+  //       setHidden(true)
+  //       setFormInput(initialForm)
+  //       props.getTasks()
+  //     })
+  //     .catch(err => console.error(err))
+  // }
 
-  const handleCancel = (e) => {
-    e.preventDefault()
-    setFormInput(initialForm)
-    setHidden(true)
-  }
+  // const handleCancel = (e) => {
+  //   e.preventDefault()
+  //   setFormInput(initialForm)
+  //   setHidden(true)
+  // }
 
-  const handleChange = (e) => {
-    switch (e.target.name) {
-      case "name":
-        setFormInput({ ...formInput, name: e.target.value })
-        break
-      case "description":
-        setFormInput({ ...formInput, description: e.target.value })
-        break
-      case "duedate":
-        setFormInput({ ...formInput, duedate: e.target.value })
-        break
-      default:
-        break
-    }
-  }
+  // const handleChange = (e) => {
+  //   switch (e.target.name) {
+  //     case "name":
+  //       setFormInput({ ...formInput, name: e.target.value })
+  //       break
+  //     case "description":
+  //       setFormInput({ ...formInput, description: e.target.value })
+  //       break
+  //     case "duedate":
+  //       setFormInput({ ...formInput, duedate: e.target.value })
+  //       break
+  //     default:
+  //       break
+  //   }
+  // }
 
   const handleDelete = (e) => {
     e.preventDefault()
@@ -93,22 +88,13 @@ export default function PendingTasks(props) {
             )
           })}
         </ul>}
-        {hidden === false && <form className="add">
-          <label>
-            Name:
-            <input type="text" onChange={handleChange} value={formInput.name} name="name"></input>
-          </label>
-          <label>
-            Description:
-            <textarea onChange={handleChange} value={formInput.description} name="description"></textarea>
-          </label>
-          <label>
-            Duedate:
-            <input type="date" onChange={handleChange} value={formInput.duedate} name="duedate"></input>
-          </label>
-          <button type="submit" onClick={handleForm}>Add</button>
-          <button type="submit" onClick={handleCancel}>cancel</button>
-        </form>}
+        {hidden === false && <AddEditAndRemoveForm
+          setHidden={setHidden}
+          selectedTeam={selectedTeam}
+          selectedProject={selectedProject}
+          token={token}
+          getTasks={getTasks}
+        />}
       </div>
     </div>
   )
