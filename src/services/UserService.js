@@ -1,6 +1,23 @@
 import { baseUrl } from "../utilities/Statics"
-
+import FilterParams from "../utilities/FilterParams"
 class UserService {
+
+  postUser = async (params) => {
+    const justFilledFields = FilterParams(params)
+    return fetch(`${baseUrl}/users`, {
+      "method": "POST",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "body": JSON.stringify({ "user": { ...justFilledFields } })
+    })
+      .then(
+        response => response.json()
+      )
+      .catch(err => {
+        console.error(err);
+      })
+  }
 
   getUsers = async (token) => {
     return fetch(`${baseUrl}/users`, {
@@ -35,13 +52,14 @@ class UserService {
   }
 
   updateUser = async (user_id, params, token) => {
+    const justFilledFields = FilterParams(params)
     return fetch(`${baseUrl}/users/${user_id}`, {
       "method": "PATCH",
       "headers": {
         "Content-Type": "application/json",
         "Authorization": token
       },
-      "body": { ...params }
+      "body": JSON.stringify({ "user": { ...justFilledFields } })
     })
       .then(
         response => response.json()

@@ -5,11 +5,14 @@ import membershipService from '../services/MembershipService'
 import projectService from '../services/ProjectService'
 import PendingTasks from '../components/PendingTasks'
 import CompletedTasks from '../components/CompletedTasks'
+import AddEditAndRemoveForm from "../components/AddAndEditForm"
 
 
 import '../styles/home.scss'
 import TeamDropdowns from '../components/Dropdowns'
 export default function Home(props) {
+  const {user, token} = props
+
   const [selectedTeam, setSelectedTeam] = useState("")
   const [selectedProject, setSelectedProject] = useState("")
 
@@ -17,28 +20,31 @@ export default function Home(props) {
   const [memberships, setMemberships] = useState([])
   const [projects, setProjects] = useState([])
   const [tasks, setTasks] = useState([])
+  const [hidden, setHidden] = useState(true)
+  const [task, setTask] = useState()
+
 
   useEffect(() => {
-    if (props.user) {
+    if (user) {
       getTasks()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTeam, selectedProject, props.user])
+  }, [selectedTeam, selectedProject, user])
 
 
   useEffect(() => {
-    if (props.user) {
+    if (user) {
       getProjects()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTeam, props.user])
+  }, [selectedTeam, user])
 
   useEffect(() => {
-    if (props.user) {
+    if (user) {
       getTeams()
       getMemberships()
     }
-    if (!props.user) {
+    if (!user) {
       setTeams([])
       setMemberships([])
       setProjects([])
@@ -47,7 +53,7 @@ export default function Home(props) {
       setSelectedProject("")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.user])
+  }, [user])
 
   const handleChange = (e) => {
     switch (e.target.getAttribute("data-dropdown")) {
@@ -70,19 +76,45 @@ export default function Home(props) {
     }
   }
 
+  const handleClick = (e) => {
+    e.preventDefault()
+    switch (e.target.name) {
+      case "addButton":
+        setTask(null)
+        setHidden(!hidden)
+        break
+      case "editButton":
+        setTask(e.target.value)
+        setHidden(!hidden)
+        break
+      case "deleteButton":
+        if (window.confirm("Are you sure")) {
+          const taskId = e.target.value
+          if (taskId) {
+            taskService.deleteTask(selectedTeam, selectedProject, taskId, token)
+              .then(() => getTasks())
+              .catch(err => console.error(err))
+          }
+        }
+        break
+      default:
+        break
+    }
+  }
+
   const getTeams = async () => {
-    const returnVal = await usersTeamService.getTeams(props.user.id, props.token)
+    const returnVal = await usersTeamService.getTeams(user.id, token)
     returnVal && returnVal.length ? setTeams([...returnVal]) : setTeams([returnVal])
   }
 
   const getMemberships = async () => {
-    const returnVal = await membershipService.getMemberships(props.user.id, props.token)
+    const returnVal = await membershipService.getMemberships(user.id, token)
     returnVal && returnVal.length ? setMemberships([...returnVal]) : setMemberships([returnVal])
   }
 
   const getProjects = async () => {
-    if (props.user && selectedTeam && selectedTeam !== "") {
-      const returnVal = await projectService.getProjects(selectedTeam, props.token)
+    if (user && selectedTeam && selectedTeam !== "") {
+      const returnVal = await projectService.getProjects(selectedTeam, token)
       returnVal && returnVal.length ? setProjects([...returnVal]) : setProjects([returnVal])
 
     } else setProjects([])
@@ -90,7 +122,7 @@ export default function Home(props) {
 
   const getTasks = async () => {
     if (selectedProject && selectedProject !== "" && selectedTeam && selectedTeam !== "") {
-      taskService.getTasks(selectedTeam, selectedProject, props.token)
+      taskService.getTasks(selectedTeam, selectedProject, token)
         .then(data => data.length ? setTasks([...data]) : setTasks([data]))
         .catch(err => console.error(err))
     } else setTasks([])
@@ -100,24 +132,31 @@ export default function Home(props) {
     <div className='main'>
       <TeamDropdowns
         tasks={tasks}
+        teams={teams}
         projects={projects}
         memberships={memberships}
         handleChange={handleChange}
-        teams={teams}
       />
+      {hidden === false && <AddEditAndRemoveForm
+        task={task}
+        token={token}
+        selectedTeam={selectedTeam}
+        selectedProject={selectedProject}
+        setTask={setTask}
+        getTasks={getTasks}
+        setHidden={setHidden}
+      />}
       <PendingTasks
-        token={props.token}
         tasks={tasks}
         selectedTeam={selectedTeam}
         selectedProject={selectedProject}
-        getTasks={getTasks}
+        handleClick={handleClick}
       />
       <CompletedTasks
         tasks={tasks}
-        token={props.token}
-        getTasks={getTasks}
         selectedTeam={selectedTeam}
         selectedProject={selectedProject}
+        handleClick={handleClick}
       />
     </div>
   )

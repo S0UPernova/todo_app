@@ -16,26 +16,26 @@ export default function Nav(props) {
       <ul>
         <li>
           <Link to="/">
-            <button className='btn primary hover'>Home</button>
+            <button className='btn secondary hover'>Home</button>
           </Link>
         </li>
         <li>
           <Link to="/teams">
-            <button className='btn primary hover'>Teams</button>
+            <button className='btn secondary hover'>Teams</button>
           </Link>
         </li>
         {props.user && <li className='ml-auto'>
           <Link to={`/profile`}>
-            <button className='btn primary hover'>Profile</button>
+            <button className='btn secondary hover'>Profile</button>
           </Link>
         </li>}
         {!props.user && <li className='ml-auto'>
           <Link to="/login">
-            <button className='btn primary hover'>Log In</button>
+            <button className='btn secondary hover'>Log In</button>
           </Link>
         </li>}
         {props.user && <li>
-          <button onClick={handleClick} className='btn primary hover'>Log Out</button>
+          <button onClick={handleClick} className='btn secondary hover'>Log Out</button>
           </li>}
       </ul>
     </nav>

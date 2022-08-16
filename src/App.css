@@ -1,7 +1,10 @@
 :root {
-  --gradient: linear-gradient(45deg, #8fc7ddbd, #7f9eeea8);
+  --primary-gradient: linear-gradient(45deg, #8fc7ddbd, #7f9eeea8);
+  --secondary-gradient: linear-gradient(45deg, #bfd5deda, #bcc9e8d6);
+  --danger-gradient: linear-gradient(45deg, #dd9b8fbd, #dc9178bd);
   --inverted-gradient: linear-gradient(225deg, #8fc7ddbd, #7f9eeea8);
-  --hue-rotation: hue-rotate(-15deg);
+  --hue-rotation: hue-rotate(-20deg);
+  --inverted-hue-rotation: hue-rotate(20deg);
 }
 
 header {
@@ -28,15 +31,26 @@ nav ul {
   transition-duration: 0.4s;
   border-radius: 5%;
   font-size: large;
-  width: 8rem;
+  /* width: 8rem; */
 }
 
 .primary {
   color: black;
-  background-image: var(--gradient)
+  background-image: var(--primary-gradient)
+}
+.secondary {
+  color: black;
+  background-image: var(--secondary-gradient)
+}
+.danger {
+  color: black;
+  background-image: var(--danger-gradient)
 }
 
 .hover:hover {
+  filter: var(--hue-rotation)
+}
+.inverted-hover:hover {
   filter: var(--hue-rotation)
 }
 

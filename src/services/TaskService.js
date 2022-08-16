@@ -3,7 +3,6 @@ import FilterParams from "../utilities/FilterParams"
 
 
 class TaskService {
-  // filters out null fields from params
   postTask = async (team_id, project_id, params, token) => {
     const justFilledFields = FilterParams(params)
     return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}/tasks`, {
@@ -12,9 +11,7 @@ class TaskService {
         "Content-Type": "application/json",
         "Authorization": token
       },
-      "body": JSON.stringify({
-        "task": {...justFilledFields}
-      })
+      "body": JSON.stringify({ "task": { ...justFilledFields } })
     })
       .then(
         response => response.json()
@@ -58,13 +55,14 @@ class TaskService {
 
   updateTask = async (team_id, project_id, task_id, params, token) => {
     const justFilledFields = FilterParams(params)
+    console.log(justFilledFields)
     return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}/tasks/${task_id}`, {
       "method": "PATCH",
       "headers": {
         "Content-Type": "application/json",
         "Authorization": token
       },
-      "body": { ...justFilledFields }
+      "body": JSON.stringify({ "task": { ...justFilledFields } })
     })
       .then(
         response => response.json()
