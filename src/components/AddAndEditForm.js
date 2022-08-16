@@ -62,6 +62,7 @@ export default function AddEditAndRemoveForm(props) {
               .catch(err => console.error(err))
           }
         }
+        break
       default:
         setFormInput(initialForm)
         setHidden(true)

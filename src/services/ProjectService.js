@@ -2,7 +2,7 @@ import { baseUrl } from "../utilities/Statics"
 import FilterParams from "../utilities/FilterParams"
 class ProjectService {
 
-  updateProject = async (team_id, params, token) => {
+  postProject = async (team_id, params, token) => {
     const justFilledFields = FilterParams(params)
     return fetch(`${baseUrl}/teams/${team_id}/projects`, {
       "method": "POST",

@@ -14,7 +14,7 @@ export default function PendingTasks(props) {
             const dueAt = task.duedate && new Intl.DateTimeFormat('en-US').format(due_at);
 
             return (
-              task && task.completed !== true &&
+              task?.completed === false &&
 
               < li key={"task index number " + i}>
                 {task.name && <>

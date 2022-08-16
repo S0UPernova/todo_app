@@ -55,7 +55,6 @@ class TaskService {
 
   updateTask = async (team_id, project_id, task_id, params, token) => {
     const justFilledFields = FilterParams(params)
-    console.log(justFilledFields)
     return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}/tasks/${task_id}`, {
       "method": "PATCH",
       "headers": {
