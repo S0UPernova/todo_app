@@ -1,16 +1,18 @@
 import { useState } from "react"
 import taskService from "../services/TaskService"
-export default function AddEditAndRemoveForm(props) {
+export default function TaskForm(props) {
   const { selectedTeam, selectedProject, token, setHidden, getTasks, task, setTask } = props
-
+  
   const taskJSON = JSON.parse(task) // Passing an object directly didn't seem to work
   const initialForm = {
     name: taskJSON?.name ? taskJSON.name : null,
     description: taskJSON?.description ? taskJSON.description : null,
-    duedate: taskJSON?.duedate ? taskJSON.duedate : null,
+    duedate: null,
     completed: taskJSON?.completed ? taskJSON.completed : null, // could fail
   }
   const [formInput, setFormInput] = useState(initialForm)
+  const due_at = taskJSON?.duedate && new Date(taskJSON.duedate)
+  const dueAt = taskJSON?.duedate && new Intl.DateTimeFormat('en-us', {dateStyle: "full", timeStyle: "short", timeZone: "UTC"}).format(due_at);
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -113,10 +115,11 @@ export default function AddEditAndRemoveForm(props) {
             name="description"
           ></textarea>
 
-          <label for="duedate">Duedate: </label>
+          <label for="duedate">Duedate:</label>
+          <i>{dueAt}</i>
           <input
             id="duedate"
-            type="date"
+            type="datetime-local"
             onChange={handleChange}
             value={formInput.duedate}
             name="duedate"
@@ -139,14 +142,14 @@ export default function AddEditAndRemoveForm(props) {
             name="submit"
             type="submit"
             onClick={handleSubmit}
-          >{taskJSON ? 'update' : 'Add'}</button>
+          >{taskJSON ? 'Update' : 'Add'}</button>
 
           <button
             className="btn primary hover"
             name="cancel"
             type="submit"
             onClick={handleSubmit}
-          >cancel</button>
+          >Cancel</button>
 
           {taskJSON && <button
             className="btn danger hover"

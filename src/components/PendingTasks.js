@@ -11,7 +11,7 @@ export default function PendingTasks(props) {
         {selectedTeam && selectedProject && <ul className="tasks">
           {tasks && tasks.map((task, i) => {
             const due_at = task.duedate && new Date(task.duedate)
-            const dueAt = task.duedate && new Intl.DateTimeFormat('en-US').format(due_at);
+            const dueAt = task.duedate && new Intl.DateTimeFormat('en-US', {dateStyle: "full", timeStyle: "short", timeZone: "UTC"}).format(due_at);
 
             return (
               task?.completed === false &&
@@ -34,7 +34,7 @@ export default function PendingTasks(props) {
                 }
                 {
                   task.duedate !== null &&
-                  <h5 key={"duedate " + i}>Due by: {dueAt} <i>m/d/y</i></h5>
+                  <h5 key={"duedate " + i}>Due by: {dueAt}</h5>
                 }
                 {
                   task.completed !== null &&

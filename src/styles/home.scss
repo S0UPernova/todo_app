@@ -131,7 +131,7 @@ i {
 }
 
 .backdrop {
-  // background-color: rgba(58, 69, 69, 0.48);
+  background-color: rgba(58, 69, 69, 0.48);
   position: fixed;
   display: flex;
   justify-content: space-around;
@@ -163,7 +163,7 @@ i {
   z-index: 10;
   display: flex;
   // position: fixed;
-  background-color: rgba(209, 230, 230, 0.729);
+  background-color: rgba(185, 210, 210, 0.749);
   backdrop-filter: blur(1.2px);
   border-radius: 10px;
   border: 1px solid black;

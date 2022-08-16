@@ -5,7 +5,7 @@ import membershipService from '../services/MembershipService'
 import projectService from '../services/ProjectService'
 import PendingTasks from '../components/PendingTasks'
 import CompletedTasks from '../components/CompletedTasks'
-import AddEditAndRemoveForm from "../components/AddAndEditForm"
+import TaskForm from "../components/TaskForm"
 
 
 import '../styles/home.scss'
@@ -137,7 +137,7 @@ export default function Home(props) {
         memberships={memberships}
         handleChange={handleChange}
       />
-      {hidden === false && <AddEditAndRemoveForm
+      {hidden === false && <TaskForm
         task={task}
         token={token}
         selectedTeam={selectedTeam}
