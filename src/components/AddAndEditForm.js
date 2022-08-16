@@ -93,68 +93,70 @@ export default function AddEditAndRemoveForm(props) {
     <>
       <div name="cancel" className="backdrop" onClick={handleSubmit}>
       </div>
-      <form className="add">
-        <label for="name">Name: </label>
-        <input
-          id="name"
-          type="text"
-          onChange={handleChange}
-          value={formInput.name}
-          name="name"
-        ></input>
-
-        <label for="desctription">Description: </label>
-        <textarea
-          id="desctription"
-          onChange={handleChange}
-          value={formInput.description}
-          name="description"
-        ></textarea>
-
-        <label for="duedate">Duedate: </label>
-        <input
-          id="duedate"
-          type="date"
-          onChange={handleChange}
-          value={formInput.duedate}
-          name="duedate"
-        ></input>
-
-        {formInput.completed !== undefined && <label>Completed?:
+      <div className="formContainer">
+        <form className="add">
+          <label for="name">Name: </label>
           <input
-            id="completed"
-            className="completed"
-            type="checkbox"
+            id="name"
+            type="text"
             onChange={handleChange}
-            checked={formInput.completed}
-            name="completed"
+            value={formInput.name}
+            name="name"
           ></input>
-        </label>
-        }
 
-        <button
-          className="btn primary hover"
-          name="submit"
-          type="submit"
-          onClick={handleSubmit}
-        >{taskJSON ? 'update' : 'Add'}</button>
+          <label for="desctription">Description: </label>
+          <textarea
+            id="desctription"
+            onChange={handleChange}
+            value={formInput.description}
+            name="description"
+          ></textarea>
 
-        <button
-          className="btn primary hover"
-          name="cancel"
-          type="submit"
-          onClick={handleSubmit}
-        >cancel</button>
-        
-        {taskJSON && <button
-          className="btn danger hover"
-          name="deleteButton"
-          type="submit"
-          onClick={handleSubmit}
-          value={taskJSON.id}
-        >Delete Me!</button>}
+          <label for="duedate">Duedate: </label>
+          <input
+            id="duedate"
+            type="date"
+            onChange={handleChange}
+            value={formInput.duedate}
+            name="duedate"
+          ></input>
 
-      </form>
+          {formInput.completed !== undefined && <label>Completed?:
+            <input
+              id="completed"
+              className="completed"
+              type="checkbox"
+              onChange={handleChange}
+              checked={formInput.completed}
+              name="completed"
+            ></input>
+          </label>
+          }
+
+          <button
+            className="btn primary hover"
+            name="submit"
+            type="submit"
+            onClick={handleSubmit}
+          >{taskJSON ? 'update' : 'Add'}</button>
+
+          <button
+            className="btn primary hover"
+            name="cancel"
+            type="submit"
+            onClick={handleSubmit}
+          >cancel</button>
+
+          {taskJSON && <button
+            className="btn danger hover"
+            name="deleteButton"
+            type="submit"
+            onClick={handleSubmit}
+            value={taskJSON.id}
+          >Delete Me!</button>}
+
+        </form>
+      </div>
     </>
   )
 }

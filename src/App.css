@@ -27,6 +27,7 @@ nav ul {
 }
 
 .btn {
+  cursor: pointer;
   padding: 1rem;
   transition-duration: 0.4s;
   border-radius: 5%;

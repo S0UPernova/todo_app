@@ -1,27 +1,33 @@
-import { useState } from "react"
-import taskService from "../services/TaskService"
-
+import { BsGearWide } from "react-icons/bs"
+import { TbClipboardPlus } from "react-icons/tb"
 export default function PendingTasks(props) {
   const { tasks, selectedTeam, selectedProject, handleClick } = props
 
-
-
   return (
     <div className="pending">
-      {selectedProject && <button name="addButton" className="addButton btn primary hover" onClick={handleClick}>Add</button>}
+      {selectedProject && <button name="addButton" id="addButton" className="addButton btn primary hover" onClick={handleClick}><i><TbClipboardPlus/></i></button>}
       <div>
         <h3>Pending completion</h3>
-        {selectedTeam && selectedProject && <ul>
+        {selectedTeam && selectedProject && <ul className="tasks">
           {tasks && tasks.map((task, i) => {
-
             const due_at = task.duedate && new Date(task.duedate)
             const dueAt = task.duedate && new Intl.DateTimeFormat('en-US').format(due_at);
 
             return (
               task && task.completed !== true &&
 
-              < li key={"task index number " + i} >
-                {task.name && <h4 key={"name" + i}>{task.name}</h4>}
+              < li key={"task index number " + i}>
+                {task.name && <>
+                  <h4 key={"name" + i}
+                  >
+                    <button
+                      name="editButton"
+                      onClick={handleClick}
+                      value={JSON.stringify(task)} // Passing an object directly didn't seem to work
+                    ><i><BsGearWide/></i>
+                    </button> {task.name}
+                  </h4>
+                </>}
                 {
                   task.description &&
                   <p key={"decription " + i}>{task.description}</p>
@@ -41,12 +47,6 @@ export default function PendingTasks(props) {
                   <p key={"id " + i}>id: {task.id}
                   </p>
                 }
-                <button
-                  name="editButton"
-                  className="btn secondary hover"
-                  onClick={handleClick}
-                  value={JSON.stringify(task)} // Passing an object directly didn't seem to work
-                >Edit me!</button>
               </li>
             )
           })}
