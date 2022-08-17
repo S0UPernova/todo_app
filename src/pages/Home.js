@@ -11,10 +11,12 @@ import PendingTasks from '../components/PendingTasks'
 import CompletedTasks from '../components/CompletedTasks'
 
 import '../styles/Home.scss'
+import TeamForm from '../components/TeamForm'
 
 export default function Home(props) {
   const { user, token } = props
-
+  // todo refactor selectedTeam and selectedProject to be objects of them
+  // todo instead of just the id
   const [selectedTeam, setSelectedTeam] = useState("")
   const [selectedProject, setSelectedProject] = useState("")
 
@@ -23,7 +25,9 @@ export default function Home(props) {
   const [projects, setProjects] = useState([])
   const [tasks, setTasks] = useState([])
   const [hidden, setHidden] = useState(true)
+  const [hidden2, setHidden2] = useState(true)
   const [task, setTask] = useState()
+  const [team, setTeam] = useState()
 
 
   useEffect(() => {
@@ -86,9 +90,17 @@ export default function Home(props) {
         setTask(null)
         setHidden(!hidden)
         break
+      case "teamAddButton":
+        setTeam(null)
+        setHidden2(!hidden2)
+        break
       case "editButton":
         setTask(e.target.value)
         setHidden(!hidden)
+        break
+      case "teamEditButton":
+        setTeam(e.target.value)
+        setHidden2(!hidden2)
         break
       case "deleteButton":
         if (window.confirm("Are you sure")) {
@@ -148,9 +160,21 @@ export default function Home(props) {
         .catch(err => console.error(err))
     } else setTasks([])
   }
-
   return (
     <div className='main'>
+
+      <button name="teamAddButton" onClick={handleClick}>AddTeam</button>
+
+      {selectedTeam && teams.filter(
+        team => Number(team.id) === Number(selectedTeam))?.length
+        ? <button
+          name="teamEditButton"
+          onClick={handleClick}
+          value={JSON.stringify(teams.filter(team => Number(team.id) === Number(selectedTeam))[0])}
+        >Edit selected Team
+        </button>
+        : null}
+
       <TeamDropdowns
         tasks={tasks}
         teams={teams}
@@ -166,6 +190,14 @@ export default function Home(props) {
         setTask={setTask}
         getTasks={getTasks}
         setHidden={setHidden}
+      />}
+      {hidden2 === false && <TeamForm
+        user={user}
+        token={token}
+        setHidden2={setHidden2}
+        getTeams={getTeams}
+        setTeam={setTeam}
+        team={team}
       />}
       <PendingTasks
         tasks={tasks}

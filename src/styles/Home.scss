@@ -18,22 +18,22 @@ select {
   // line-height: 1.1;
   background-image: var(--gradient);
 
-  &::after {
-    content: "";
-    width: 0.8em;
-    height: 0.5em;
+  // &::after {
+  //   content: "";
+  //   width: 0.8em;
+  //   height: 0.5em;
 
-    /* not sure what this does */
-    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
-  }
+  //   /* not sure what this does */
+  //   clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+  // }
 
-  &::-ms-expand {
-    display: none;
-  }
+  // &::-ms-expand {
+  //   display: none;
+  // }
 
-  &:focus {
-    outline: #7f9eeea8 auto 1px;
-  }
+  // &:focus {
+  //   outline: #7f9eeea8 auto 1px;
+  // }
 }
 
 .tasks {

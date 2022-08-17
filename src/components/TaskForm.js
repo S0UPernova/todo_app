@@ -108,6 +108,7 @@ export default function TaskForm(props) {
               onChange={handleChange}
               value={formInput.name}
               name="name"
+              required
             ></input>
           </label>
 
