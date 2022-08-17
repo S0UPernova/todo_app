@@ -175,6 +175,14 @@ export default function Home(props) {
         </button>
         : null}
 
+      {selectedTeam && <button name="teamAddButton" onClick={handleClick}>Add Project</button>}
+
+      {selectedProject && <button
+          name="teamEditButton"
+          onClick={handleClick}
+          value={JSON.stringify(projects.filter(project => Number(project.id) === Number(selectedProject))[0])}
+        >Edit selected Project
+        </button>}
       <TeamDropdowns
         tasks={tasks}
         teams={teams}
