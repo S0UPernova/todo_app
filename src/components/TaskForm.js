@@ -1,8 +1,10 @@
 import { useState } from "react"
+
 import taskService from "../services/TaskService"
+
 export default function TaskForm(props) {
   const { selectedTeam, selectedProject, token, setHidden, getTasks, task, setTask } = props
-  
+
   const taskJSON = JSON.parse(task) // Passing an object directly didn't seem to work
   const initialForm = {
     name: taskJSON?.name ? taskJSON.name : null,
@@ -12,7 +14,7 @@ export default function TaskForm(props) {
   }
   const [formInput, setFormInput] = useState(initialForm)
   const due_at = taskJSON?.duedate && new Date(taskJSON.duedate)
-  const dueAt = taskJSON?.duedate && new Intl.DateTimeFormat('en-us', {dateStyle: "full", timeStyle: "short", timeZone: "UTC"}).format(due_at);
+  const dueAt = taskJSON?.duedate && new Intl.DateTimeFormat('en-us', { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" }).format(due_at);
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -98,34 +100,41 @@ export default function TaskForm(props) {
       </div>
       <div className="formContainer">
         <form className="add">
-          <label for="name">Name: </label>
-          <input
-            id="name"
-            type="text"
-            onChange={handleChange}
-            value={formInput.name}
-            name="name"
-          ></input>
+          <label>
+            Name:
+            <input
+              id="name"
+              type="text"
+              onChange={handleChange}
+              value={formInput.name}
+              name="name"
+            ></input>
+          </label>
 
-          <label for="desctription">Description: </label>
-          <textarea
-            id="desctription"
-            onChange={handleChange}
-            value={formInput.description}
-            name="description"
-          ></textarea>
+          <label>
+            Description:
+            <textarea
+              id="desctription"
+              onChange={handleChange}
+              value={formInput.description}
+              name="description"
+            ></textarea>
+          </label>
 
-          <label for="duedate">Duedate:</label>
-          <i>{dueAt}</i>
-          <input
-            id="duedate"
-            type="datetime-local"
-            onChange={handleChange}
-            value={formInput.duedate}
-            name="duedate"
-          ></input>
+          <label>
+            Duedate: <i className="ml-1">{dueAt}</i>
+            <input
+              id="duedate"
+              type="datetime-local"
+              onChange={handleChange}
+              value={formInput.duedate}
+              name="duedate"
+            ></input>
+          </label>
 
-          {formInput.completed !== undefined && <label>Completed?:
+
+          {formInput.completed !== undefined && <label>
+            Completed?: 
             <input
               id="completed"
               className="completed"

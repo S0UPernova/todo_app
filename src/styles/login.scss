@@ -1,9 +1,10 @@
-form {
-  label {
-    display: flex;
-  }
+#loginForm {
+  // label {
+  //   display: block;
+  // }
   input {
     width: 50ch;
+    display: block;
   }
   button {
     display: block;

@@ -38,21 +38,39 @@ select {
 
 .tasks {
   position: relative;
-	list-style: none;
-	margin-left: 0;
-	padding-left: 1.2em;
-  // li:before {
-  //   content: "+";
-  //   position: absolute;
-  //   left: 0;
-  // }
+  list-style: none;
+  margin-left: 0;
+  padding-left: 1.2em;
+  padding-right: 1.2em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
   li {
+    flex-grow: 3;
+    box-shadow: 1px 1px 1px grey;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.565);
+    padding: 1rem;
+    max-width: 60ch;
+    word-break: break-all;
+    word-wrap: break-word;
+
     h4 {
       display: flex;
       height: 1.5rem;
       align-items: center;
 
     }
+
+    .checkbox {
+      padding: .2rem;
+      float: right;
+      // margin-top: 1rem;
+      // margin-right: 1rem;
+      pointer-events: all;
+    }
+
     button {
       display: flex;
       justify-content: center;
@@ -67,18 +85,19 @@ select {
       border: none;
       background: transparent;
       cursor: pointer;
+
       &:hover {
         font-size: 1.2rem;
+      }
+
+      i {
+        display: flex;
+        padding: 0;
+        pointer-events: none;
       }
     }
   }
 }
-i {
-  display: flex;
-  padding: 0;
-  pointer-events: none;
-}
-
 
 .main {
   width: 100%;
@@ -97,7 +116,7 @@ i {
 }
 
 .completed {
-  /* width: 100%; */
+  padding: 1rem;
   grid-area: completed;
   background-color: rgba(189, 210, 210, 0.5);
   background: blur(1px);
@@ -105,17 +124,11 @@ i {
 }
 
 .pending {
-  /* width: 100%; */
+  padding: 1rem;
   grid-area: pending;
   background-color: rgba(160, 209, 209, 0.5);
   background: blur(1px);
   border-radius: 10px;
-}
-
-.pending div,
-.completed div {
-  padding: 1rem;
-  height: 100%;
 }
 
 // .selects {
@@ -126,6 +139,7 @@ i {
 #selectTeam {
   grid-area: select1;
 }
+
 #selectProject {
   grid-area: select2;
 }
@@ -158,6 +172,7 @@ i {
   pointer-events: none;
 }
 
+
 .add {
   pointer-events: all;
   z-index: 10;
@@ -174,14 +189,9 @@ i {
   gap: 1rem;
   flex-direction: column;
 
-  // button {
-  //   width: 4rem;
-  // }
-  // label {
-  //   // pointer-events: none;
-  // }
-
   input {
+    margin-top: .5rem;
+    display: block;
     width: 98%;
     padding: .1rem 1%;
     height: 1.2rem;
@@ -191,8 +201,16 @@ i {
 
   }
 
+
+
+  #completed {
+    display: inline;
+  }
+
   textarea {
+    margin-top: .5rem;
     width: 98%;
+    // resize: vertical;
     padding: .4rem 1%;
     height: 3rem;
     border: none;
@@ -211,11 +229,29 @@ i {
 #addButton {
   padding: .2rem;
   float: right;
-  margin-top: 1rem;
-  margin-right: 1rem;
+  margin-top: .2rem;
+  margin-right: .2rem;
   pointer-events: all;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition-duration: 0.4s;
+  height: 2.5rem;
+  width: 2.5rem;
+  font-size: 1rem;
+
+  &:hover {
+    i {
+      font-size: 2rem;
+    }
+  }
+
   i {
-  font-size: 1.5rem;
+    transition-duration: 0.4s;
+    font-size: 1.5rem;
+    display: flex;
+    padding: 0;
+    pointer-events: none;
   }
 }
 
