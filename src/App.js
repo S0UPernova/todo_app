@@ -1,16 +1,25 @@
 import { Route, Routes, useNavigate } from 'react-router-dom'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Nav from "./layout/Nav"
 import Footer from './layout/Footer'
 
 import Home from './pages/Home'
+import HomeNotLoggedIn from './pages/StaticHome'
 import Login from './pages/Login'
 import Team from './pages/Team'
 import Teams from './pages/Teams'
 import Profile from './pages/Profile'
 import sessionService from './services/SessionService'
-import './App.css';
+import './App.scss';
+
+export function RedirectToLogin() {
+  const navigate = useNavigate()
+  useEffect(() => {
+    navigate('/login')
+  })
+  return (<></>)
+}
 
 export default function App() {
   const [token, setToken] = useState(null)
@@ -36,17 +45,18 @@ export default function App() {
     setToken(null)
     setUser(null)
   }
+
   return (
-    <div className='container'>
+    <div className='container d-flex flex-d-col align-items-center'>
       <header>
         <Nav user={user} token={token} handleLogOut={handleLogOut} />
       </header>
       <Routes>
-        <Route path="/" element={<Home user={user} token={token} />} />
+        <Route path="/" element={user ? <Home user={user} token={token} /> : <HomeNotLoggedIn />} />
         <Route path="/login" element={<Login handleLogIn={handleLogIn} user={user} />} />
-        <Route path="/profile" element={<Profile token={token} user={user} />} />
-        <Route exaxt path="/teams" element={<Teams user={user} token={token} />} />
-        <Route path="/teams/:teamId" element={<Team user={user} token={token} />} />
+        <Route path="/profile" element={user ? <Profile token={token} user={user} /> : <RedirectToLogin />} />
+        <Route exaxt path="/teams" element={user ? <Teams user={user} token={token} /> : <RedirectToLogin />} />
+        <Route path="/teams/:teamId" element={user ? <Team user={user} token={token} /> : <RedirectToLogin />} />
       </Routes>
       <Footer />
     </div>

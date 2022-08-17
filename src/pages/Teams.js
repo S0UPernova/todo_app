@@ -14,7 +14,7 @@ export default function Teams(props) {
 
 
   return (
-    <div className='main container'>
+    <div className='main container d-flex flex-d-col align-items-center'>
       <h1>Teams</h1>
       {teams && teams.map((team, i) => {
         return (

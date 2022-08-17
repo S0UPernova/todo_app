@@ -10,7 +10,7 @@ import TeamDropdowns from '../components/Dropdowns'
 import PendingTasks from '../components/PendingTasks'
 import CompletedTasks from '../components/CompletedTasks'
 
-import '../styles/home.scss'
+import '../styles/Home.scss'
 
 export default function Home(props) {
   const { user, token } = props

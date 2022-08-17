@@ -7,10 +7,10 @@ export default function TaskForm(props) {
 
   const taskJSON = JSON.parse(task) // Passing an object directly didn't seem to work
   const initialForm = {
-    name: taskJSON?.name ? taskJSON.name : null,
-    description: taskJSON?.description ? taskJSON.description : null,
-    duedate: null,
-    completed: taskJSON?.completed ? taskJSON.completed : null, // could fail
+    name: taskJSON?.name ? taskJSON.name : "",
+    description: taskJSON?.description ? taskJSON.description : "",
+    duedate: "",
+    completed: taskJSON?.completed ? taskJSON.completed : "", // could fail
   }
   const [formInput, setFormInput] = useState(initialForm)
   const due_at = taskJSON?.duedate && new Date(taskJSON.duedate)
