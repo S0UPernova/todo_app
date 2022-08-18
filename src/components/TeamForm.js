@@ -6,6 +6,7 @@ import usersTeamService from "../services/UsersTeamService"
 export default function TeamForm(props) {
   const { user, token, setHidden2, getTeams, team, setTeam } = props
 
+  // const teamJSON = JSON.parse(team) // Passing an object directly didn't seem to work
   const initialForm = {
     name: team?.name ? team.name : "",
     description: team?.description ? team.description : "",
@@ -24,26 +25,27 @@ export default function TeamForm(props) {
           usersTeamService.postTeam(user.id, params, token)
             .then(() => {
               setHidden2(true)
-              setFormInput(initialForm)
               getTeams()
-              setTeam(null)
+              // setTeam("")
+              setFormInput(initialForm)
             })
             .catch(err => console.error(err))
         } else if (team) {
           usersTeamService.updateTeam(user.id, team.id, params, token)
             .then(() => {
               setHidden2(true)
-              setFormInput(initialForm)
               getTeams()
-              setTeam(null)
+              // setTeam("")
+              setFormInput(initialForm)
             })
             .catch(err => console.error(err))
         }
         break
       case "cancel":
-        setFormInput(initialForm)
         setHidden2(true)
-        setTeam(null)
+        getTeams()
+        setTeam("")
+        setFormInput(initialForm)
         break
       case "deleteButton":
         if (window.confirm("Are you sure")) {
@@ -52,18 +54,19 @@ export default function TeamForm(props) {
             usersTeamService.deleteTeam(user.id, team.id, token)
               .then(() => {
                 setHidden2(true)
-                setFormInput(initialForm)
                 getTeams()
-                setTeam(null)
+                setTeam("")
+                setFormInput(initialForm)
               })
               .catch(err => console.error(err))
           }
         }
         break
       default:
-        setFormInput(initialForm)
         setHidden2(true)
-        setTeam(null)
+        getTeams()
+        // setTeam(null)
+        setFormInput(initialForm)
         break
     }
   }

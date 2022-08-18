@@ -5,6 +5,7 @@ import taskService from "../services/TaskService"
 export default function TaskForm(props) {
   const { selectedTeam, selectedProject, token, setHidden, getTasks, task, setTask } = props
 
+  // const taskJSON = JSON.parse(task) // Passing an object directly didn't seem to work
   const initialForm = {
     name: task?.name ? task.name : "",
     description: task?.description ? task.description : "",
@@ -27,7 +28,7 @@ export default function TaskForm(props) {
         }
 
         if (!task) {
-          taskService.postTask(selectedTeam.id, selectedProject.id, params, token)
+          taskService.postTask(selectedTeam, selectedProject, params, token)
             .then(() => {
               setHidden(true)
               setFormInput(initialForm)
@@ -36,7 +37,7 @@ export default function TaskForm(props) {
             })
             .catch(err => console.error(err))
         } else if (task) {
-          taskService.updateTask(selectedTeam.id, selectedProject.id, Number(task.id), params, token)
+          taskService.updateTask(selectedTeam, selectedProject, task.id, params, token)
             .then(() => {
               setHidden(true)
               setFormInput(initialForm)
@@ -55,7 +56,7 @@ export default function TaskForm(props) {
         if (window.confirm("Are you sure")) {
           const taskId = e.target.value
           if (taskId) {
-            taskService.deleteTask(selectedTeam.id, selectedProject.id, taskId, token)
+            taskService.deleteTask(selectedTeam, selectedProject, taskId, token)
               .then(() => {
                 setHidden(true)
                 setFormInput(initialForm)

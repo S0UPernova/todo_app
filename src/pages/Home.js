@@ -9,6 +9,7 @@ import TaskForm from "../components/TaskForm"
 import TeamDropdowns from '../components/Dropdowns'
 import PendingTasks from '../components/PendingTasks'
 import CompletedTasks from '../components/CompletedTasks'
+import ProjectForm from '../components/ProjectForm'
 
 import '../styles/Home.scss'
 import TeamForm from '../components/TeamForm'
@@ -26,16 +27,12 @@ export default function Home(props) {
 
   const [projects, setProjects] = useState([])
   const [tasks, setTasks] = useState([])
-
-  const [team, setTeam] = useState()
-  const [project, setProject] = useState()
-  const [task, setTask] = useState()
-
   const [hidden, setHidden] = useState(true)
   const [hidden2, setHidden2] = useState(true)
   const [hidden3, setHidden3] = useState(true)
-
-
+  const [task, setTask] = useState()
+  const [team, setTeam] = useState()
+  const [project, setProject] = useState()
 
 
   useEffect(() => {
@@ -43,29 +40,14 @@ export default function Home(props) {
       getTasks()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [team, project, user])
-
+  }, [selectedTeam, selectedProject, user])
 
   useEffect(() => {
     if (user) {
       getProjects()
-      setProject("")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [team, user])
-  
-  
-  
-  // useEffect(() => {
-  //   if (user && team) {
-  //     getProjects()
-  //     setProject("")
-  //   }
-  //   if (project) {
-  //     getTasks()
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [team, user])
+  }, [selectedTeam, user])
 
   useEffect(() => {
     if (user) {
@@ -77,32 +59,28 @@ export default function Home(props) {
       setMemberships([])
       setProjects([])
       setTasks([])
-      setTeam(null)
-      setProject(null)
+      setSelectedTeam("")
+      setSelectedProject("")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   const handleChange = (e) => {
+    // console.log(selectedProject)
     switch (e.target.getAttribute("data-dropdown")) {
       case 'team':
-        if (e.target.value === "") {
-          setTeam("")
-          setProject("")
-          setTasks([])
-        } else {
-          setTeam(JSON.parse(e.target.value))
-          setProject("")
-          setTasks([])
-        }
+        setSelectedProject("")
+        setSelectedTeam("")
+        const teamTimer = setTimeout(() => {
+          setSelectedTeam(e.target.value)
+        }, 200)
+        return () => clearTimeout(teamTimer)
       case 'project':
-        if (e.target.value === "") {
-          setProject("")
-          setTasks([])
-        } else {
-          setProject(JSON.parse(e.target.value))
-          setTasks([])
-        }
+        setSelectedProject("")
+        const projectTimer = setTimeout(() => {
+          setSelectedProject(e.target.value)
+        }, 200)
+        return () => clearTimeout(projectTimer)
       default:
         break
     }
@@ -112,29 +90,36 @@ export default function Home(props) {
     e.preventDefault()
     switch (e.target.name) {
       case "addButton":
-        setTask("")
+        setTask(null)
         setHidden(!hidden)
         break
       case "teamAddButton":
+        setTeam(null)
         setHidden2(!hidden2)
         break
       case "editButton":
+        setTask(JSON.parse(e.target.value))
         setHidden(!hidden)
         break
       case "teamEditButton":
+        // getTeams()
+        setTeam(teams.filter(team =>  Number(team.id) === Number(selectedTeam))[0])
         setHidden2(!hidden2)
         break
-      case "projectEditButton":
+      case "projectAddButton":
+        setProject(null)
         setHidden3(!hidden3)
         break
-      case "projectAddButton":
+      case "projectEditButton":
+        getProjects()
+        setProject(projects.filter(team =>  Number(team.id) === Number(selectedProject))[0])
         setHidden3(!hidden3)
         break
       case "deleteButton":
         if (window.confirm("Are you sure")) {
           const taskId = e.target.value
           if (taskId) {
-            taskService.deleteTask(team.id, project.id, taskId, token)
+            taskService.deleteTask(selectedTeam, selectedProject, taskId, token)
               .then(() => getTasks())
               .catch(err => console.error(err))
           }
@@ -142,11 +127,10 @@ export default function Home(props) {
         break
       case "checkbox":
         const taskId = e.target.value
-        setTask(e.target.value)
-        if (taskId && task) {
+        if (taskId) {
           taskService.updateTask(
-            team.id,
-            project.id,
+            selectedTeam,
+            selectedProject,
             taskId,
             { completed: e.target.dataset.completed },
             token
@@ -161,6 +145,7 @@ export default function Home(props) {
   }
 
   const getTeams = async () => {
+    setTeam(selectedTeam)
     const returnVal = await usersTeamService.getTeams(user.id, token)
     returnVal?.length ? setTeams([...returnVal]) : setTeams([returnVal])
   }
@@ -171,53 +156,57 @@ export default function Home(props) {
   }
 
   const getProjects = async () => {
-    if (user && team?.id && team !== "") {
-      const returnVal = await projectService.getProjects(team.id, token)
+    // console.log(selectedTeam)
+    if (user && selectedTeam) {
+      const returnVal = await projectService.getProjects(selectedTeam, token)
       returnVal?.length ? setProjects([...returnVal]) : setProjects([returnVal])
     } else setProjects([])
   }
 
   const getTasks = async () => {
-    if (token && project?.id && team?.id) {
-      taskService.getTasks(team.id, project.id, token)
-      .then(data => {
-        data.length ? setTasks([...data]) : setTasks([data])
-      })
-      .catch(err => console.error(err))
-    } else setTasks("")
+    setTask("")
+    if (selectedProject
+      && selectedTeam) {
+      taskService.getTasks(selectedTeam, selectedProject, token)
+        .then(data => data.length ? setTasks([...data]) : setTasks([data]))
+        .catch(err => console.error(err))
+    } else setTasks([])
   }
   return (
     <div className='main'>
 
       <button name="teamAddButton" onClick={handleClick}>AddTeam</button>
 
-      {team?.id
-        ? <button
-          name="teamEditButton"
-          onClick={handleClick}
-          value={JSON.stringify(team)}
-        >Edit selected Team
-        </button>
-        : null}
-
-      {team && <button name="projectAddButton" onClick={handleClick}>Add Project</button>}
-
-      {project && <button
-        name="projectEditButton"
+      {selectedTeam && <button
+        name="teamEditButton"
         onClick={handleClick}
-        value={JSON.stringify(project)}
-      >Edit selected Project
+        // value={JSON.stringify(teams.filter(team =>  Number(team.id) === Number(selectedTeam))[0])}
+      >Edit selected Team
       </button>}
 
+      {selectedTeam && <button name="projectAddButton" onClick={handleClick}>Add Project</button>}
+
+      {selectedProject && <button
+        name="projectEditButton"
+        onClick={handleClick}
+      >Edit selected Project
+      </button>}
+      <TeamDropdowns
+        tasks={tasks}
+        teams={teams}
+        projects={projects}
+        memberships={memberships}
+        handleChange={handleChange}
+      />
       {hidden === false && <TaskForm
         task={task}
         token={token}
-        selectedTeam={team?.id ? team.id : ""}
-        selectedProject={project?.id ? project.id: ""}
+        selectedTeam={selectedTeam}
+        selectedProject={selectedProject}
         setTask={setTask}
         getTasks={getTasks}
         setHidden={setHidden}
-      />}
+        />}
       {hidden2 === false && <TeamForm
         user={user}
         token={token}
@@ -225,7 +214,7 @@ export default function Home(props) {
         getTeams={getTeams}
         setTeam={setTeam}
         team={team}
-      />}
+        />}
       {hidden3 === false && <ProjectForm
         user={user}
         token={token}
@@ -234,26 +223,19 @@ export default function Home(props) {
         setProject={setProject}
         project={project}
         selectedTeam={team}
+        selectedProject={selectedProject}
+
       />}
-      <TeamDropdowns
-        tasks={tasks}
-        teams={teams}
-        projects={projects}
-        memberships={memberships}
-        handleChange={handleChange}
-        selectedProject={project}
-        selectedTeam={team}
-      />
       <PendingTasks
         tasks={tasks}
-        selectedTeam={team?.id ? team.id : ""}
-        selectedProject={project?.id ? project.id : ""}
+        selectedTeam={selectedTeam}
+        selectedProject={selectedProject}
         handleClick={handleClick}
       />
       <CompletedTasks
         tasks={tasks}
-        selectedTeam={team?.id ? team.id : ""}
-        selectedProject={project?.id ? project.id : ""}
+        selectedTeam={selectedTeam}
+        selectedProject={selectedProject}
         handleClick={handleClick}
       />
     </div>

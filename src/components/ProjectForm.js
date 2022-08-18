@@ -1,14 +1,14 @@
 import { useState } from "react"
 import projectService from "../services/ProjectService"
 
-// import taskService from "../services/TaskService"
-import usersTeamService from "../services/UsersTeamService"
-
 export default function ProjectForm(props) {
-  const { selectedTeam, token, setHidden3, getProjects, project, setProject } = props
+  const { user, token, setHidden3, getProjects, project, setProject, selectedTeam, selectedProject } = props
+
+  // const projectJSON = project ? JSON.parse(project) : null // Passing an object directly didn't seem to work
   const initialForm = {
     name: project?.name ? project.name : "",
     description: project?.description ? project.description : "",
+    requirements: project?.requirements ? project.requirements : "",
   }
   const [formInput, setFormInput] = useState(initialForm)
 
@@ -22,20 +22,21 @@ export default function ProjectForm(props) {
           requirements: formInput.requirements ? formInput.requirements : null
         }
         if (!project) {
-          projectService.postProject(selectedTeam.id, params, token)
+          projectService.postProject(selectedTeam, params, token)
             .then(() => {
               setHidden3(true)
               setFormInput(initialForm)
               getProjects()
+              setProject(null)
             })
             .catch(err => console.error(err))
         } else if (project) {
-          projectService.updateProject(selectedTeam.id, project.id, params, token)
+          projectService.updateProject(selectedTeam, project.id, params, token)
             .then(() => {
               setHidden3(true)
               setFormInput(initialForm)
               getProjects()
-              // setProject(null)
+              setProject(null)
             })
             .catch(err => console.error(err))
         }
@@ -48,12 +49,12 @@ export default function ProjectForm(props) {
         if (window.confirm("Are you sure")) {
           const projectId = e.target.value
           if (projectId) {
-            projectService.deleteProject(selectedTeam.id, project.id, token)
+            projectService.deleteProject(selectedTeam, selectedProject, token)
               .then(() => {
                 setHidden3(true)
                 setFormInput(initialForm)
                 getProjects()
-                setProject("")
+                setProject(null)
               })
               .catch(err => console.error(err))
           }
@@ -62,6 +63,7 @@ export default function ProjectForm(props) {
       default:
         setFormInput(initialForm)
         setHidden3(true)
+        setProject(null)
         break
     }
   }
