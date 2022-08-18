@@ -6,10 +6,9 @@ import usersTeamService from "../services/UsersTeamService"
 export default function TeamForm(props) {
   const { user, token, setHidden2, getTeams, team, setTeam } = props
 
-  const teamJSON = JSON.parse(team) // Passing an object directly didn't seem to work
   const initialForm = {
-    name: teamJSON?.name ? teamJSON.name : "",
-    description: teamJSON?.description ? teamJSON.description : "",
+    name: team?.name ? team.name : "",
+    description: team?.description ? team.description : "",
   }
   const [formInput, setFormInput] = useState(initialForm)
 
@@ -21,7 +20,7 @@ export default function TeamForm(props) {
           name: formInput.name ? formInput.name : null,
           description: formInput.description ? formInput.description : null
         }
-        if (!teamJSON) {
+        if (!team) {
           usersTeamService.postTeam(user.id, params, token)
             .then(() => {
               setHidden2(true)
@@ -30,8 +29,8 @@ export default function TeamForm(props) {
               setTeam(null)
             })
             .catch(err => console.error(err))
-        } else if (teamJSON) {
-          usersTeamService.updateTeam(user.id, teamJSON.id, params, token)
+        } else if (team) {
+          usersTeamService.updateTeam(user.id, team.id, params, token)
             .then(() => {
               setHidden2(true)
               setFormInput(initialForm)
@@ -50,7 +49,7 @@ export default function TeamForm(props) {
         if (window.confirm("Are you sure")) {
           const teamId = e.target.value
           if (teamId) {
-            usersTeamService.deleteTeam(user.id, teamJSON.id, token)
+            usersTeamService.deleteTeam(user.id, team.id, token)
               .then(() => {
                 setHidden2(true)
                 setFormInput(initialForm)
@@ -113,7 +112,7 @@ export default function TeamForm(props) {
             name="submit"
             type="submit"
             onClick={handleSubmit}
-          >{teamJSON ? 'Update' : 'Add'}</button>
+          >{team ? 'Update' : 'Add'}</button>
 
           <button
             className="btn primary hover"
@@ -122,12 +121,12 @@ export default function TeamForm(props) {
             onClick={handleSubmit}
           >Cancel</button>
 
-          {teamJSON && <button
+          {team && <button
             className="btn danger hover"
             name="deleteButton"
             type="submit"
             onClick={handleSubmit}
-            value={teamJSON.id}
+            value={team.id}
           >Delete Me!</button>}
 
         </form>

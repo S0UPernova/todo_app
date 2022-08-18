@@ -8,7 +8,7 @@ export default function PendingTasks(props) {
 
   return (
     <div className="pending">
-      {selectedProject &&
+      {selectedProject && selectedProject !=="" &&
         <button
           name="addButton"
           id="addButton"
@@ -18,7 +18,7 @@ export default function PendingTasks(props) {
           <i><TbClipboardPlus /></i>
         </button>}
       <h3>Pending completion</h3>
-      {selectedTeam && selectedProject && <ul className="tasks">
+      {selectedTeam && selectedProject && selectedProject !=="" && <ul className="tasks">
         {tasks && tasks.map((task, i) => {
           return (
             task?.completed === false &&

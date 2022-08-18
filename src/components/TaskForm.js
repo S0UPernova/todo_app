@@ -5,16 +5,15 @@ import taskService from "../services/TaskService"
 export default function TaskForm(props) {
   const { selectedTeam, selectedProject, token, setHidden, getTasks, task, setTask } = props
 
-  const taskJSON = JSON.parse(task) // Passing an object directly didn't seem to work
   const initialForm = {
-    name: taskJSON?.name ? taskJSON.name : "",
-    description: taskJSON?.description ? taskJSON.description : "",
+    name: task?.name ? task.name : "",
+    description: task?.description ? task.description : "",
     duedate: "",
-    completed: taskJSON?.completed ? taskJSON.completed : "", // could fail
+    completed: task?.completed ? task.completed : "", // could fail
   }
   const [formInput, setFormInput] = useState(initialForm)
-  const due_at = taskJSON?.duedate && new Date(taskJSON.duedate)
-  const dueAt = taskJSON?.duedate && new Intl.DateTimeFormat('en-us', { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" }).format(due_at);
+  const due_at = task?.duedate && new Date(task.duedate)
+  const dueAt = task?.duedate && new Intl.DateTimeFormat('en-us', { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" }).format(due_at);
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -27,8 +26,8 @@ export default function TaskForm(props) {
           completed: formInput.completed === true ? formInput.completed : false
         }
 
-        if (!taskJSON) {
-          taskService.postTask(selectedTeam, selectedProject, params, token)
+        if (!task) {
+          taskService.postTask(selectedTeam.id, selectedProject.id, params, token)
             .then(() => {
               setHidden(true)
               setFormInput(initialForm)
@@ -36,8 +35,8 @@ export default function TaskForm(props) {
               setTask(null)
             })
             .catch(err => console.error(err))
-        } else if (taskJSON) {
-          taskService.updateTask(selectedTeam, selectedProject, Number(taskJSON.id), params, token)
+        } else if (task) {
+          taskService.updateTask(selectedTeam.id, selectedProject.id, Number(task.id), params, token)
             .then(() => {
               setHidden(true)
               setFormInput(initialForm)
@@ -56,7 +55,7 @@ export default function TaskForm(props) {
         if (window.confirm("Are you sure")) {
           const taskId = e.target.value
           if (taskId) {
-            taskService.deleteTask(selectedTeam, selectedProject, taskId, token)
+            taskService.deleteTask(selectedTeam.id, selectedProject.id, taskId, token)
               .then(() => {
                 setHidden(true)
                 setFormInput(initialForm)
@@ -152,7 +151,7 @@ export default function TaskForm(props) {
             name="submit"
             type="submit"
             onClick={handleSubmit}
-          >{taskJSON ? 'Update' : 'Add'}</button>
+          >{task ? 'Update' : 'Add'}</button>
 
           <button
             className="btn primary hover"
@@ -161,12 +160,12 @@ export default function TaskForm(props) {
             onClick={handleSubmit}
           >Cancel</button>
 
-          {taskJSON && <button
+          {task && <button
             className="btn danger hover"
             name="deleteButton"
             type="submit"
             onClick={handleSubmit}
-            value={taskJSON.id}
+            value={task.id}
           >Delete Me!</button>}
 
         </form>

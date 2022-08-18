@@ -1,15 +1,14 @@
 import { useState } from "react"
+import projectService from "../services/ProjectService"
 
 // import taskService from "../services/TaskService"
 import usersTeamService from "../services/UsersTeamService"
 
-export default function TeamForm(props) {
-  const { user, token, setHidden3, getProjects, project, setProject } = props
-
-  const projectJSON = JSON.parse(project) // Passing an object directly didn't seem to work
+export default function ProjectForm(props) {
+  const { selectedTeam, token, setHidden3, getProjects, project, setProject } = props
   const initialForm = {
-    name: projectJSON?.name ? projectJSON.name : "",
-    description: projectJSON?.description ? projectJSON.description : "",
+    name: project?.name ? project.name : "",
+    description: project?.description ? project.description : "",
   }
   const [formInput, setFormInput] = useState(initialForm)
 
@@ -22,22 +21,21 @@ export default function TeamForm(props) {
           description: formInput.description ? formInput.description : null,
           requirements: formInput.requirements ? formInput.requirements : null
         }
-        if (!projectJSON) {
-          usersTeamService.postTeam(user.id, params, token)
+        if (!project) {
+          projectService.postProject(selectedTeam.id, params, token)
             .then(() => {
               setHidden3(true)
               setFormInput(initialForm)
               getProjects()
-              setProject(null)
             })
             .catch(err => console.error(err))
-        } else if (projectJSON) {
-          usersTeamService.updateTeam(user.id, projectJSON.id, params, token)
+        } else if (project) {
+          projectService.updateProject(selectedTeam.id, project.id, params, token)
             .then(() => {
               setHidden3(true)
               setFormInput(initialForm)
               getProjects()
-              setProject(null)
+              // setProject(null)
             })
             .catch(err => console.error(err))
         }
@@ -45,18 +43,17 @@ export default function TeamForm(props) {
       case "cancel":
         setFormInput(initialForm)
         setHidden3(true)
-        setProject(null)
         break
       case "deleteButton":
         if (window.confirm("Are you sure")) {
           const projectId = e.target.value
           if (projectId) {
-            usersTeamService.deleteTeam(user.id, projectJSON.id, token)
+            projectService.deleteProject(selectedTeam.id, project.id, token)
               .then(() => {
                 setHidden3(true)
                 setFormInput(initialForm)
                 getProjects()
-                setProject(null)
+                setProject("")
               })
               .catch(err => console.error(err))
           }
@@ -65,7 +62,6 @@ export default function TeamForm(props) {
       default:
         setFormInput(initialForm)
         setHidden3(true)
-        setProject(null)
         break
     }
   }
@@ -110,11 +106,11 @@ export default function TeamForm(props) {
             ></textarea>
           </label>
           <label>
-            Description:
+            Requirements:
             <textarea
               id="Requirements"
               onChange={handleChange}
-              value={formInput.description}
+              value={formInput.requirements}
               name="requirements"
             ></textarea>
           </label>
@@ -123,7 +119,7 @@ export default function TeamForm(props) {
             name="submit"
             type="submit"
             onClick={handleSubmit}
-          >{projectJSON ? 'Update' : 'Add'}</button>
+          >{project ? 'Update' : 'Add'}</button>
 
           <button
             className="btn primary hover"
@@ -132,12 +128,12 @@ export default function TeamForm(props) {
             onClick={handleSubmit}
           >Cancel</button>
 
-          {projectJSON && <button
+          {project && <button
             className="btn danger hover"
             name="deleteButton"
             type="submit"
             onClick={handleSubmit}
-            value={projectJSON.id}
+            value={project.id}
           >Delete Me!</button>}
 
         </form>
