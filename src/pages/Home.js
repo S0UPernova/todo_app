@@ -5,35 +5,34 @@ import membershipService from '../services/MembershipService'
 import projectService from '../services/ProjectService'
 import taskService from '../services/TaskService'
 
-import TaskForm from "../components/TaskForm"
 import TeamDropdowns from '../components/Dropdowns'
 import PendingTasks from '../components/PendingTasks'
 import CompletedTasks from '../components/CompletedTasks'
-import ProjectForm from '../components/ProjectForm'
 
-import '../styles/Home.scss'
 import TeamForm from '../components/TeamForm'
 import ProjectForm from '../components/ProjectForm'
+import TaskForm from "../components/TaskForm"
+
+import '../styles/Home.scss'
 
 export default function Home(props) {
   const { user, token } = props
-  // todo refactor selectedTeam and selectedProject to be objects of them
-  // todo instead of just the id
-  // const [team, setTeam] = useState("")
-  // const [project, setProject] = useState("")
+
+  const [selectedTeam, setSelectedTeam] = useState("")
+  const [selectedProject, setSelectedProject] = useState("")
 
   const [teams, setTeams] = useState([])
   const [memberships, setMemberships] = useState([])
-
   const [projects, setProjects] = useState([])
+
+  const [project, setProject] = useState()
   const [tasks, setTasks] = useState([])
+  const [task, setTask] = useState()
+  const [team, setTeam] = useState()
+
   const [hidden, setHidden] = useState(true)
   const [hidden2, setHidden2] = useState(true)
   const [hidden3, setHidden3] = useState(true)
-  const [task, setTask] = useState()
-  const [team, setTeam] = useState()
-  const [project, setProject] = useState()
-
 
   useEffect(() => {
     if (user) {
@@ -103,7 +102,7 @@ export default function Home(props) {
         break
       case "teamEditButton":
         // getTeams()
-        setTeam(teams.filter(team =>  Number(team.id) === Number(selectedTeam))[0])
+        setTeam(teams.filter(team => Number(team.id) === Number(selectedTeam))[0])
         setHidden2(!hidden2)
         break
       case "projectAddButton":
@@ -112,7 +111,7 @@ export default function Home(props) {
         break
       case "projectEditButton":
         getProjects()
-        setProject(projects.filter(team =>  Number(team.id) === Number(selectedProject))[0])
+        setProject(projects.filter(team => Number(team.id) === Number(selectedProject))[0])
         setHidden3(!hidden3)
         break
       case "deleteButton":
@@ -180,7 +179,7 @@ export default function Home(props) {
       {selectedTeam && <button
         name="teamEditButton"
         onClick={handleClick}
-        // value={JSON.stringify(teams.filter(team =>  Number(team.id) === Number(selectedTeam))[0])}
+      // value={JSON.stringify(teams.filter(team =>  Number(team.id) === Number(selectedTeam))[0])}
       >Edit selected Team
       </button>}
 
@@ -206,7 +205,7 @@ export default function Home(props) {
         setTask={setTask}
         getTasks={getTasks}
         setHidden={setHidden}
-        />}
+      />}
       {hidden2 === false && <TeamForm
         user={user}
         token={token}
@@ -214,7 +213,7 @@ export default function Home(props) {
         getTeams={getTeams}
         setTeam={setTeam}
         team={team}
-        />}
+      />}
       {hidden3 === false && <ProjectForm
         user={user}
         token={token}
@@ -222,7 +221,7 @@ export default function Home(props) {
         getProjects={getProjects}
         setProject={setProject}
         project={project}
-        selectedTeam={team}
+        selectedTeam={selectedTeam}
         selectedProject={selectedProject}
 
       />}
