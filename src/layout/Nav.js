@@ -8,7 +8,6 @@ export default function Nav(props) {
   const [smallWindow, setSmallWindow] = useState(false)
   const navigate = useNavigate()
   const handleClick = (e) => {
-    console.log(e.name)
     switch (e.target.name) {
       case "logout":
         if (window.confirm("are you sure")) {
@@ -50,7 +49,6 @@ export default function Nav(props) {
 
   return (
     <>
-      {/* //todo add backdrop and have it close dropdown on click */}
       <nav>
         {!hidden | !smallWindow ? <ul>
           <li>

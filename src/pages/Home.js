@@ -13,6 +13,9 @@ import TeamForm from '../components/TeamForm'
 import ProjectForm from '../components/ProjectForm'
 import TaskForm from "../components/TaskForm"
 
+import TeamPanel from '../components/TeamPanel'
+import ProjectPanel from '../components/ProjectPanel'
+
 import '../styles/Home.scss'
 
 export default function Home(props) {
@@ -33,9 +36,10 @@ export default function Home(props) {
   const [hidden, setHidden] = useState(true)
   const [hidden2, setHidden2] = useState(true)
   const [hidden3, setHidden3] = useState(true)
-
+  const [add, setAdd] = useState(false)
   useEffect(() => {
     if (user) {
+      setProject(projects.filter(team => Number(team.id) === Number(selectedProject))[0])
       getTasks()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -106,12 +110,14 @@ export default function Home(props) {
         setHidden2(!hidden2)
         break
       case "projectAddButton":
-        setProject(null)
+        // setProject(null)
+        setAdd(true)
         setHidden3(!hidden3)
         break
       case "projectEditButton":
+        setAdd(false)
         getProjects()
-        setProject(projects.filter(team => Number(team.id) === Number(selectedProject))[0])
+        // setProject(projects.filter(team => Number(team.id) === Number(selectedProject))[0])
         setHidden3(!hidden3)
         break
       case "deleteButton":
@@ -173,29 +179,23 @@ export default function Home(props) {
   }
   return (
     <div className='main'>
-
-      <button name="teamAddButton" onClick={handleClick}>AddTeam</button>
-
-      {selectedTeam && <button
-        name="teamEditButton"
-        onClick={handleClick}
-      // value={JSON.stringify(teams.filter(team =>  Number(team.id) === Number(selectedTeam))[0])}
-      >Edit selected Team
-      </button>}
-
-      {selectedTeam && <button name="projectAddButton" onClick={handleClick}>Add Project</button>}
-
-      {selectedProject && <button
-        name="projectEditButton"
-        onClick={handleClick}
-      >Edit selected Project
-      </button>}
       <TeamDropdowns
         tasks={tasks}
         teams={teams}
         projects={projects}
         memberships={memberships}
         handleChange={handleChange}
+      />
+      <TeamPanel 
+        team={team}
+        handleClick={handleClick}
+        selectedTeam={selectedTeam}
+      />
+      <ProjectPanel
+        project={project}
+        handleClick={handleClick}
+        selectedTeam={selectedTeam}
+        selectedProject={selectedProject}
       />
       {hidden === false && <TaskForm
         task={task}
@@ -220,10 +220,11 @@ export default function Home(props) {
         setHidden3={setHidden3}
         getProjects={getProjects}
         setProject={setProject}
-        project={project}
+        project={!hidden3 ? project : null}
         selectedTeam={selectedTeam}
         selectedProject={selectedProject}
-
+        add={add}
+        setSelectedProject={setSelectedProject}
       />}
       <PendingTasks
         tasks={tasks}

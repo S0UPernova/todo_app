@@ -22,6 +22,7 @@ export default function TeamDropdowns(props) {
           return <option value={project.id} key={k}>{project.name}</option>
         })}
       </select>
+
     </>
   )
 }

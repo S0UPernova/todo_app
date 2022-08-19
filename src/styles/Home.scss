@@ -36,6 +36,9 @@ select {
   // }
 }
 
+
+
+
 .tasks {
   position: relative;
   list-style: none;
@@ -77,11 +80,8 @@ select {
       align-items: center;
       transition-duration: 0.4s;
       // height: 1.5rem;
-      width: 1.5rem;
-      font-size: 1rem;
       padding: 0;
       line-height: normal;
-      margin: 0;
       border: none;
       background: transparent;
       cursor: pointer;
@@ -90,59 +90,16 @@ select {
         font-size: 1.2rem;
       }
 
-      i {
-        display: flex;
-        padding: 0;
-        pointer-events: none;
-      }
+
+      // i {
+      //   display: flex;
+      //   padding: 0;
+      //   pointer-events: none;
+      // }
     }
   }
 }
 
-.main {
-  width: 100%;
-  min-height: 100vh;
-
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 4rem 4rem 2fr 1fr;
-  gap: 1rem;
-  grid-template-areas:
-    "select1 select1 select1 select1"
-    "select2 select2 select2 select2"
-    "pending pending pending pending"
-    "completed completed completed completed"
-  ;
-}
-
-.completed {
-  padding: 1rem;
-  grid-area: completed;
-  background-color: rgba(189, 210, 210, 0.5);
-  background: blur(1px);
-  border-radius: 10px;
-}
-
-.pending {
-  padding: 1rem;
-  grid-area: pending;
-  background-color: rgba(160, 209, 209, 0.5);
-  background: blur(1px);
-  border-radius: 10px;
-}
-
-// .selects {
-//   /* width: 100%; */
-//   grid-area: selects;
-// }
-
-#selectTeam {
-  grid-area: select1;
-}
-
-#selectProject {
-  grid-area: select2;
-}
 
 .backdrop {
   background-color: rgba(58, 69, 69, 0.48);
@@ -154,7 +111,7 @@ select {
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 8;
+  z-index: 6;
 }
 
 .formContainer {
@@ -201,12 +158,6 @@ select {
 
   }
 
-
-
-  #completed {
-    display: inline;
-  }
-
   textarea {
     margin-top: .5rem;
     width: 98%;
@@ -240,27 +191,76 @@ select {
   width: 2.5rem;
   font-size: 1rem;
 
-  &:hover {
-    i {
-      font-size: 2rem;
-    }
-  }
 
-  i {
-    transition-duration: 0.4s;
-    font-size: 1.5rem;
-    display: flex;
-    padding: 0;
-    pointer-events: none;
-  }
+
+  // i {
+  //   transition-duration: 0.4s;
+  //   font-size: 1.5rem;
+  //   display: flex;
+  //   padding: 0;
+  //   pointer-events: none;
+  // }
 }
 
+.completed {
+  padding: 1rem;
+  grid-area: completed;
+
+  // background: blur(1px);
+}
+
+.rounded {
+  border-radius: 10px;
+}
+
+.main {
+  width: 100%;
+  min-height: 100vh;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 4rem auto 4rem auto auto auto;
+  gap: 1rem;
+  grid-template-areas:
+    "select1 select1 select1 select1"
+    "team team team team"
+    "select2 select2 select2 select2"
+    "project project project project"
+    "pending pending pending pending"
+    "completed completed completed completed"
+  ;
+}
+
+.pending {
+  padding: 1rem;
+  grid-area: pending;
+  background-color: rgba(160, 209, 209, 0.5);
+  background: blur(1px);
+  border-radius: 10px;
+}
+
+#teamPanel {
+  grid-area: team;
+}
+
+#projectPanel {
+  grid-area: project;
+}
+
+#selectTeam {
+  grid-area: select1;
+}
+
+#selectProject {
+  grid-area: select2;
+}
 
 @media screen and (min-width: 1200px) {
   .main {
-    grid-template-rows: 4rem auto;
+    grid-template-rows: 4rem  300px  auto ;
     grid-template-areas:
       "select1 select1 select2 select2"
+      "team team project project"
       "completed pending pending pending"
     ;
   }

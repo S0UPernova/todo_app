@@ -15,14 +15,14 @@ export default function Task(props) {
       {
         task.completed !== null | undefined &&
         <button
-          className="checkbox"
+          className="checkbox icon-button"
           onClick={handleClick}
           value={task.id}
           data-completed={!task.completed}
           name="checkbox">{
             task.completed === true
-              ? <i style={{ pointerEvents: "none" }}><GrCheckboxSelected /></i>
-              : <i style={{ pointerEvents: "none" }}><GrCheckbox /></i>}
+              ? <i className="icon"><GrCheckboxSelected /></i>
+              : <i className="icon"><GrCheckbox /></i>}
         </button>
       }
       {task.name && <>
@@ -30,8 +30,9 @@ export default function Task(props) {
           <button
             name="editButton"
             onClick={handleClick}
+            className="icon-button mr-1"
             value={JSON.stringify(task)} // Passing an object directly didn't seem to work
-          ><i><BsGearWide /></i>
+          ><i className="icon"><BsGearWide /></i>
           </button> {task.name}
         </h4>
       </>}

@@ -2,13 +2,13 @@ import { useState } from "react"
 import projectService from "../services/ProjectService"
 
 export default function ProjectForm(props) {
-  const { user, token, setHidden3, getProjects, project, setProject, selectedTeam, selectedProject } = props
+  const { user, token, setHidden3, getProjects, project, setProject, selectedTeam, selectedProject, setSelectedProject, add } = props
 
   // const projectJSON = project ? JSON.parse(project) : null // Passing an object directly didn't seem to work
   const initialForm = {
-    name: project?.name ? project.name : "",
-    description: project?.description ? project.description : "",
-    requirements: project?.requirements ? project.requirements : "",
+    name: project?.name && !add ? project.name : "",
+    description: project?.description && !add ? project.description : "",
+    requirements: project?.requirements && !add ? project.requirements : "",
   }
   const [formInput, setFormInput] = useState(initialForm)
 
@@ -21,7 +21,7 @@ export default function ProjectForm(props) {
           description: formInput.description ? formInput.description : null,
           requirements: formInput.requirements ? formInput.requirements : null
         }
-        if (!project) {
+        if (add) {
           projectService.postProject(selectedTeam, params, token)
             .then(() => {
               setHidden3(true)
@@ -30,7 +30,7 @@ export default function ProjectForm(props) {
               setProject(null)
             })
             .catch(err => console.error(err))
-        } else if (project) {
+        } else if (!add && project) {
           projectService.updateProject(selectedTeam, project.id, params, token)
             .then(() => {
               setHidden3(true)
@@ -54,7 +54,8 @@ export default function ProjectForm(props) {
                 setHidden3(true)
                 setFormInput(initialForm)
                 getProjects()
-                setProject(null)
+                setSelectedProject("")
+                // setProject(null)
               })
               .catch(err => console.error(err))
           }
@@ -121,7 +122,7 @@ export default function ProjectForm(props) {
             name="submit"
             type="submit"
             onClick={handleSubmit}
-          >{project ? 'Update' : 'Add'}</button>
+          >{add ? 'Add' : 'Update'}</button>
 
           <button
             className="btn primary hover"
