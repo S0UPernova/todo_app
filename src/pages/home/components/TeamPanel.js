@@ -6,15 +6,17 @@ export default function TeamPanel(props) {
     <>
       <div id="teamPanel" className="bg-secondary d-flex flex-d-col rounded">
         <div className='container'>
+          <div className="button-container">
+            <button name="teamAddButton" onClick={handleClick} className="btn primary icon-button"><i className='icon'><MdGroupAdd /></i></button>
+            {selectedTeam && <button
+              name="teamEditButton"
+              onClick={handleClick}
+              className='btn primary icon-button'
+            ><i className='icon'><FiEdit /></i>
+            </button>}
+          </div>
           <h2>Description:</h2>
           <p>{team?.description ? team.description : "No description"}</p>
-          <button name="teamAddButton" onClick={handleClick} className="btn primary icon-button"><i className='icon'><MdGroupAdd /></i></button>
-          {selectedTeam && <button
-            name="teamEditButton"
-            onClick={handleClick}
-            className='btn primary icon-button'
-          ><i className='icon'><FiEdit /></i>
-          </button>}
         </div>
       </div>
     </>

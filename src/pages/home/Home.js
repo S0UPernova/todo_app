@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react'
 
-import usersTeamService from '../services/UsersTeamService'
-import membershipService from '../services/MembershipService'
-import projectService from '../services/ProjectService'
-import taskService from '../services/TaskService'
+import usersTeamService from '../../services/UsersTeamService'
+import membershipService from '../../services/MembershipService'
+import projectService from '../../services/ProjectService'
+import taskService from '../../services/TaskService'
 
-import TeamDropdowns from '../components/Dropdowns'
-import PendingTasks from '../components/PendingTasks'
-import CompletedTasks from '../components/CompletedTasks'
+import TeamDropdowns from './components/Dropdowns'
+import PendingTasks from './components/PendingTasks'
+import CompletedTasks from './components/CompletedTasks'
 
-import TeamForm from '../components/TeamForm'
-import ProjectForm from '../components/ProjectForm'
-import TaskForm from "../components/TaskForm"
+import FormContainer from './components/FormContainer'
+import TeamForm from './components/TeamForm'
+import ProjectForm from './components/ProjectForm'
+import TaskForm from "./components/TaskForm"
 
-import TeamPanel from '../components/TeamPanel'
-import ProjectPanel from '../components/ProjectPanel'
+import TeamPanel from './components/TeamPanel'
+import ProjectPanel from './components/ProjectPanel'
 
-import '../styles/Home.scss'
+import './home.scss'
 
 export default function Home(props) {
   const { user, token } = props
@@ -33,17 +34,23 @@ export default function Home(props) {
   const [task, setTask] = useState()
   const [team, setTeam] = useState()
 
-  const [hidden, setHidden] = useState(true)
-  const [hidden2, setHidden2] = useState(true)
-  const [hidden3, setHidden3] = useState(true)
+  const formStates = {
+    0: "NONE",
+    1: "TEAM",
+    2: "PROJECT",
+    3: "TASK"
+  }
+  const [formState, setFormState] = useState(formStates[0])
   const [add, setAdd] = useState(false)
+
   useEffect(() => {
     if (user) {
-      setProject(projects.filter(team => Number(team.id) === Number(selectedProject))[0])
+      setTeam(teams.filter(team => Number(team.id) === Number(selectedTeam))[0])
+      setProject(projects.filter(project => Number(project.id) === Number(selectedProject))[0])
       getTasks()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTeam, selectedProject, user])
+  }, [selectedTeam, selectedProject, user, teams])
 
   useEffect(() => {
     if (user) {
@@ -93,32 +100,10 @@ export default function Home(props) {
     e.preventDefault()
     switch (e.target.name) {
       case "addButton":
-        setTask(null)
-        setHidden(!hidden)
-        break
-      case "teamAddButton":
-        setTeam(null)
-        setHidden2(!hidden2)
-        break
-      case "editButton":
-        setTask(JSON.parse(e.target.value))
-        setHidden(!hidden)
-        break
-      case "teamEditButton":
-        // getTeams()
-        setTeam(teams.filter(team => Number(team.id) === Number(selectedTeam))[0])
-        setHidden2(!hidden2)
-        break
-      case "projectAddButton":
-        // setProject(null)
+        // setTask(null)
         setAdd(true)
-        setHidden3(!hidden3)
-        break
-      case "projectEditButton":
-        setAdd(false)
-        getProjects()
-        // setProject(projects.filter(team => Number(team.id) === Number(selectedProject))[0])
-        setHidden3(!hidden3)
+        setFormState(formStates[3])
+        // setHidden(!hidden)
         break
       case "deleteButton":
         if (window.confirm("Are you sure")) {
@@ -129,6 +114,28 @@ export default function Home(props) {
               .catch(err => console.error(err))
           }
         }
+        break
+      case "editButton":
+        setAdd(false)
+        setTask(JSON.parse(e.target.value))
+        setFormState(formStates[3])
+        break
+      case "teamAddButton":
+        setAdd(true)
+        setFormState(formStates[1])
+        break
+      case "teamEditButton":
+        setAdd(false)
+        setFormState(formStates[1])
+        break
+      case "projectAddButton":
+        setAdd(true)
+        setFormState(formStates[2])
+        break
+      case "projectEditButton":
+        getProjects()
+        setAdd(false)
+        setFormState(formStates[2])
         break
       case "checkbox":
         const taskId = e.target.value
@@ -161,7 +168,6 @@ export default function Home(props) {
   }
 
   const getProjects = async () => {
-    // console.log(selectedTeam)
     if (user && selectedTeam) {
       const returnVal = await projectService.getProjects(selectedTeam, token)
       returnVal?.length ? setProjects([...returnVal]) : setProjects([returnVal])
@@ -186,7 +192,8 @@ export default function Home(props) {
         memberships={memberships}
         handleChange={handleChange}
       />
-      <TeamPanel 
+      {/* // ? maybe refactor add team, and add project buttons to be select options */}
+      <TeamPanel
         team={team}
         handleClick={handleClick}
         selectedTeam={selectedTeam}
@@ -197,35 +204,35 @@ export default function Home(props) {
         selectedTeam={selectedTeam}
         selectedProject={selectedProject}
       />
-      {hidden === false && <TaskForm
-        task={task}
-        token={token}
-        selectedTeam={selectedTeam}
-        selectedProject={selectedProject}
-        setTask={setTask}
-        getTasks={getTasks}
-        setHidden={setHidden}
-      />}
-      {hidden2 === false && <TeamForm
+      {/* // todo refactor api to allow members to add edit, and delete tasks */}
+      {team && formState !== formStates[0] && <FormContainer
+        // todo refactor this abomination to use useRducer,and just pass state, and dispatch
+        setFormState={setFormState}
+        formStates={formStates}
         user={user}
         token={token}
-        setHidden2={setHidden2}
         getTeams={getTeams}
         setTeam={setTeam}
         team={team}
-      />}
-      {hidden3 === false && <ProjectForm
-        user={user}
-        token={token}
-        setHidden3={setHidden3}
+        add={add}
         getProjects={getProjects}
         setProject={setProject}
-        project={!hidden3 ? project : null}
+        project={project}
         selectedTeam={selectedTeam}
         selectedProject={selectedProject}
-        add={add}
+        setSelectedTeam={setSelectedTeam}
         setSelectedProject={setSelectedProject}
-      />}
+        task={task}
+        setTask={setTask}
+        getTasks={getTasks}
+      >
+        {formState === formStates[1] && <TeamForm
+        />}
+        {formState === formStates[2] && <ProjectForm
+        />}
+        {formState === formStates[3] && <TaskForm
+        />}
+      </FormContainer>}
       <PendingTasks
         tasks={tasks}
         selectedTeam={selectedTeam}

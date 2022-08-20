@@ -3,7 +3,7 @@ export default function TeamDropdowns(props) {
 
   return (
     <>
-      <select id="selectTeam" className='hover' value={selectedTeam} data-dropdown="team" onChange={handleChange}>
+      <select id="selectTeam" className='hover' data-dropdown="team" onChange={handleChange}>
         <option value="">Select a team</option>
         <optgroup label='Your teams'>
           {teams && teams.map((team, i) => {
@@ -16,7 +16,7 @@ export default function TeamDropdowns(props) {
           })}
         </optgroup>
       </select>
-      <select id="selectProject" className='hover' data-dropdown="project" value={selectedProject} onChange={handleChange}>
+      <select id="selectProject" className='hover' data-dropdown="project" onChange={handleChange}>
         <option value="">Select a project</option>
         {projects && projects.map((project, k) => {
           return <option value={project.id} key={k}>{project.name}</option>

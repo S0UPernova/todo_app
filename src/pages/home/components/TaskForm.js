@@ -1,16 +1,28 @@
 import { useState } from "react"
 
-import taskService from "../services/TaskService"
+import taskService from "../../../services/TaskService"
 
 export default function TaskForm(props) {
-  const { selectedTeam, selectedProject, token, setHidden, getTasks, task, setTask } = props
+  const {
+    selectedTeam,
+    selectedProject,
+    token,
+    setHidden,
+    getTasks,
+    task,
+    setTask,
+
+    setFormState,
+    formStates,
+    add
+  } = props
 
   // const taskJSON = JSON.parse(task) // Passing an object directly didn't seem to work
   const initialForm = {
-    name: task?.name ? task.name : "",
-    description: task?.description ? task.description : "",
+    name: task?.name && !add ? task.name : "",
+    description: task?.description && !add ? task.description : "",
     duedate: "",
-    completed: task?.completed ? task.completed : "", // could fail
+    completed: task?.completed && !add ? task.completed : "", // could fail
   }
   const [formInput, setFormInput] = useState(initialForm)
   const due_at = task?.duedate && new Date(task.duedate)
@@ -27,30 +39,33 @@ export default function TaskForm(props) {
           completed: formInput.completed === true ? formInput.completed : false
         }
 
-        if (!task) {
+        if (add) {
           taskService.postTask(selectedTeam, selectedProject, params, token)
             .then(() => {
-              setHidden(true)
-              setFormInput(initialForm)
               getTasks()
-              setTask(null)
+              setFormState(formStates[0])
+              // setHidden(true)
+              // setFormInput(initialForm)
+              // setTask(null)
             })
             .catch(err => console.error(err))
-        } else if (task) {
+        } else if (task && !add) {
           taskService.updateTask(selectedTeam, selectedProject, task.id, params, token)
             .then(() => {
-              setHidden(true)
-              setFormInput(initialForm)
               getTasks()
-              setTask(null)
+              setFormState(formStates[0])
+              // setHidden(true)
+              // setFormInput(initialForm)
+              // setTask(null)
             })
             .catch(err => console.error(err))
         }
         break
       case "cancel":
-        setFormInput(initialForm)
-        setHidden(true)
-        setTask(null)
+        // setFormInput(initialForm)
+        setFormState(formStates[0])
+        // setHidden(true)
+        // setTask(null)
         break
       case "deleteButton":
         if (window.confirm("Are you sure")) {
@@ -58,19 +73,21 @@ export default function TaskForm(props) {
           if (taskId) {
             taskService.deleteTask(selectedTeam, selectedProject, taskId, token)
               .then(() => {
-                setHidden(true)
-                setFormInput(initialForm)
-                getTasks()
+                // setHidden(true)
                 setTask(null)
+                getTasks()
+                setFormState(formStates[0])
+                // setFormInput(initialForm)
               })
               .catch(err => console.error(err))
           }
         }
         break
       default:
-        setFormInput(initialForm)
-        setHidden(true)
-        setTask(null)
+        // setFormInput(initialForm)
+        setFormState(formStates[0])
+        // setHidden(true)
+        // setTask(null)
         break
     }
   }
@@ -96,10 +113,10 @@ export default function TaskForm(props) {
 
   return (
     <>
-      <div name="cancel" className="backdrop" onClick={handleSubmit}>
+      {/* <div name="cancel" className="backdrop" onClick={handleSubmit}>
       </div>
       <div className="formContainer">
-        <form className="add">
+        <form className="add"> */}
           <label>
             Name:
             <input
@@ -123,7 +140,7 @@ export default function TaskForm(props) {
           </label>
 
           <label>
-            Duedate: <i className="ml-1">{dueAt}</i>
+            Duedate: <i className="ml-1">{!add && dueAt}</i>
             <input
               id="duedate"
               type="datetime-local"
@@ -135,7 +152,7 @@ export default function TaskForm(props) {
 
 
           {formInput.completed !== undefined && <label>
-            Completed?: 
+            Completed?:
             <input
               id="completed"
               className="completed"
@@ -152,7 +169,7 @@ export default function TaskForm(props) {
             name="submit"
             type="submit"
             onClick={handleSubmit}
-          >{task ? 'Update' : 'Add'}</button>
+          >{add ? 'Create Task' : 'Update Task'}</button>
 
           <button
             className="btn primary hover"
@@ -161,16 +178,16 @@ export default function TaskForm(props) {
             onClick={handleSubmit}
           >Cancel</button>
 
-          {task && <button
+          {task && !add && <button
             className="btn danger hover"
             name="deleteButton"
             type="submit"
             onClick={handleSubmit}
             value={task.id}
-          >Delete Me!</button>}
+          >Delete Task</button>}
 
-        </form>
-      </div>
+        {/* </form> */}
+      {/* </div> */}
     </>
   )
 }

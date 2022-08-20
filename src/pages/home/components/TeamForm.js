@@ -1,15 +1,25 @@
 import { useState } from "react"
 
 // import taskService from "../services/TaskService"
-import usersTeamService from "../services/UsersTeamService"
+import usersTeamService from "../../../services/UsersTeamService"
 
 export default function TeamForm(props) {
-  const { user, token, setHidden2, getTeams, team, setTeam } = props
+  const {
+    user,
+    token,
+    setFormState,
+    formStates,
+    getTeams,
+    team,
+    setTeam,
+    add,
+    setSelectedTeam
+  } = props
 
   // const teamJSON = JSON.parse(team) // Passing an object directly didn't seem to work
   const initialForm = {
-    name: team?.name ? team.name : "",
-    description: team?.description ? team.description : "",
+    name: team?.name && !add ? team.name : "",
+    description: team?.description && !add ? team.description : "",
   }
   const [formInput, setFormInput] = useState(initialForm)
 
@@ -21,19 +31,21 @@ export default function TeamForm(props) {
           name: formInput.name ? formInput.name : null,
           description: formInput.description ? formInput.description : null
         }
-        if (!team) {
+        if (add) {
           usersTeamService.postTeam(user.id, params, token)
             .then(() => {
-              setHidden2(true)
+              // setHidden2(true)
+              setFormState(formStates[0])
               getTeams()
               // setTeam("")
               setFormInput(initialForm)
             })
             .catch(err => console.error(err))
-        } else if (team) {
+        } else if (!add) {
           usersTeamService.updateTeam(user.id, team.id, params, token)
             .then(() => {
-              setHidden2(true)
+              // setHidden2(true)
+              setFormState(formStates[0])
               getTeams()
               // setTeam("")
               setFormInput(initialForm)
@@ -42,10 +54,11 @@ export default function TeamForm(props) {
         }
         break
       case "cancel":
-        setHidden2(true)
+        // setHidden2(true)
         getTeams()
-        setTeam("")
+        // setTeam("")
         setFormInput(initialForm)
+        setFormState(formStates[0])
         break
       case "deleteButton":
         if (window.confirm("Are you sure")) {
@@ -53,9 +66,11 @@ export default function TeamForm(props) {
           if (teamId) {
             usersTeamService.deleteTeam(user.id, team.id, token)
               .then(() => {
-                setHidden2(true)
+                // setHidden2(true)
+                setFormState(formStates[0])
                 getTeams()
                 setTeam("")
+                setSelectedTeam("")
                 setFormInput(initialForm)
               })
               .catch(err => console.error(err))
@@ -63,7 +78,8 @@ export default function TeamForm(props) {
         }
         break
       default:
-        setHidden2(true)
+        // setHidden2(true)
+        setFormState(formStates[0])
         getTeams()
         // setTeam(null)
         setFormInput(initialForm)
@@ -86,54 +102,50 @@ export default function TeamForm(props) {
 
   return (
     <>
-      <div name="cancel" className="backdrop" onClick={handleSubmit}></div>
-      <div className="formContainer">
-        <form className="add">
-          <label>
-            Name:
-            <input
-              id="name"
-              type="text"
-              onChange={handleChange}
-              value={formInput.name}
-              name="name"
-              required
-            ></input>
-          </label>
 
-          <label>
-            Description:
-            <textarea
-              id="desctription"
-              onChange={handleChange}
-              value={formInput.description}
-              name="description"
-            ></textarea>
-          </label>
-          <button
-            className="btn primary hover"
-            name="submit"
-            type="submit"
-            onClick={handleSubmit}
-          >{team ? 'Update' : 'Add'}</button>
+      <label>
+        Name:
+        <input
+          id="name"
+          type="text"
+          onChange={handleChange}
+          value={formInput.name}
+          name="name"
+          required
+        ></input>
+      </label>
 
-          <button
-            className="btn primary hover"
-            name="cancel"
-            type="submit"
-            onClick={handleSubmit}
-          >Cancel</button>
+      <label>
+        Description:
+        <textarea
+          id="desctription"
+          onChange={handleChange}
+          value={formInput.description}
+          name="description"
+        ></textarea>
+      </label>
+      <button
+        className="btn primary hover"
+        name="submit"
+        type="submit"
+        onClick={handleSubmit}
+      >{add ? 'Create Team' : 'Update Team'}</button>
 
-          {team && <button
-            className="btn danger hover"
-            name="deleteButton"
-            type="submit"
-            onClick={handleSubmit}
-            value={team.id}
-          >Delete Me!</button>}
+      <button
+        className="btn primary hover"
+        name="cancel"
+        type="submit"
+        onClick={handleSubmit}
+      >Cancel</button>
 
-        </form>
-      </div>
+      {team && !add && <button
+        className="btn danger hover"
+        name="deleteButton"
+        type="submit"
+        onClick={handleSubmit}
+        value={team.id}
+      >Delete Team</button>}
+
     </>
   )
 }

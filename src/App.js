@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import Nav from "./layout/Nav"
 import Footer from './layout/Footer'
 
-import Home from './pages/Home'
+import Home from './pages/home/Home'
 import HomeNotLoggedIn from './pages/StaticHome'
 import Login from './pages/Login'
 import Team from './pages/Team'

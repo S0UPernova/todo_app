@@ -11,7 +11,7 @@ export default function Profile(props) {
     } else setUser([])
   }, [props.user.id, props.token])
   return (
-    <div className='main container d-flex flex-d-col align-items-center'>
+    <div className='container d-flex flex-d-col align-items-center'>
       <h1>Profile</h1>
       {user && <div>
         <h2>id: {user.id}</h2>

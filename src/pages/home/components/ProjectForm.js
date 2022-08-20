@@ -1,8 +1,8 @@
 import { useState } from "react"
-import projectService from "../services/ProjectService"
+import projectService from "../../../services/ProjectService"
 
 export default function ProjectForm(props) {
-  const { user, token, setHidden3, getProjects, project, setProject, selectedTeam, selectedProject, setSelectedProject, add } = props
+  const { token, setFormState, formStates, getProjects, project, setProject, selectedTeam, selectedProject, setSelectedProject, add } = props
 
   // const projectJSON = project ? JSON.parse(project) : null // Passing an object directly didn't seem to work
   const initialForm = {
@@ -24,26 +24,29 @@ export default function ProjectForm(props) {
         if (add) {
           projectService.postProject(selectedTeam, params, token)
             .then(() => {
-              setHidden3(true)
+              // setHidden3(true)
+              setFormState(formStates[0])
               setFormInput(initialForm)
               getProjects()
-              setProject(null)
+              // setProject(null)
             })
             .catch(err => console.error(err))
         } else if (!add && project) {
           projectService.updateProject(selectedTeam, project.id, params, token)
             .then(() => {
-              setHidden3(true)
+              setFormState(formStates[0])
+              // setHidden3(true)
               setFormInput(initialForm)
               getProjects()
-              setProject(null)
+              // setProject(null)
             })
             .catch(err => console.error(err))
         }
         break
       case "cancel":
         setFormInput(initialForm)
-        setHidden3(true)
+        setFormState(formStates[0])
+        // setHidden3(true)
         break
       case "deleteButton":
         if (window.confirm("Are you sure")) {
@@ -51,7 +54,8 @@ export default function ProjectForm(props) {
           if (projectId) {
             projectService.deleteProject(selectedTeam, selectedProject, token)
               .then(() => {
-                setHidden3(true)
+                // setHidden3(true)
+                setFormState(formStates[0])
                 setFormInput(initialForm)
                 getProjects()
                 setSelectedProject("")
@@ -63,8 +67,9 @@ export default function ProjectForm(props) {
         break
       default:
         setFormInput(initialForm)
-        setHidden3(true)
-        setProject(null)
+        // setHidden3(true)
+        setFormState(formStates[0])
+        // setProject(null)
         break
     }
   }
@@ -84,63 +89,64 @@ export default function ProjectForm(props) {
 
   return (
     <>
-      <div name="cancel" className="backdrop" onClick={handleSubmit}></div>
+      {/* <div name="cancel" className="backdrop" onClick={handleSubmit}></div>
       <div className="formContainer">
-        <form className="add">
-          <label>
-            Name:
-            <input
-              id="name"
-              type="text"
-              onChange={handleChange}
-              value={formInput.name}
-              name="name"
-              required
-            ></input>
-          </label>
+        <form className="add"> */}
+      <label>
+        Name:
+        <input
+          id="name"
+          type="text"
+          onChange={handleChange}
+          value={formInput.name}
+          name="name"
+          required
+        ></input>
+      </label>
 
-          <label>
-            Description:
-            <textarea
-              id="desctription"
-              onChange={handleChange}
-              value={formInput.description}
-              name="description"
-            ></textarea>
-          </label>
-          <label>
-            Requirements:
-            <textarea
-              id="Requirements"
-              onChange={handleChange}
-              value={formInput.requirements}
-              name="requirements"
-            ></textarea>
-          </label>
-          <button
-            className="btn primary hover"
-            name="submit"
-            type="submit"
-            onClick={handleSubmit}
-          >{add ? 'Add' : 'Update'}</button>
+      <label>
+        Description:
+        <textarea
+          id="desctription"
+          onChange={handleChange}
+          value={formInput.description}
+          name="description"
+        ></textarea>
+      </label>
+      <label>
+        Requirements:
+        <textarea
+          id="Requirements"
+          onChange={handleChange}
+          value={formInput.requirements}
+          name="requirements"
+        ></textarea>
+      </label>
+      <button
+        className="btn primary hover"
+        name="submit"
+        type="submit"
+        onClick={handleSubmit}
+      >{add ? 'Create Project' : 'Update Project'}
+      </button>
 
-          <button
-            className="btn primary hover"
-            name="cancel"
-            type="submit"
-            onClick={handleSubmit}
-          >Cancel</button>
+      <button
+        className="btn primary hover"
+        name="cancel"
+        type="submit"
+        onClick={handleSubmit}
+      >Cancel</button>
 
-          {project && <button
-            className="btn danger hover"
-            name="deleteButton"
-            type="submit"
-            onClick={handleSubmit}
-            value={project.id}
-          >Delete Me!</button>}
+      {project && !add && <button
+        className="btn danger hover"
+        name="deleteButton"
+        type="submit"
+        onClick={handleSubmit}
+        value={project.id}
+      >Delete Project</button>}
 
-        </form>
-      </div>
+      {/* </form>
+      </div> */}
     </>
   )
 }
