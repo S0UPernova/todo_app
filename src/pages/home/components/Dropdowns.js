@@ -1,5 +1,5 @@
 export default function TeamDropdowns(props) {
-  const { handleChange, teams, memberships, projects, selectedTeam, selectedProject } = props
+  const { handleChange, teams, memberships, projects } = props
 
   return (
     <>

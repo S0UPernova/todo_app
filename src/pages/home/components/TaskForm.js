@@ -7,7 +7,6 @@ export default function TaskForm(props) {
     selectedTeam,
     selectedProject,
     token,
-    setHidden,
     getTasks,
     task,
     setTask,
@@ -16,18 +15,17 @@ export default function TaskForm(props) {
     formStates,
     add
   } = props
-
-  // const taskJSON = JSON.parse(task) // Passing an object directly didn't seem to work
-  const initialForm = {
-    name: task?.name && !add ? task.name : "",
-    description: task?.description && !add ? task.description : "",
-    duedate: "",
-    completed: task?.completed && !add ? task.completed : "", // could fail
-  }
-  const [formInput, setFormInput] = useState(initialForm)
   const due_at = task?.duedate && new Date(task.duedate)
   const dueAt = task?.duedate && new Intl.DateTimeFormat('en-us', { dateStyle: "medium", timeStyle: "short", timeZone: "UTC" }).format(due_at);
 
+  const initialForm = {
+    name: task?.name && !add ? task.name : "",
+    description: task?.description && !add ? task.description : "",
+    duedate: task?.duedate && !add ? task.duedate : "",
+    completed: task?.completed && !add ? task.completed : "", // could fail
+  }
+
+  const [formInput, setFormInput] = useState(initialForm)
   const handleSubmit = (e) => {
     e.preventDefault()
     switch (e.target.name) {
@@ -35,7 +33,7 @@ export default function TaskForm(props) {
         const params = {
           name: formInput.name ? formInput.name : null,
           description: formInput.description ? formInput.description : null,
-          duedate: formInput.duedate ? formInput.duedate : null,
+          duedate: formInput.duedate,
           completed: formInput.completed === true ? formInput.completed : false
         }
 
@@ -44,9 +42,6 @@ export default function TaskForm(props) {
             .then(() => {
               getTasks()
               setFormState(formStates[0])
-              // setHidden(true)
-              // setFormInput(initialForm)
-              // setTask(null)
             })
             .catch(err => console.error(err))
         } else if (task && !add) {
@@ -54,18 +49,12 @@ export default function TaskForm(props) {
             .then(() => {
               getTasks()
               setFormState(formStates[0])
-              // setHidden(true)
-              // setFormInput(initialForm)
-              // setTask(null)
             })
             .catch(err => console.error(err))
         }
         break
       case "cancel":
-        // setFormInput(initialForm)
         setFormState(formStates[0])
-        // setHidden(true)
-        // setTask(null)
         break
       case "deleteButton":
         if (window.confirm("Are you sure")) {
@@ -73,21 +62,16 @@ export default function TaskForm(props) {
           if (taskId) {
             taskService.deleteTask(selectedTeam, selectedProject, taskId, token)
               .then(() => {
-                // setHidden(true)
                 setTask(null)
                 getTasks()
                 setFormState(formStates[0])
-                // setFormInput(initialForm)
               })
               .catch(err => console.error(err))
           }
         }
         break
       default:
-        // setFormInput(initialForm)
         setFormState(formStates[0])
-        // setHidden(true)
-        // setTask(null)
         break
     }
   }
@@ -113,81 +97,73 @@ export default function TaskForm(props) {
 
   return (
     <>
-      {/* <div name="cancel" className="backdrop" onClick={handleSubmit}>
-      </div>
-      <div className="formContainer">
-        <form className="add"> */}
-          <label>
-            Name:
-            <input
-              id="name"
-              type="text"
-              onChange={handleChange}
-              value={formInput.name}
-              name="name"
-              required
-            ></input>
-          </label>
+      <label>
+        Name:
+        <input
+          id="name"
+          type="text"
+          onChange={handleChange}
+          value={formInput.name}
+          name="name"
+          required
+        ></input>
+      </label>
 
-          <label>
-            Description:
-            <textarea
-              id="desctription"
-              onChange={handleChange}
-              value={formInput.description}
-              name="description"
-            ></textarea>
-          </label>
+      <label>
+        Description:
+        <textarea
+          id="desctription"
+          onChange={handleChange}
+          value={formInput.description}
+          name="description"
+        ></textarea>
+      </label>
 
-          <label>
-            Duedate: <i className="ml-1">{!add && dueAt}</i>
-            <input
-              id="duedate"
-              type="datetime-local"
-              onChange={handleChange}
-              value={formInput.duedate}
-              name="duedate"
-            ></input>
-          </label>
+      <label>
+        Duedate: <i className="ml-1">{!add && dueAt}</i>
+        <input
+          id="duedate"
+          type="datetime-local"
+          onChange={handleChange}
+          value={formInput.duedate}
+          name="duedate"
+        ></input>
+      </label>
 
 
-          {formInput.completed !== undefined && <label>
-            Completed?:
-            <input
-              id="completed"
-              className="completed"
-              type="checkbox"
-              onChange={handleChange}
-              checked={formInput.completed}
-              name="completed"
-            ></input>
-          </label>
-          }
+      {formInput.completed !== undefined && <label className="completed-label">
+        Completed?:
+        <input
+          className="completed-checkbox"
+          type="checkbox"
+          onChange={handleChange}
+          checked={formInput.completed}
+          name="completed"
+        ></input>
+      </label>
+      }
 
-          <button
-            className="btn primary hover"
-            name="submit"
-            type="submit"
-            onClick={handleSubmit}
-          >{add ? 'Create Task' : 'Update Task'}</button>
+      <button
+        className="btn primary hover"
+        name="submit"
+        type="submit"
+        onClick={handleSubmit}
+      >{add ? 'Create Task' : 'Update Task'}</button>
 
-          <button
-            className="btn primary hover"
-            name="cancel"
-            type="submit"
-            onClick={handleSubmit}
-          >Cancel</button>
+      <button
+        className="btn primary hover"
+        name="cancel"
+        type="submit"
+        onClick={handleSubmit}
+      >Cancel</button>
 
-          {task && !add && <button
-            className="btn danger hover"
-            name="deleteButton"
-            type="submit"
-            onClick={handleSubmit}
-            value={task.id}
-          >Delete Task</button>}
-
-        {/* </form> */}
-      {/* </div> */}
+      {task && !add && <button
+        className="btn danger hover"
+        name="deleteButton"
+        type="submit"
+        onClick={handleSubmit}
+        value={task.id}
+      >Delete Task</button>}
     </>
   )
 }

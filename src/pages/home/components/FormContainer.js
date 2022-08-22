@@ -1,12 +1,11 @@
-import React, { Children, cloneElement, useState } from "react"
-import usersTeamService from "../../../services/UsersTeamService"
-// todo make this adapt for project and task forms
+import React, { Children, cloneElement } from "react"
 export default function FormContainer(props) {
   const {
     user,
     token,
     setFormState,
     formStates,
+    formState,
     getTeams,
     team,
     setTeam,
@@ -26,12 +25,10 @@ export default function FormContainer(props) {
 
     children
   } = props
-  // const { setFormState, formStates } = props
-  // const arrayChildren = Children.toArray(children)
   const handleBackdrop = () => {
     props.setFormState(props.formStates[0])
   }
-  const test = Children.map(children, child => {
+  const childComponents = Children.map(children, child => {
     if (React.isValidElement(child,)) {
       return cloneElement(child, {
         user: user,
@@ -47,6 +44,7 @@ export default function FormContainer(props) {
         project: project,
         setProject: setProject,
         selectedTeam: selectedTeam,
+        setSelectedTeam: setSelectedTeam,
         selectedProject: selectedProject,
         setSelectedProject: setSelectedProject,
 
@@ -58,22 +56,16 @@ export default function FormContainer(props) {
   })
   return (
     <>
-      <div name="cancel" className="backdrop" onClick={handleBackdrop}></div>
-      <div className="formContainer">
-        <form className="add">
-          {test}
-          {/* {React.cloneElement(children, {
-            user: user,
-            token: token,
-            setFormState: setFormState,
-            formStates: formStates,
-            getTeams: getTeams,
-            team: team,
-            setTeam: setTeam,
-            add: add
-          })} */}
-        </form>
-      </div>
+      {formState !== formStates[0] && <>
+          <div name="cancel" className="backdrop" onClick={handleBackdrop}></div>
+          <div className="formContainer">
+            <form className="form">
+              {childComponents}
+            </form>
+          </div>
+        </>
+      }
+
     </>
   )
 }

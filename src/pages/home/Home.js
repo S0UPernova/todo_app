@@ -45,12 +45,25 @@ export default function Home(props) {
 
   useEffect(() => {
     if (user) {
-      setTeam(teams.filter(team => Number(team.id) === Number(selectedTeam))[0])
+      getTeams()
       setProject(projects.filter(project => Number(project.id) === Number(selectedProject))[0])
       getTasks()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTeam, selectedProject, user, teams])
+  }, [selectedTeam, selectedProject, user])
+
+  useEffect(() => {
+    setFormState(formStates[0])
+    window.addEventListener("resize", () => {
+      setFormState(formStates[0])
+    })
+    return () => {
+      window.removeEventListener("resize", () => {
+        setFormState(formStates[0])
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (user) {
@@ -62,7 +75,7 @@ export default function Home(props) {
   useEffect(() => {
     if (user) {
       getTeams()
-      getMemberships()
+      // getMemberships()
     }
     if (!user) {
       setTeams([])
@@ -157,20 +170,32 @@ export default function Home(props) {
   }
 
   const getTeams = async () => {
-    setTeam(selectedTeam)
     const returnVal = await usersTeamService.getTeams(user.id, token)
     returnVal?.length ? setTeams([...returnVal]) : setTeams([returnVal])
-  }
 
-  const getMemberships = async () => {
-    const returnVal = await membershipService.getMemberships(user.id, token)
-    returnVal?.length ? setMemberships([...returnVal]) : setMemberships([returnVal])
+    const returnVal2 = await membershipService.getMemberships(user.id, token)
+    returnVal2?.length ? setMemberships([...returnVal2]) : setMemberships([returnVal2])
+
+    let setVal
+    setVal = returnVal.filter(team => Number(team.id) === Number(selectedTeam))[0]
+    if (!setVal) setVal = memberships.filter(team => Number(team.id) === Number(selectedTeam))[0]
+
+    if (!setVal) setVal = returnVal2.filter(team => Number(team.id) === Number(selectedTeam))[0]
+    if (!setVal) setVal = memberships.filter(team => Number(team.id) === Number(selectedTeam))[0]
+
+
+    setTeam(setVal)
   }
+  // add membership to be like team for conditionals
+  // const getMemberships = async () => {
+  //   return
+  // }
 
   const getProjects = async () => {
     if (user && selectedTeam) {
       const returnVal = await projectService.getProjects(selectedTeam, token)
       returnVal?.length ? setProjects([...returnVal]) : setProjects([returnVal])
+      setProject(returnVal.filter(project => Number(project.id) === Number(selectedProject))[0])
     } else setProjects([])
   }
 
@@ -205,12 +230,14 @@ export default function Home(props) {
         selectedProject={selectedProject}
       />
       {/* // todo refactor api to allow members to add edit, and delete tasks */}
-      {team && formState !== formStates[0] && <FormContainer
+      <FormContainer
         // todo refactor this abomination to use useRducer,and just pass state, and dispatch
         setFormState={setFormState}
         formStates={formStates}
+        formState={formState}
         user={user}
         token={token}
+        // getMemberships={getMemberships}
         getTeams={getTeams}
         setTeam={setTeam}
         team={team}
@@ -232,7 +259,7 @@ export default function Home(props) {
         />}
         {formState === formStates[3] && <TaskForm
         />}
-      </FormContainer>}
+      </FormContainer>
       <PendingTasks
         tasks={tasks}
         selectedTeam={selectedTeam}

@@ -13,7 +13,7 @@ export default function TeamForm(props) {
     team,
     setTeam,
     add,
-    setSelectedTeam
+    setSelectedTeam,
   } = props
 
   // const teamJSON = JSON.parse(team) // Passing an object directly didn't seem to work
@@ -66,7 +66,6 @@ export default function TeamForm(props) {
           if (teamId) {
             usersTeamService.deleteTeam(user.id, team.id, token)
               .then(() => {
-                // setHidden2(true)
                 setFormState(formStates[0])
                 getTeams()
                 setTeam("")

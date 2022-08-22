@@ -1,12 +1,3 @@
-:root {
-  --primary-gradient: linear-gradient(45deg, #8fc7ddbd, #7f9eeea8);
-  --secondary-gradient: linear-gradient(45deg, #bfd5deda, #bcc9e8d6);
-  --danger-gradient: linear-gradient(45deg, #dd9b8fbd, #dc9178bd);
-  --inverted-gradient: linear-gradient(225deg, #8fc7ddbd, #7f9eeea8);
-  --hue-rotation: hue-rotate(-20deg);
-  --inverted-hue-rotation: hue-rotate(20deg);
-}
-
 header {
   margin-top: 1rem;
   width: 100%;
@@ -19,6 +10,9 @@ header {
   border-radius: 10px;
   min-width: 100px;
   margin-right: 0;
+}
+.rounded {
+  border-radius: 10px;
 }
 
 .gap-1 {
@@ -148,8 +142,11 @@ nav {
   }
 }
 
+.bg-primary {
+  background-color: rgba(160, 209, 209, 0.5);
+}
 .bg-secondary {
-  background-color: rgba(189, 210, 210, 0.5);
+  background-color: var(--bg-secondary);
 }
 
 .primary {

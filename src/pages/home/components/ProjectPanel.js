@@ -3,6 +3,34 @@ import { FiEdit } from "react-icons/fi"
 
 export default function ProjectPanel(props) {
   const { handleClick, selectedProject, selectedTeam, project } = props
+  let reqs = null
+  const rtnRequirements = () => {
+    if (project?.requirements) {
+      try {
+        reqs = JSON.parse(project.requirements)
+        if (reqs?.arr) {
+          let rtnVal = []
+          reqs.arr.forEach(req => {
+            rtnVal.push(
+              <li>{req}</li>
+            )
+          })
+          return (
+            <ul>
+              {rtnVal}
+            </ul>
+          )
+        } else {
+          return `${project.requirements}`
+        }
+      } catch (e) {
+        return reqs = project.requirements
+
+      }
+    } else {
+      return "No requirements"
+    }
+  }
   return (
     <>
       <div id="projectPanel" className="d-flex flex-d-col bg-secondary rounded">
@@ -22,7 +50,7 @@ export default function ProjectPanel(props) {
           <h3>Description:</h3>
           <p>{project?.description ? project.description : "No description"}</p>
           <h3>Requirements:</h3>
-          <p>{project?.requirements ? project.requirements : "No requirements"}</p> {/* //todo add json parse option to make ul with li */}
+          {rtnRequirements()}
         </div>
       </div>
 

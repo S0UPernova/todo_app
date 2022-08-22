@@ -1,9 +1,72 @@
-:root {
-  --gradient: linear-gradient(45deg, #8fc7ddbd, #7f9eeea8);
-  --inverted-gradient: linear-gradient(225deg, #8fc7ddbd, #7f9eeea8);
-  --hue-rotation: hue-rotate(-15deg);
-  --select-border: #777;
+.formContainer {
+  background: transparent;
+  // background-color: rgba(58, 69, 69, 0.48);
+  position: absolute;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 9;
+  pointer-events: none;
+
+  .form {
+    pointer-events: all;
+    z-index: 10;
+    display: flex;
+    // position: fixed;
+    background-color: rgba(185, 210, 210, 0.749);
+    backdrop-filter: blur(1.2px);
+    border-radius: 10px;
+    border: 1px solid black;
+    padding: 1rem;
+    width: clamp(300px, 20%, 100%);
+    // left: 40%;
+    // top: 30%;
+    gap: 1rem;
+    flex-direction: column;
+
+    input {
+      margin-top: .5rem;
+      display: block;
+      width: 98%;
+      padding: .1rem 1%;
+      height: 1.2rem;
+      // padding: 0;
+      border: none;
+      box-shadow: 1px 1px 1px grey;
+
+    }
+
+    textarea {
+      margin-top: .5rem;
+      width: 98%;
+      resize: none;
+      padding: .4rem 1%;
+      height: 3rem;
+      border: none;
+      box-shadow: 1px 1px 1px grey;
+    }
+
+    .completed-label {
+      pointer-events: none;
+      display: flex;
+      width: 100%;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+
+      .completed-checkbox {
+        box-shadow: 0px 0px 0px grey;
+        width: 1rem;
+        pointer-events: all;
+      }
+    }
+  }
 }
+
 
 select {
   transition-duration: 0.4s;
@@ -15,9 +78,9 @@ select {
   padding: 0.25em 0.5em;
   font-size: 1.25rem;
   cursor: pointer;
-  // line-height: 1.1;
-  background-image: var(--gradient);
+  background-image: var(--primary-gradient);
 
+  // line-height: 1.1;
   // &::after {
   //   content: "";
   //   width: 0.8em;
@@ -35,8 +98,6 @@ select {
   //   outline: #7f9eeea8 auto 1px;
   // }
 }
-
-
 
 
 .tasks {
@@ -69,8 +130,6 @@ select {
     .checkbox {
       padding: .2rem;
       float: right;
-      // margin-top: 1rem;
-      // margin-right: 1rem;
       pointer-events: all;
     }
 
@@ -79,7 +138,6 @@ select {
       justify-content: center;
       align-items: center;
       transition-duration: 0.4s;
-      // height: 1.5rem;
       padding: 0;
       line-height: normal;
       border: none;
@@ -89,80 +147,10 @@ select {
       &:hover {
         font-size: 1.2rem;
       }
-
-
-      // i {
-      //   display: flex;
-      //   padding: 0;
-      //   pointer-events: none;
-      // }
     }
   }
 }
 
-
-.formContainer {
-  background: transparent;
-  // background-color: rgba(58, 69, 69, 0.48);
-  position: absolute;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 9;
-  pointer-events: none;
-}
-
-
-.add {
-  pointer-events: all;
-  z-index: 10;
-  display: flex;
-  // position: fixed;
-  background-color: rgba(185, 210, 210, 0.749);
-  backdrop-filter: blur(1.2px);
-  border-radius: 10px;
-  border: 1px solid black;
-  padding: 1rem;
-  width: clamp(300px, 20%, 100%);
-  // left: 40%;
-  // top: 30%;
-  gap: 1rem;
-  flex-direction: column;
-
-  input {
-    margin-top: .5rem;
-    display: block;
-    width: 98%;
-    padding: .1rem 1%;
-    height: 1.2rem;
-    // padding: 0;
-    border: none;
-    box-shadow: 1px 1px 1px grey;
-
-  }
-
-  textarea {
-    margin-top: .5rem;
-    width: 98%;
-    resize: none;
-    padding: .4rem 1%;
-    height: 3rem;
-    border: none;
-    box-shadow: 1px 1px 1px grey;
-  }
-
-  .completed {
-    box-shadow: 0px 0px 0px grey;
-    width: 1rem;
-    margin-left: 1rem;
-    margin-right: auto;
-    pointer-events: all;
-  }
-}
 
 #addButton {
   padding: .2rem;
@@ -177,28 +165,14 @@ select {
   height: 2.5rem;
   width: 2.5rem;
   font-size: 1rem;
-
-
-
-  // i {
-  //   transition-duration: 0.4s;
-  //   font-size: 1.5rem;
-  //   display: flex;
-  //   padding: 0;
-  //   pointer-events: none;
-  // }
 }
 
-.completed {
+
+#completed {
   padding: 1rem;
   grid-area: completed;
-
-  // background: blur(1px);
 }
 
-.rounded {
-  border-radius: 10px;
-}
 
 .main {
   width: 100%;
@@ -221,18 +195,19 @@ select {
 .pending {
   padding: 1rem;
   grid-area: pending;
-  background-color: rgba(160, 209, 209, 0.5);
-  background: blur(1px);
-  border-radius: 10px;
+  // background-color: rgba(160, 209, 209, 0.5);
+  // background: blur(1px);
 }
 
-#teamPanel, #projectPanel {
+#teamPanel,
+#projectPanel {
   .button-container {
     float: right;
     margin-top: 1rem;
     margin-right: -10%;
   }
 }
+
 #teamPanel {
   grid-area: team;
 }
@@ -251,7 +226,7 @@ select {
 
 @media screen and (min-width: 1200px) {
   .main {
-    grid-template-rows: 4rem  300px  auto ;
+    grid-template-rows: 4rem 300px auto;
     grid-template-areas:
       "select1 select1 select2 select2"
       "team team project project"
