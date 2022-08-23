@@ -65,6 +65,10 @@
       }
     }
   }
+  ul {
+    max-height: 150px;
+    overflow-y: scroll;
+  }
 }
 
 
@@ -111,17 +115,20 @@ select {
   gap: 1rem;
 
   li {
-    flex-grow: 3;
+    flex-grow: 2;
+    flex-shrink: 2;
+    flex-basis: 40ch;
     box-shadow: 1px 1px 1px grey;
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.565);
     padding: 1rem;
-    max-width: 60ch;
-    word-break: break-all;
+    max-width: 80ch;
+    // word-break: break-all;
     word-wrap: break-word;
 
     h4 {
       display: flex;
+      word-break: break-word;
       height: 1.5rem;
       align-items: center;
 
@@ -201,10 +208,19 @@ select {
 
 #teamPanel,
 #projectPanel {
+  overflow-y: scroll;
   .button-container {
     float: right;
     margin-top: 1rem;
     margin-right: -10%;
+  }
+  ul {
+    max-height: 100%;
+    display: flex;
+    // flex-direction: column;
+    row-gap: 1rem;
+    column-gap: 3rem;
+    flex-wrap: wrap;
   }
 }
 

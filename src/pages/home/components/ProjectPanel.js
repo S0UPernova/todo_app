@@ -3,16 +3,15 @@ import { FiEdit } from "react-icons/fi"
 
 export default function ProjectPanel(props) {
   const { handleClick, selectedProject, selectedTeam, project } = props
-  let reqs = null
   const rtnRequirements = () => {
     if (project?.requirements) {
       try {
-        reqs = JSON.parse(project.requirements)
-        if (reqs?.arr) {
+        // reqs = JSON.parse(formInput.requirements)
+        if (project?.requirements) {
           let rtnVal = []
-          reqs.arr.forEach(req => {
+          JSON.parse(project.requirements).forEach((req, i) => {
             rtnVal.push(
-              <li>{req}</li>
+              <li key={i}>{`${req}`}</li>
             )
           })
           return (
@@ -24,7 +23,7 @@ export default function ProjectPanel(props) {
           return `${project.requirements}`
         }
       } catch (e) {
-        return reqs = project.requirements
+        return project.requirements
 
       }
     } else {

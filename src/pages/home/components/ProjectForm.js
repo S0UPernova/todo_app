@@ -1,15 +1,91 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import projectService from "../../../services/ProjectService"
-
+// todo make json requirements optional
 export default function ProjectForm(props) {
   const { token, setFormState, formStates, getProjects, project, selectedTeam, selectedProject, setSelectedProject, add } = props
+  const parseReqs = () => {
+    // let reqs = requirements
+    try {
+      if (project?.requirements) {
+        return JSON.parse(project.requirements)
+      } else {
+        return `${project.requirements}`
+      }
+    } catch (e) {
+      console.error(e)
 
+    }
+  }
   const initialForm = {
     name: project?.name && !add ? project.name : "",
     description: project?.description && !add ? project.description : "",
-    requirements: project?.requirements && !add ? project.requirements : "",
+    requirements: project?.requirements && !add ? parseReqs() : "",
   }
   const [formInput, setFormInput] = useState(initialForm)
+  const [requirementsInput, setRequirementsInput] = useState("")
+
+
+
+
+  // temp for woking on this
+  // let reqs = null
+  const handleClick = (e) => {
+    e.preventDefault()
+    setFormInput({
+      ...formInput, requirements: [
+        ...formInput.requirements.slice(0, e.target.dataset.reqnum),
+        ...formInput.requirements.slice(Number(e.target.dataset.reqnum) + 1)
+      ]
+    })
+
+    // alert(`Clicked ${e.target.dataset.reqnum}`)
+  }
+  const rtnRequirements = () => {
+    if (formInput?.requirements) {
+      try {
+        // reqs = JSON.parse(formInput.requirements)
+        if (formInput?.requirements.length) {
+          let rtnVal = []
+          formInput.requirements.forEach((req, i) => {
+            rtnVal.push(
+              <li key={i}
+              >{`${req}`}
+                <button
+                  data-reqnum={i}
+                  className="danger hover rounded ml-1"
+                  onClick={handleClick}
+                >X
+                </button></li>
+            )
+          })
+          return (
+            <ul>
+              {rtnVal}
+            </ul>
+          )
+        } else {
+          return `${formInput.requirements}`
+        }
+      } catch (e) {
+        return formInput.requirements
+
+      }
+    } else {
+      return "No requirements"
+    }
+  }
+
+
+  const reqEnter = (event) => {
+    if (event.keyCode === 13) {
+      event.preventDefault()
+      setFormInput({ ...formInput, requirements: [...formInput.requirements, `${event.target.value}`] })
+      setRequirementsInput("")
+    }
+  }
+
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -18,14 +94,14 @@ export default function ProjectForm(props) {
         const params = {
           name: formInput.name ? formInput.name : "",
           description: formInput.description ? formInput.description : "",
-          requirements: formInput.requirements ? formInput.requirements : ""
+          requirements: formInput.requirements ? JSON.stringify(formInput.requirements) : ""
         }
         if (add) {
           projectService.postProject(selectedTeam, params, token)
             .then(() => {
               getProjects()
+              // setFormInput(initialForm)
               setFormState(formStates[0])
-              setFormInput(initialForm)
             })
             .catch(err => console.error(err))
         } else if (!add && project) {
@@ -33,13 +109,13 @@ export default function ProjectForm(props) {
             .then(() => {
               getProjects()
               setFormState(formStates[0])
-              setFormInput(initialForm)
+              // setFormInput(initialForm)
             })
             .catch(err => console.error(err))
         }
         break
       case "cancel":
-        setFormInput(initialForm)
+        // setFormInput(initialForm)
         setFormState(formStates[0])
         break
       case "deleteButton":
@@ -49,16 +125,16 @@ export default function ProjectForm(props) {
             projectService.deleteProject(selectedTeam, selectedProject, token)
               .then(() => {
                 getProjects()
-                setFormState(formStates[0])
-                setFormInput(initialForm)
+                // setFormInput(initialForm)
                 setSelectedProject("")
+                setFormState(formStates[0])
               })
               .catch(err => console.error(err))
           }
         }
         break
       default:
-        setFormInput(initialForm)
+        // setFormInput(initialForm)
         setFormState(formStates[0])
         break
     }
@@ -73,7 +149,7 @@ export default function ProjectForm(props) {
         setFormInput({ ...formInput, description: e.target.value })
         break
       case "requirements":
-        setFormInput({ ...formInput, requirements: e.target.value })
+        setRequirementsInput(e.target.value)
         break
       default:
         break
@@ -93,7 +169,6 @@ export default function ProjectForm(props) {
           required
         ></input>
       </label>
-
       <label>
         Description:
         <textarea
@@ -103,15 +178,21 @@ export default function ProjectForm(props) {
           name="description"
         ></textarea>
       </label>
+
+
       <label>
         Requirements:
-        <textarea
-          id="Requirements"
+        <input
+          id="requirements"
           onChange={handleChange}
-          value={formInput.requirements}
+          onKeyDown={reqEnter}
+          value={requirementsInput}
           name="requirements"
-        ></textarea>
+        ></input>
       </label>
+
+      {rtnRequirements()}
+
       <button
         className="btn primary hover"
         name="submit"
