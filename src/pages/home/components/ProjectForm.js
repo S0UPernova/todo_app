@@ -59,7 +59,7 @@ export default function ProjectForm(props) {
             )
           })
           return (
-            <ul>
+            <ul className="new-scrollbar">
               {rtnVal}
             </ul>
           )

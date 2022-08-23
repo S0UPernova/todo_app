@@ -5,7 +5,7 @@ export default function TeamPanel(props) {
   const { handleClick, selectedTeam, team } = props
   return (
     <>
-      <div id="teamPanel" className="bg-secondary d-flex flex-d-col rounded">
+      <div id="teamPanel" className="bg-secondary d-flex flex-d-col rounded new-scrollbar">
         <div className='container'>
           <div className="button-container">
             <button name="teamAddButton" onClick={handleClick} className="btn primary icon-button"><i className='icon'><MdGroupAdd /></i></button>
