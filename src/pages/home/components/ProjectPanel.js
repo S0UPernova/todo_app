@@ -7,23 +7,23 @@ export default function ProjectPanel(props) {
     if (project?.requirements) {
       try {
         // reqs = JSON.parse(formInput.requirements)
-        if (project?.requirements) {
-          let rtnVal = []
+        let rtnVal = []
+        if (project?.requirements.length > 0) {
           JSON.parse(project.requirements).forEach((req, i) => {
             rtnVal.push(
               <li key={i}>{`${req}`}</li>
             )
           })
           return (
-            <ul>
+            rtnVal?.length > 0 ? <ul>
               {rtnVal}
-            </ul>
+            </ul> : <p>No requirements</p>
           )
         } else {
-          return `${project.requirements}`
+          return `${project.requirements} else`
         }
       } catch (e) {
-        return project.requirements
+        return `catch ${project.requirements}`
 
       }
     } else {
