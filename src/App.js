@@ -8,7 +8,7 @@ import Home from './pages/home/Home'
 import HomeNotLoggedIn from './pages/StaticHome'
 import Login from './pages/Login'
 import Team from './pages/Team'
-import Teams from './pages/Teams'
+import Teams from './pages/teams/Teams'
 import Profile from './pages/Profile'
 import sessionService from './services/SessionService'
 import './App.scss';

@@ -141,7 +141,15 @@ nav {
     }
   }
 }
-
+.p-1 {
+  padding: 1rem;
+}
+.p-2 {
+  padding: 2rem;
+}
+.mb-1 {
+  margin-bottom: 1rem;
+}
 .bg-primary {
   background-color: rgba(160, 209, 209, 0.5);
 }
@@ -182,6 +190,12 @@ nav {
 
 .align-items-center {
   align-items: center;
+}
+.justify-content-center {
+  justify-content: center;
+}
+.justify-content-around {
+  justify-content: space-around;
 }
 
 .container {

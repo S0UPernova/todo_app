@@ -37,6 +37,22 @@ class TeamService {
       })
   }
 
+  discoverTeams = async (token) => {
+    return fetch(`${baseUrl}/teams/discover`, {
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    })
+      .then(
+        response => response.json()
+      )
+      .catch(err => {
+        console.error(err);
+      })
+  }
+
   getTeam = async (team_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}`, {
       "method": "GET",

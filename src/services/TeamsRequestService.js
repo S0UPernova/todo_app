@@ -1,28 +1,43 @@
 import { baseUrl } from "../utilities/Statics"
-import FilterParams from "../utilities/FilterParams"
-class UserService {
 
-  postUser = async (params) => {
-    const justFilledFields = FilterParams(params)
-    return fetch(`${baseUrl}/users`, {
+class TeamsRequestService {
+
+  getRequests = async (team_id, token) => {
+    return fetch(`${baseUrl}/teams/${team_id}/requests`, {
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    })
+      .then(
+        response => response.json()
+      )
+      .catch(err => {
+        console.error(err);
+      })
+  }
+
+  getRequest = async (team_id, request_id, token) => {
+    return fetch(`${baseUrl}/teams/${team_id}/requests/${request_id}`, {
+      "method": "GET",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    })
+      .then(
+        response => response.json()
+      )
+      .catch(err => {
+        console.error(err);
+      })
+  }
+
+  createRequest = async (team_id, token) => {
+    return fetch(`${baseUrl}/teams/${team_id}/requests`, {
       "method": "POST",
       "headers": {
-        "Content-Type": "application/json"
-      },
-      "body": JSON.stringify({ "user": { ...justFilledFields } })
-    })
-      .then(
-        response => response.json()
-      )
-      .catch(err => {
-        console.error(err);
-      })
-  }
-
-  getUsers = async (token) => {
-    return fetch(`${baseUrl}/users`, {
-      "method": "GET",
-      "headers": {
         "Content-Type": "application/json",
         "Authorization": token
       }
@@ -35,31 +50,13 @@ class UserService {
       })
   }
 
-  getUser = async (user_id, token) => {
-    return fetch(`${baseUrl}/users/${user_id}`, {
-      "method": "GET",
-      "headers": {
-        "Content-Type": "application/json",
-        "Authorization": token
-      }
-    })
-      .then(
-        response => response.json()
-      )
-      .catch(err => {
-        console.error(err);
-      })
-  }
-
-  updateUser = async (user_id, params, token) => {
-    const justFilledFields = FilterParams(params)
-    return fetch(`${baseUrl}/users/${user_id}`, {
+  accept = async (team_id, request_id, token) => {
+    return fetch(`${baseUrl}/teams/${team_id}/requests/${request_id}/accept`, {
       "method": "PATCH",
       "headers": {
         "Content-Type": "application/json",
         "Authorization": token
-      },
-      "body": JSON.stringify({ "user": { ...justFilledFields } })
+      }
     })
       .then(
         response => response.json()
@@ -69,9 +66,9 @@ class UserService {
       })
   }
 
-  deleteUser = async (user_id, token) => {
-    return fetch(`${baseUrl}/users/${user_id}`, {
-      "method": "DELETE",
+  reject = async (team_id, request_id, token) => {
+    return fetch(`${baseUrl}/teams/${team_id}/requests/${request_id}/reject`, {
+      "method": "PATCH",
       "headers": {
         "Content-Type": "application/json",
         "Authorization": token
@@ -85,5 +82,5 @@ class UserService {
       })
   }
 }
-const userService = new UserService()
-export default userService
+const teamsRequestService = new TeamsRequestService()
+export default teamsRequestService

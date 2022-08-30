@@ -19,6 +19,7 @@ import ProjectPanel from './components/ProjectPanel'
 
 import './home.scss'
 
+// todo refactor icons to make sure they are all compatible licences
 export default function Home(props) {
   const { user, token } = props
 
