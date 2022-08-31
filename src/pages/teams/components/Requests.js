@@ -21,6 +21,7 @@ export default function Requests(props) {
   }, [user, token])
 
   const handleClick = (e) => {
+    console.log(e.target)
     switch (e.target.name) {
       case "accept":
         usersRequestService.accept(user.id, e.target.dataset.request_id, token)
@@ -29,6 +30,12 @@ export default function Requests(props) {
       case "reject":
         usersRequestService.reject(user.id, e.target.dataset.request_id, token)
         getRequests()
+        break
+      case "delete":
+        if (window.confirm("are you sure")) {
+          usersRequestService.deleteRequest(user.id, e.target.dataset.request_id, token)
+          getRequests()
+        }
         break
       default:
         break
@@ -62,6 +69,13 @@ export default function Requests(props) {
             onClick={handleClick}
             data-request_id={request.id}
           >Reject
+          </button>}
+        {request.from_team === false &&
+          <button
+            name='delete'
+            onClick={handleClick}
+            data-request_id={request.id}
+          >Delete
           </button>}
       </div>
     )

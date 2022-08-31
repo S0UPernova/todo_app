@@ -2,11 +2,13 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import teamService from '../../services/TeamsService'
 import usersTeamService from '../../services/UsersTeamService'
+import usersMembershipService from '../../services/UsersMembershipService'
 import Requests from './components/Requests'
 
 export default function Teams(props) {
   const [discoverTeams, setDiscoverTeams] = useState([])
   const [myTeams, setMyTeams] = useState([])
+  const [myMemberships, setMyMemberships] = useState([])
   const { user, token } = props
   useEffect(() => {
     if (user && token) {
@@ -19,7 +21,16 @@ export default function Teams(props) {
         .then(res => setMyTeams(res))
         .catch(err => console.error(err))
     }
+    if (user && token) {
+      usersMembershipService.getMemberships(user.id, token)
+        .then(res => setMyMemberships(res))
+        .catch(err => console.error(err))
+    }
   }, [user, token])
+
+  const handleClick = (e) => {
+    alert('stubbed... does not currently work')
+  }
 
   return (
     <div className='main d-flex container gap-2 justify-content-around'>
@@ -41,6 +52,16 @@ export default function Teams(props) {
             <div key={team.id} className="bg-primary rounded p-1">
               {team.name && <Link to={`${team.id}`} state={{ fromMyTeams: true }}><h3 key={`name ${i}`}>{team.name}</h3></Link>}
               {team.description && <p key={`description ${i}`}>{team.description && team.description}</p>}
+            </div>
+          )
+        })}
+        <h2>My Memberships</h2>
+        {myMemberships?.length && myMemberships.map((team, i) => {
+          return (
+            <div key={team.id} className="bg-secondary rounded p-1">
+              {team.name && <Link to={`${team.id}`} state={{ fromMyTeams: true }}><h3 key={`name ${i}`}>{team.name}</h3></Link>}
+              {team.description && <p key={`description ${i}`}>{team.description && team.description}</p>}
+              <button onClick={handleClick} className="btn danger hover">Leave team</button>
             </div>
           )
         })}

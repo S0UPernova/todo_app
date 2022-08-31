@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import usersTeamService from '../../services/UsersTeamService'
-import membershipService from '../../services/MembershipService'
+import usersMembershipService from '../../services/UsersMembershipService'
 import projectService from '../../services/ProjectService'
 import taskService from '../../services/TaskService'
 
@@ -174,7 +174,7 @@ export default function Home(props) {
     const returnVal = await usersTeamService.getTeams(user.id, token)
     returnVal?.length ? setTeams([...returnVal]) : setTeams([returnVal])
 
-    const returnVal2 = await membershipService.getMemberships(user.id, token)
+    const returnVal2 = await usersMembershipService.getMemberships(user.id, token)
     returnVal2?.length ? setMemberships([...returnVal2]) : setMemberships([returnVal2])
 
     let setVal

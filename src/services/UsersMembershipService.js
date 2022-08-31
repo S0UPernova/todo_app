@@ -1,6 +1,6 @@
 import { baseUrl } from "../utilities/Statics"
 
-class MembershipService {
+class UsersMembershipService {
 
   getMemberships = async (user_id, token) => {
     return fetch(`${baseUrl}/users/${user_id}/memberships`, {
@@ -50,5 +50,5 @@ class MembershipService {
       })
   }
 }
-const membershipService = new MembershipService()
-export default membershipService
+const usersMembershipService = new UsersMembershipService()
+export default usersMembershipService

@@ -37,12 +37,13 @@ export default function Team(props) {
     switch (e.target.name) {
       case "newRequest":
         teamsRequestService.createRequest(team.id, token)
-          .then(res => { alert(res) })
+          // .then(res => { alert(res) })
+          .catch(err => console.error(err))
         break
       case "acceptRequest":
         teamsRequestService.accept(team.id, e.target.dataset.request_id, token)
-          .then(res => { alert(res) })
-
+          // .then(res => { alert(res) })
+          .catch(err => console.error(err))
         break
     }
   }

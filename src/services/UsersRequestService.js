@@ -81,6 +81,22 @@ class UsersRequestService {
         console.error(err);
       })
   }
+
+  deleteRequest = async (user_id, request_id, token) => {
+    return fetch(`${baseUrl}/users/${user_id}/requests/${request_id}`, {
+      "method": "DELETE",
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": token
+      }
+    })
+      .then(
+        response => response.json()
+      )
+      .catch(err => {
+        console.error(err);
+      })
+  }
 }
 const usersRequestService = new UsersRequestService()
 export default usersRequestService
