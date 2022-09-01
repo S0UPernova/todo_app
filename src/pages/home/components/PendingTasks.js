@@ -1,5 +1,5 @@
 // import { BsGearWide } from "react-icons/bs"
-import { MdOutlinePlaylistAdd } from "react-icons/md"
+import { MdPostAdd } from "react-icons/md"
 
 import Task from "./Task"
 
@@ -15,7 +15,7 @@ export default function PendingTasks(props) {
           className="addButton btn primary hover icon-button"
           onClick={handleClick}
         >
-          <i className="icon"><MdOutlinePlaylistAdd /></i>
+          <i className="icon"><MdPostAdd /></i>
         </button>}
       <h3>Pending completion</h3>
       {selectedTeam && selectedProject && selectedProject !=="" && <ul className="tasks">

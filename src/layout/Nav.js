@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { GiHamburgerMenu } from 'react-icons/gi'
 // import * as urlSlug from 'url-slug'
 
@@ -52,27 +52,31 @@ export default function Nav(props) {
       <nav>
         {!hidden | !smallWindow ? <ul>
           <li>
-            <Link to="/">
-              <button className='btn primary hover'>Home</button>
-            </Link>
+            <NavLink to="/" className='btn primary hover'>
+              {/* <button className='btn primary hover'>Home</button> */}
+              Home
+            </NavLink>
           </li>
           <li>
-            <Link to="/teams">
-              <button className='btn primary hover'>Teams</button>
-            </Link>
+            <NavLink to="/teams" className='btn primary hover'>
+              {/* <button className='btn primary hover'>Teams</button> */}
+              Teams
+            </NavLink>
           </li>
           {props.user && <li className='ml-auto'>
-            <Link to={`/profile`}>
-              <button className='btn primary hover'>Profile</button>
-            </Link>
+            <NavLink to={`/profile`} className='btn primary hover'>
+              {/* <button className='btn primary hover'>Profile</button> */}
+              Profile
+            </NavLink>
           </li>}
           {!props.user && <li className='ml-auto'>
-            <Link to="/login">
-              <button className='btn primary hover'>Log In</button>
-            </Link>
+            <NavLink to="/login" className='btn primary hover'>
+              {/* <button className='btn primary hover'>Log In</button> */}
+              Log In
+            </NavLink>
           </li>}
           {props.user && <li>
-            <button name='logout' onClick={handleClick} className='btn primary hover'>Log Out</button>
+            <button name='logout' onClick={handleClick} className='btn danger hover'>Log Out</button>
           </li>}
         </ul> : null}
       </nav>

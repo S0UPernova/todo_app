@@ -1,3 +1,14 @@
 .handle {
   min-width: 20ch;
 }
+.team-name {
+  text-decoration: none;
+  color: black;
+  :visited {
+    color: black;
+  }
+  :hover {
+    color: navy;
+    text-decoration: underline;
+  }
+}

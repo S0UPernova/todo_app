@@ -21,7 +21,6 @@ export default function Requests(props) {
   }, [user, token])
 
   const handleClick = (e) => {
-    console.log(e.target)
     switch (e.target.name) {
       case "accept":
         usersRequestService.accept(user.id, e.target.dataset.request_id, token)
@@ -52,64 +51,71 @@ export default function Requests(props) {
         .catch(err => console.error(err))
     }, [])
     return (
-      <div key={request.id} className={DivClassName}>
-        {team.name && <Link to={`${team.id}`}><h3>{team.name}</h3></Link>}
+      team && request && <div className={DivClassName}>
+        {team.name && <Link className='team-name' to={`${team.id}`}><h3>{team.name}</h3></Link>}
         <p >id: {request.id}</p>
         <p>Accepted: {request.accepted ? "true" : "false"}</p>
-        {request.from_team === true &&
-          <button
-            name='accept'
-            onClick={handleClick}
-            data-request_id={request.id}
-          >Accept
-          </button>}
-        {request.from_team === true &&
-          <button
-            name='reject'
-            onClick={handleClick}
-            data-request_id={request.id}
-          >Reject
-          </button>}
-        {request.from_team === false &&
-          <button
-            name='delete'
-            onClick={handleClick}
-            data-request_id={request.id}
-          >Delete
-          </button>}
+        <div className='d-flex gap-1'>
+          {request.from_team === true &&
+            <button
+              name='accept'
+              onClick={handleClick}
+              data-request_id={request.id}
+              className="btn success hover p-05"
+            >Accept
+            </button>}
+          {request.from_team === true &&
+            <button
+              name='reject'
+              onClick={handleClick}
+              data-request_id={request.id}
+              className="btn danger hover p-05"
+            >Reject
+            </button>}
+          {request.from_team === false &&
+            <button
+              name='delete'
+              onClick={handleClick}
+              data-request_id={request.id}
+              className="btn danger hover p-05"
+            >Delete
+            </button>}
+        </div>
       </div>
     )
   }
-
   return (
     <div className='d-flex flex-d-col'>
+      <div className='d-flex flex-d-col gap-1'>
         <h2>Recieved requests</h2>
-      <div className='d-flex flex-d-col gap-1'>
-        {requests?.length && requests.filter(req => req.from_team === true).map((request, i) => {
-          return (
-            <ShowTeamForRequest
-              request={request}
-              token={token}
-              handleClick={handleClick}
-              DivClassName="bg-primary rounded p-1"
-            />
-          )
-        })}
+        {requests?.length && requests.filter(req => req.from_team === true)
+          .map((request, i) => {
+            return (
+              <ShowTeamForRequest
+                request={request}
+                token={token}
+                handleClick={handleClick}
+                DivClassName="bg-primary rounded p-1"
+              />
+            )
+          })}
       </div>
-      <h2>Sent requests</h2>
       <div className='d-flex flex-d-col gap-1'>
-        {requests?.length && requests.filter(req => req.from_team === false).map((request, i) => {
-          return (
-            <ShowTeamForRequest
-              request={request}
-              token={token}
-              handleClick={handleClick}
-              DivClassName="bg-secondary rounded p-1"
-            />
-          )
-        })}
+        <h2>Sent requests</h2>
+        {requests.filter(req => req.from_team === false)?.length > 0
+          ? requests.filter(req => req.from_team === false).map((request, i) => {
+            return (
+              <ShowTeamForRequest
+                key={request.id}
+                request={request}
+                token={token}
+                handleClick={handleClick}
+                DivClassName="bg-secondary rounded p-1"
+              />
+            )
+          })
+          : <div className='bg-secondary rounded p-2'>No sent requests</div>}
       </div>
-      <button onClick={() => console.log(requests)}>log requests</button>
     </div>
   )
 }

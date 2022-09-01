@@ -18,6 +18,7 @@ import TeamPanel from './components/TeamPanel'
 import ProjectPanel from './components/ProjectPanel'
 
 import './home.scss'
+import teamService from '../../services/TeamsService'
 
 // todo refactor icons to make sure they are all compatible licences
 export default function Home(props) {
@@ -90,13 +91,18 @@ export default function Home(props) {
   }, [user])
 
   const handleChange = (e) => {
-    // console.log(selectedProject)
     switch (e.target.getAttribute("data-dropdown")) {
       case 'team':
         setSelectedProject("")
         setSelectedTeam("")
         const teamTimer = setTimeout(() => {
           setSelectedTeam(e.target.value)
+
+          // team from selected team
+          let setVal
+          setVal = teams.filter(team => Number(team.id) === Number(selectedTeam))[0]
+          if (!setVal) setVal = memberships.filter(team => Number(team.id) === Number(selectedTeam))[0]
+          setTeam(setVal)
         }, 200)
         return () => clearTimeout(teamTimer)
       case 'project':
@@ -171,26 +177,36 @@ export default function Home(props) {
   }
 
   const getTeams = async () => {
-    const returnVal = await usersTeamService.getTeams(user.id, token)
-    returnVal?.length ? setTeams([...returnVal]) : setTeams([returnVal])
+    // teams
+    await usersTeamService.getTeams(user.id, token)
+      .then(res => {
+        res?.length ? setTeams([...res]) : setTeams([res])
+      })
 
-    const returnVal2 = await usersMembershipService.getMemberships(user.id, token)
-    returnVal2?.length ? setMemberships([...returnVal2]) : setMemberships([returnVal2])
+    // memberships
+    usersMembershipService.getMemberships(user.id, token)
+      .then(res => {
+        res.forEach(relationship => {
+          teamService.getTeam(relationship.team_id, token)
+            .then(res => {
+              if (!memberships.find(membership => {
+                  if (membership.id === res.id) {
+                    return true
+                  }
+                  return false
+                })) {
+                setMemberships([...memberships, res])
+              }
+              else if (!memberships) {
+                setMemberships([res])
+              }
+              else return
+            })
+            .catch(err => console.error(err))
+        })
+      })
 
-    let setVal
-    setVal = returnVal.filter(team => Number(team.id) === Number(selectedTeam))[0]
-    if (!setVal) setVal = memberships.filter(team => Number(team.id) === Number(selectedTeam))[0]
-
-    if (!setVal) setVal = returnVal2.filter(team => Number(team.id) === Number(selectedTeam))[0]
-    if (!setVal) setVal = memberships.filter(team => Number(team.id) === Number(selectedTeam))[0]
-
-
-    setTeam(setVal)
   }
-  // add membership to be like team for conditionals
-  // const getMemberships = async () => {
-  //   return
-  // }
 
   const getProjects = async () => {
     if (user && selectedTeam) {
