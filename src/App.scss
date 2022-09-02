@@ -14,7 +14,10 @@ header {
 .rounded {
   border-radius: 10px;
 }
-
+.border {
+  border: 1px solid rgba(0, 0, 0, 0.565);
+  box-shadow: 1px 1px 1px grey;
+}
 .gap-1 {
   gap: 1rem;
 }

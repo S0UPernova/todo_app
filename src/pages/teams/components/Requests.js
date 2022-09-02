@@ -6,7 +6,7 @@ import teamService from '../../../services/TeamsService'
 
 export default function Requests(props) {
   const [requests, setRequests] = useState([])
-  const { user, token } = props
+  const { user, token, getMemberships, getDiscoverTeams } = props
 
   const getRequests = () => {
     if (token) {
@@ -20,19 +20,21 @@ export default function Requests(props) {
     getRequests()
   }, [user, token])
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     switch (e.target.name) {
       case "accept":
-        usersRequestService.accept(user.id, e.target.dataset.request_id, token)
+        await usersRequestService.accept(user.id, e.target.dataset.request_id, token)
         getRequests()
+        getMemberships()
+        getDiscoverTeams()
         break
       case "reject":
-        usersRequestService.reject(user.id, e.target.dataset.request_id, token)
+        await usersRequestService.reject(user.id, e.target.dataset.request_id, token)
         getRequests()
         break
       case "delete":
         if (window.confirm("are you sure")) {
-          usersRequestService.deleteRequest(user.id, e.target.dataset.request_id, token)
+          await usersRequestService.deleteRequest(user.id, e.target.dataset.request_id, token)
           getRequests()
         }
         break
@@ -86,21 +88,22 @@ export default function Requests(props) {
   }
   return (
     <div className='d-flex flex-d-col'>
-      <div className='d-flex flex-d-col gap-1'>
+      <div className='d-flex flex-d-col gap-1 container bg-primary rounded p-1 border'>
         <h2>Recieved requests</h2>
         {requests?.length && requests.filter(req => req.from_team === true)
           .map((request, i) => {
             return (
               <ShowTeamForRequest
+                key={request.id}
                 request={request}
                 token={token}
                 handleClick={handleClick}
-                DivClassName="bg-primary rounded p-1"
+                DivClassName="bg-primary rounded p-1 border"
               />
             )
           })}
       </div>
-      <div className='d-flex flex-d-col gap-1'>
+      <div className='d-flex flex-d-col gap-1 bg-secondary rounded border p-1'>
         <h2>Sent requests</h2>
         {requests.filter(req => req.from_team === false)?.length > 0
           ? requests.filter(req => req.from_team === false).map((request, i) => {
@@ -110,7 +113,7 @@ export default function Requests(props) {
                 request={request}
                 token={token}
                 handleClick={handleClick}
-                DivClassName="bg-secondary rounded p-1"
+                DivClassName="bg-secondary rounded p-1 border"
               />
             )
           })

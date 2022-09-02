@@ -32,7 +32,7 @@ export default function ProjectPanel(props) {
   }
   return (
     <>
-      <div id="projectPanel" className="d-flex flex-d-col bg-secondary rounded new-scrollbar">
+      <div id="projectPanel" className="d-flex flex-d-col bg-secondary rounded new-scrollbar border">
         <div className="container">
           <div className="button-container">
             {selectedTeam && <button name="projectAddButton" className="btn primary icon-button" onClick={handleClick}>

@@ -43,7 +43,7 @@ class UsersMembershipService {
       }
     })
       .then(
-        response => response.json()
+        response => response
       )
       .catch(err => {
         console.error(err);
