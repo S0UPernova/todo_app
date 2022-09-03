@@ -59,7 +59,7 @@ export default function ProjectForm(props) {
             )
           })
           return (
-            <ul className="new-scrollbar">
+            <ul className="border new-scrollbar">
               {rtnVal}
             </ul>
           )
@@ -194,7 +194,7 @@ export default function ProjectForm(props) {
       {rtnRequirements()}
 
       <button
-        className="btn primary hover"
+        className="btn success hover"
         name="submit"
         type="submit"
         onClick={handleSubmit}

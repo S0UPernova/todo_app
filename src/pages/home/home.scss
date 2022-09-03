@@ -67,6 +67,7 @@
   }
   ul {
     max-height: 150px;
+    min-height: 100px;
     overflow-y: scroll;
   }
 }
@@ -179,7 +180,7 @@ select {
 }
 
 
-.main {
+#home {
   width: 100%;
   min-height: 100vh;
 
@@ -239,7 +240,7 @@ select {
 }
 
 @media screen and (min-width: 1200px) {
-  .main {
+  #home {
     grid-template-rows: 4rem 300px auto;
     grid-template-areas:
       "select1 select1 select2 select2"

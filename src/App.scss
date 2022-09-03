@@ -18,6 +18,9 @@ header {
   border: 1px solid rgba(0, 0, 0, 0.565);
   box-shadow: 1px 1px 1px grey;
 }
+.gap-0 {
+  gap: 0;
+}
 .gap-1 {
   gap: 1rem;
 }
@@ -230,7 +233,25 @@ nav {
   margin-left: auto;
   margin-right: auto;
 }
-
+.new-scrollbar {
+  &::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(111, 111, 111, 0.247);
+    border-radius: 0 10px 10px 0;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(170, 170, 170, 0.247);
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    background-color: transparent;
+    border-radius: 0 10px 10px 0;
+  }
+}
 @media screen and (min-width: 1200px) {
   header {
     display: flex;
@@ -248,26 +269,6 @@ nav {
   z-index: 5;
 
   }
-  .new-scrollbar {
-    &::-webkit-scrollbar {
-      width: 10px;
-      height: 10px;
-      background: transparent;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: rgba(111, 111, 111, 0.247);
-      border-radius: 0 10px 10px 0;
-    }
-    &::-webkit-scrollbar-thumb:hover {
-      background-color: rgba(170, 170, 170, 0.247);
-    }
-    &::-webkit-scrollbar-track {
-      background: transparent;
-      background-color: transparent;
-      border-radius: 0 10px 10px 0;
-    }
-  }
-
   nav ul {
     backdrop-filter: blur(0);
     border-radius: none;

@@ -1,0 +1,63 @@
+#teams {
+  width: 100%;
+  display: grid;
+  // max-height: 200vh;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+  // grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-areas:
+    "recieved recieved recieved recieved"
+    "discover discover discover discover"
+    "teams teams teams teams"
+    "memberships memberships memberships memberships"
+    "sent sent sent sent"
+  ;
+}
+
+#memberships {
+  grid-area: memberships;
+  overflow-y: scroll;
+  // max-height: 25vh;
+
+}
+
+#sent-requests {
+  grid-area: sent;
+  overflow-y: scroll;
+  // max-height: 25vh;
+
+}
+
+#recieved-requests {
+  grid-area: recieved;
+  overflow-y: scroll;
+  // max-height: 25vh;
+
+}
+
+#discover {
+  grid-area: discover;
+  overflow-y: scroll;
+  // max-height: 25vh;
+}
+
+#my-teams {
+  grid-area: teams;
+  overflow-y: scroll;
+
+  // max-height: 25vh;
+}
+
+@media screen and (min-width: 1200px) {
+  #teams {
+    // min-height: 50vh;
+    // max-height: 95vh;
+    grid-template-rows: 20vh 20vh 25vh 30vh;
+    grid-template-areas:
+      "discover discover discover recieved"
+      "discover discover discover recieved"
+      "teams teams teams recieved"
+      "memberships memberships memberships sent"
+    ;
+  }
+}

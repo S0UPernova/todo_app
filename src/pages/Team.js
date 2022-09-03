@@ -15,13 +15,15 @@ export default function Team(props) {
 
   const { teamId } = useParams()
   let location = useLocation()
-
-  useEffect(() => {
+  const getTeam = () => {
     if (user && token) {
       teamService.getTeam(teamId, token)
         .then(res => setTeam(res))
         .catch(err => console.error(err))
     }
+  }
+  useEffect(() => {
+    getTeam()
   }, [user, token, teamId])
 
   useEffect(() => {
@@ -39,11 +41,17 @@ export default function Team(props) {
         teamsRequestService.createRequest(team.id, token)
           // .then(res => { alert(res) })
           .catch(err => console.error(err))
+          getTeam()
         break
       case "acceptRequest":
         teamsRequestService.accept(team.id, e.target.dataset.request_id, token)
           // .then(res => { alert(res) })
           .catch(err => console.error(err))
+          getTeam()
+        break
+      case "rejectRequest":
+        teamsRequestService.reject(team.id, e.target.dataset.request_id, token)
+        getTeam()
         break
     }
   }
@@ -74,7 +82,8 @@ export default function Team(props) {
               return (
                 <div className='bg-secondary rounded p-1 d-flex gap-1'>
                   {user && <h3 className='handle'>From: <br></br> <HandleFromRequest request={request} /></h3>} {/* // todo add link to user profile */}
-                  <button name='acceptRequest' className='btn primary hover' data-request_id={request.id} onClick={handleClick}>Accept request</button>
+                  <button name='acceptRequest' className='btn success hover' data-request_id={request.id} onClick={handleClick}>Accept request</button>
+                  <button name='rejectRequest' className='btn danger hover' data-request_id={request.id} onClick={handleClick}>Reject request</button>
                 </div>
               )
             })}

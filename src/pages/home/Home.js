@@ -226,7 +226,7 @@ export default function Home(props) {
     } else setTasks([])
   }
   return (
-    <div className='main'>
+    <div id='home' className='main'>
       <TeamDropdowns
         tasks={tasks}
         teams={teams}

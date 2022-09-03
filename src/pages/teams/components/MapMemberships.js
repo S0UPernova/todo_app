@@ -21,6 +21,23 @@ export default function MapMemberships(props) {
         break
     }
   }
+
+  const MembershipDisplay = (props) => {
+    const { team, memberships, handleClick } = props
+    const relationship = memberships.filter(membership => {
+      return String(membership.team_id) === String(team.id)
+    })[0]
+    return (
+      <>
+        {relationship ? <div className="bg-secondary rounded p-1 border">
+          {team.name && <Link className='team-name' to={`${team.id}`} state={{ fromMyTeams: true }}><h3>{team.name}</h3></Link>}
+          {team.description && <p>{team.description && team.description}</p>}
+          <button name='leaveTeam' onClick={handleClick} value={relationship.id} className="btn danger hover p-05">Leave team</button>
+        </div> : null}
+      </>
+    )
+  }
+  
   const Memberships = () => {
     if (teamMemberships?.length > 1) {
       teamMemberships.map(team => {
@@ -51,27 +68,10 @@ export default function MapMemberships(props) {
     else return <></>
   }
   return (
-    <div className='container bg-secondary border p-1 rounded container'>
+    <div id="memberships" className='bg-secondary border p-1 rounded new-scrollbar'>
       <h2>My Memberships</h2>
       <Memberships/>
     </div>
 
-  )
-}
-
-
-const MembershipDisplay = (props) => {
-  const { team, memberships, handleClick } = props
-  const relationship = memberships.filter(membership => {
-    return String(membership.team_id) === String(team.id)
-  })[0]
-  return (
-    <>
-      {relationship ? <div className="bg-secondary rounded p-1 border">
-        {team.name && <Link className='team-name' to={`${team.id}`} state={{ fromMyTeams: true }}><h3>{team.name}</h3></Link>}
-        {team.description && <p>{team.description && team.description}</p>}
-        <button name='leaveTeam' onClick={handleClick} value={relationship.id} className="btn danger hover p-05">Leave team</button>
-      </div> : null}
-    </>
   )
 }

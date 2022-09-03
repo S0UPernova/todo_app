@@ -1,11 +1,14 @@
-import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+
 import teamService from '../../services/TeamsService'
 import usersTeamService from '../../services/UsersTeamService'
 import usersMembershipService from '../../services/UsersMembershipService'
 
 import Requests from './components/Requests'
 import MapMemberships from './components/MapMemberships'
+
+import './teams.scss'
 
 export default function Teams(props) {
   const [discoverTeams, setDiscoverTeams] = useState([])
@@ -65,8 +68,8 @@ export default function Teams(props) {
     getMemberships()
   }, [user, token])
   return (
-    <div className='main d-flex gap-1'>
-      <div className='d-flex flex-d-col gap-1 bg-primary rounded border p-1 container'>
+    <div id='teams' className='main'>
+      <div id="discover" className='d-flex flex-d-col gap-1 bg-primary rounded border p-1 new-scrollbar'>
         <h2>Discover new Teams</h2>
         {discoverTeams?.length ? discoverTeams.map((team, i) => {
           return (
@@ -77,7 +80,7 @@ export default function Teams(props) {
           )
         }) : "No teams found"}
       </div>
-      <div className='d-flex flex-d-col gap-1 bg-primary rounded border p-1 container'>
+      <div id="my-teams" className='d-flex flex-d-col gap-1 bg-primary rounded border p-1 new-scrollbar'>
         <h2>My Teams</h2>
         {teams?.length && teams.map((team, i) => {
           return (

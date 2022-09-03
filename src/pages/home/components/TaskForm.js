@@ -144,7 +144,7 @@ export default function TaskForm(props) {
       }
 
       <button
-        className="btn primary hover"
+        className="btn success hover"
         name="submit"
         type="submit"
         onClick={handleSubmit}

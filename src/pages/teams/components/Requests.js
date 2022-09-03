@@ -87,8 +87,8 @@ export default function Requests(props) {
     )
   }
   return (
-    <div className='d-flex flex-d-col'>
-      <div className='d-flex flex-d-col gap-1 container bg-primary rounded p-1 border'>
+    <>
+      <div id="recieved-requests" className='d-flex flex-d-col gap-1 bg-primary rounded p-1 border new-scrollbar'>
         <h2>Recieved requests</h2>
         {requests?.length && requests.filter(req => req.from_team === true)
           .map((request, i) => {
@@ -103,7 +103,7 @@ export default function Requests(props) {
             )
           })}
       </div>
-      <div className='d-flex flex-d-col gap-1 bg-secondary rounded border p-1'>
+      <div id="sent-requests" className='d-flex flex-d-col gap-1 bg-secondary rounded border p-1 new-scrollbar'>
         <h2>Sent requests</h2>
         {requests.filter(req => req.from_team === false)?.length > 0
           ? requests.filter(req => req.from_team === false).map((request, i) => {
@@ -119,6 +119,6 @@ export default function Requests(props) {
           })
           : <div className='bg-secondary rounded p-2'>No sent requests</div>}
       </div>
-    </div>
+    </>
   )
 }

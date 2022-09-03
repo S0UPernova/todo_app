@@ -124,7 +124,7 @@ export default function TeamForm(props) {
         ></textarea>
       </label>
       <button
-        className="btn primary hover"
+        className="btn success hover"
         name="submit"
         type="submit"
         onClick={handleSubmit}
