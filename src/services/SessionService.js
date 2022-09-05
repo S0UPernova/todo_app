@@ -3,7 +3,7 @@ import { baseUrl } from "../utilities/Statics"
 class SessionService {
 
   newSession = async (email, password) => {
-    return fetch(`${baseUrl}/token/new`, {
+    return fetch(`${baseUrl}/login`, {
       "method": "POST",
       "headers": {
         "Content-Type": "application/json"
