@@ -90,7 +90,7 @@ export default function Requests(props) {
     <>
       <div id="recieved-requests" className='d-flex flex-d-col gap-1 bg-primary rounded p-1 border new-scrollbar'>
         <h2>Recieved requests</h2>
-        {requests?.length && requests.filter(req => req.from_team === true)
+        {requests?.length ? requests.filter(req => req.from_team === true)
           .map((request, i) => {
             return (
               <ShowTeamForRequest
@@ -101,7 +101,8 @@ export default function Requests(props) {
                 DivClassName="bg-primary rounded p-1 border"
               />
             )
-          })}
+          })
+          : <div className='bg-primary rounded p-2 border'>No recieved requests</div>}
       </div>
       <div id="sent-requests" className='d-flex flex-d-col gap-1 bg-secondary rounded border p-1 new-scrollbar'>
         <h2>Sent requests</h2>
@@ -117,7 +118,7 @@ export default function Requests(props) {
               />
             )
           })
-          : <div className='bg-secondary rounded p-2'>No sent requests</div>}
+          : <div className='bg-secondary rounded p-2 border'>No sent requests</div>}
       </div>
     </>
   )

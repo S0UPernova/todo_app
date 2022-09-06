@@ -15,19 +15,13 @@ export default function HomeNotLoggedIn() {
             Create a team
           </li>
           <li>
-            <s>
-              Request to join an existing team
-            </s>
+            Request to join an existing team
           </li>
           <li>
-            <s>
-              Accept or reject user requests to join your team
-            </s>
+            Accept or reject user requests to join your team
           </li>
           <li>
-            <s>
-              Accept or reject requests to join someones team
-            </s>
+            Accept or reject requests to join someones team
           </li>
           <li>
             Add project or get started on an existing one
