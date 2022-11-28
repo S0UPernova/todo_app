@@ -1,5 +1,8 @@
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie';
+
+import './App.scss';
 
 import Nav from "./layout/Nav"
 import Footer from './layout/Footer'
@@ -11,7 +14,8 @@ import Team from './pages/Team'
 import Teams from './pages/teams/Teams'
 import Profile from './pages/Profile'
 import sessionService from './services/SessionService'
-import './App.scss';
+import SignUp from './pages/Signup';
+
 
 export function RedirectToLogin() {
   const navigate = useNavigate()
@@ -22,16 +26,20 @@ export function RedirectToLogin() {
 }
 
 export default function App() {
-  const [token, setToken] = useState(null)
-  const [user, setUser] = useState(null)
+  // const [token, setToken] = useState(null)
+  // const [user, setUser] = useState(null)
+  const [cookies, setCookie, removeCookie] = useCookies(['user'])
 
   const navigate = useNavigate()
   const handleLogIn = (e) => {
     e.preventDefault()
     sessionService.newSession(e.target.email.value, e.target.password.value)
       .then(res => {
-        res['token'] && setToken(res['token'])
-        res['user'] && setUser(res['user'])
+        // res['token'] && setToken(res['token'])
+        // res['user'] && setUser(res['user'])
+        setCookie('token', res['token'], {sameSite: true})
+        setCookie('user', res['user'], {sameSite: true})
+        // console.log(res['user'])
       })
       .then(() => {
         e.target.email.value = ""
@@ -42,21 +50,25 @@ export default function App() {
   }
 
   const handleLogOut = () => {
-    setToken(null)
-    setUser(null)
+    // setToken(null)
+    // setUser(null)
+    removeCookie('token')
+    removeCookie('user')
   }
+  // console.log(cookies.token)
 
   return (
     <div className='container d-flex flex-d-col align-items-center'>
       <header>
-        <Nav user={user} token={token} handleLogOut={handleLogOut} />
+        <Nav user={cookies.user} token={cookies.token} handleLogOut={handleLogOut} />
       </header>
       <Routes>
-        <Route path="/" element={user ? <Home user={user} token={token} /> : <HomeNotLoggedIn />} />
-        <Route path="/login" element={<Login handleLogIn={handleLogIn} user={user} />} />
-        <Route path="/profile" element={user ? <Profile token={token} user={user} /> : <RedirectToLogin />} />
-        <Route exaxt path="/teams" element={user ? <Teams user={user} token={token} /> : <RedirectToLogin />} />
-        <Route path="/teams/:teamId" element={user ? <Team user={user} token={token} /> : <RedirectToLogin />} />
+        <Route path="/" element={cookies.user ? <Home user={cookies.user} token={cookies.token} /> : <HomeNotLoggedIn />} />
+        <Route path="/login" element={<Login user={cookies.user} handleLogIn={handleLogIn} />} />
+        <Route path="/profile" element={cookies.user ? <Profile user={cookies.user} token={cookies.token} /> : <RedirectToLogin />} />
+        <Route exaxt path="/teams" element={cookies.user ? <Teams user={cookies.user} token={cookies.token} /> : <RedirectToLogin />} />
+        <Route path="/teams/:teamId" element={cookies.user ? <Team user={cookies.user} token={cookies.token} /> : <RedirectToLogin />} />
+        <Route path="/signup" element={!cookies.user ? <SignUp /> : <Home user={cookies.user} token={cookies.token} />} />
       </Routes>
       <Footer />
     </div>
