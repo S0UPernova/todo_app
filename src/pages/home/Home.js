@@ -70,6 +70,11 @@ export default function Home(props) {
   useEffect(() => {
     if (user) {
       getProjects()
+      // team from selected team
+      let setVal
+      setVal = teams.filter(team => Number(team.id) === Number(selectedTeam))[0]
+      if (!setVal) setVal = memberships.filter(team => Number(team.id) === Number(selectedTeam))[0]
+      setTeam(setVal)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTeam, user])
@@ -94,16 +99,13 @@ export default function Home(props) {
     switch (e.target.getAttribute("data-dropdown")) {
       case 'team':
         setSelectedProject("")
+        //* not certain why, but the project does not reset,
+        //* without cycling with a bit of delay
         setSelectedTeam("")
         const teamTimer = setTimeout(() => {
           setSelectedTeam(e.target.value)
-
-          // team from selected team
-          let setVal
-          setVal = teams.filter(team => Number(team.id) === Number(selectedTeam))[0]
-          if (!setVal) setVal = memberships.filter(team => Number(team.id) === Number(selectedTeam))[0]
-          setTeam(setVal)
         }, 200)
+        
         return () => clearTimeout(teamTimer)
       case 'project':
         setSelectedProject("")
