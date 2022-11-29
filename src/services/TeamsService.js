@@ -1,7 +1,7 @@
 import { baseUrl } from "../utilities/Statics";
 import FilterParams from "../utilities/FilterParams"
-
-class TeamService {
+import ResAlertHelper from "../utilities/ResAlertHelper"
+class TeamService extends ResAlertHelper {
 
   postTeam = async (team_id, params, token) => {
     const justFilledFields = FilterParams(params)
@@ -14,7 +14,7 @@ class TeamService {
       "body": JSON.stringify({ "team": { ...justFilledFields } })
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -30,7 +30,7 @@ class TeamService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -46,7 +46,7 @@ class TeamService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -62,7 +62,7 @@ class TeamService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -80,7 +80,7 @@ class TeamService {
       "body": JSON.stringify({ "team": { ...justFilledFields } })
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -96,7 +96,7 @@ class TeamService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);

@@ -1,6 +1,7 @@
 import { baseUrl } from "../utilities/Statics"
 import FilterParams from "../utilities/FilterParams"
-class ProjectService {
+import ResAlertHelper from "../utilities/ResAlertHelper"
+class ProjectService extends ResAlertHelper {
 
   postProject = async (team_id, params, token) => {
     const justFilledFields = FilterParams(params)
@@ -13,7 +14,7 @@ class ProjectService {
       "body": JSON.stringify({ "project": { ...justFilledFields } })
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -29,7 +30,7 @@ class ProjectService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -45,7 +46,7 @@ class ProjectService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -63,7 +64,7 @@ class ProjectService {
       "body": JSON.stringify({ "project": { ...justFilledFields } })
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -79,7 +80,7 @@ class ProjectService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);

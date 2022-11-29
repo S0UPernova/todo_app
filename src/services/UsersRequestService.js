@@ -1,6 +1,6 @@
 import { baseUrl } from "../utilities/Statics"
-
-class UsersRequestService {
+import ResAlertHelper from "../utilities/ResAlertHelper"
+class UsersRequestService extends ResAlertHelper {
 
   getRequests = async (user_id, token) => {
     return fetch(`${baseUrl}/users/${user_id}/requests`, {
@@ -11,7 +11,7 @@ class UsersRequestService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -27,7 +27,7 @@ class UsersRequestService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -59,7 +59,7 @@ class UsersRequestService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -75,7 +75,7 @@ class UsersRequestService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -91,7 +91,7 @@ class UsersRequestService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);

@@ -1,8 +1,7 @@
 import { baseUrl } from "../utilities/Statics"
 import FilterParams from "../utilities/FilterParams"
-
-
-class TaskService {
+import ResAlertHelper from "../utilities/ResAlertHelper"
+class TaskService extends ResAlertHelper {
   postTask = async (team_id, project_id, params, token) => {
     const justFilledFields = FilterParams(params)
     return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}/tasks`, {
@@ -14,7 +13,7 @@ class TaskService {
       "body": JSON.stringify({ "task": { ...justFilledFields } })
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -30,7 +29,7 @@ class TaskService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -46,7 +45,7 @@ class TaskService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -64,7 +63,7 @@ class TaskService {
       "body": JSON.stringify({ "task": { ...justFilledFields } })
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);

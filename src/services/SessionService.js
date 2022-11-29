@@ -1,6 +1,7 @@
 import { baseUrl } from "../utilities/Statics"
+import ResAlertHelper from "../utilities/ResAlertHelper"
 
-class SessionService {
+class SessionService extends ResAlertHelper {
 
   newSession = async (email, password) => {
     return fetch(`${baseUrl}/login`, {
@@ -13,7 +14,7 @@ class SessionService {
       .then(
         response => {
           if (response.status === 200) {
-            return response.json()
+            return this.resAlert(response)
           }
           return alert('That does not seem to be the right password')
         }

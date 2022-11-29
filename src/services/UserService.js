@@ -1,6 +1,7 @@
 import { baseUrl } from "../utilities/Statics"
 import FilterParams from "../utilities/FilterParams"
-class UserService {
+import ResAlertHelper from "../utilities/ResAlertHelper"
+class UserService extends ResAlertHelper{
 
   postUser = async (params) => {
     const justFilledFields = FilterParams(params)
@@ -12,7 +13,7 @@ class UserService {
       "body": JSON.stringify({ "user": { ...justFilledFields } })
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -28,7 +29,7 @@ class UserService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -44,7 +45,7 @@ class UserService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -62,7 +63,7 @@ class UserService {
       "body": JSON.stringify({ "user": { ...justFilledFields } })
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -78,7 +79,7 @@ class UserService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);

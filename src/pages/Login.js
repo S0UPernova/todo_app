@@ -6,17 +6,20 @@ export default function Login(props) {
   return (
     <>
       <div className="main d-flex flex-d-col">
-        <form id="loginForm" onSubmit={handleLogIn}>
-          <label>
-            Email:
-            <input required id="email" type="email" name="email"></input>
-          </label>
-          <label>
-            Password:
-            <input required id="password" type="password" name="password"></input>
-          </label>
-          <button type="submit">Log In</button>
-        </form>
+        <div className="formContainer">
+          <form id="loginForm" className="form" onSubmit={handleLogIn}>
+            <label>
+              Email:
+              <input required id="email" type="email" name="email"></input>
+            </label>
+            <label>
+              Password:
+              <input required id="password" type="password" name="password"></input>
+            </label>
+            <button type="submit">Log In</button>
+          </form>
+        </div>
+
         <p>Don't have an account?
           {' '}
           <NavLink to="/signup">

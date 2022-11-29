@@ -1,6 +1,6 @@
 import { baseUrl } from "../utilities/Statics"
-
-class UsersMembershipService {
+import ResAlertHelper from "../utilities/ResAlertHelper"
+class UsersMembershipService extends ResAlertHelper {
 
   getMemberships = async (user_id, token) => {
     return fetch(`${baseUrl}/users/${user_id}/memberships`, {
@@ -11,7 +11,7 @@ class UsersMembershipService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -27,7 +27,7 @@ class UsersMembershipService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);

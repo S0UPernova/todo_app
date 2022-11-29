@@ -1,6 +1,6 @@
 import { baseUrl } from "../utilities/Statics"
-
-class TeamsRequestService {
+import ResAlertHelper from "../utilities/ResAlertHelper"
+class TeamsRequestService extends ResAlertHelper {
 
   getRequests = async (team_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}/requests`, {
@@ -11,7 +11,7 @@ class TeamsRequestService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -27,7 +27,7 @@ class TeamsRequestService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -43,7 +43,7 @@ class TeamsRequestService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -59,7 +59,7 @@ class TeamsRequestService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
@@ -75,7 +75,7 @@ class TeamsRequestService {
       }
     })
       .then(
-        response => response.json()
+        response => this.resAlert(response)
       )
       .catch(err => {
         console.error(err);
