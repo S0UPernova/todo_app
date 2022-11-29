@@ -23,6 +23,8 @@ export default function FormContainer(props) {
     setTask,
     getTasks,
 
+    getUser,
+
     children
   } = props
   const handleBackdrop = () => {
@@ -51,6 +53,8 @@ export default function FormContainer(props) {
         task: task,
         setTask: setTask,
         getTasks: getTasks,
+
+        getUser: getUser
       })
     }
   })

@@ -37,9 +37,11 @@ export default function App() {
       .then(res => {
         // res['token'] && setToken(res['token'])
         // res['user'] && setUser(res['user'])
-        setCookie('token', res['token'], {sameSite: true})
-        setCookie('user', res['user'], {sameSite: true})
-        // console.log(res['user'])
+        if (res['token'] && res['user']) {
+          setCookie('token', res['token'], { sameSite: true })
+          setCookie('user', res['user'], { sameSite: true })
+        }
+
       })
       .then(() => {
         e.target.email.value = ""

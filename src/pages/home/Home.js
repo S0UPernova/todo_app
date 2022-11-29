@@ -9,7 +9,7 @@ import TeamDropdowns from './components/Dropdowns'
 import PendingTasks from './components/PendingTasks'
 import CompletedTasks from './components/CompletedTasks'
 
-import FormContainer from './components/FormContainer'
+import FormContainer from '../../components/FormContainer'
 import TeamForm from './components/TeamForm'
 import ProjectForm from './components/ProjectForm'
 import TaskForm from "./components/TaskForm"
