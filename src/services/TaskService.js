@@ -4,17 +4,16 @@ import ResAlertHelper from "../utilities/ResAlertHelper"
 class TaskService extends ResAlertHelper {
   constructor() {
     this.headers = {
-    "Content-Type": "application/json",
-    "Authorization": token,
-    'Access-Control-Allow-Origin': origin,
-    'Access-Control-Allow-Credentials': 'true'
-  }
+      "Content-Type": "application/json",
+      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Credentials': 'true'
+    }
   }
   postTask = async (team_id, project_id, params, token) => {
     const justFilledFields = FilterParams(params)
     return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}/tasks`, {
       "method": "POST",
-      "headers": this.headers,
+      "headers": {...this.headers,"Authorization": token,},
       "body": JSON.stringify({ "task": { ...justFilledFields } })
     })
       .then(
@@ -28,7 +27,7 @@ class TaskService extends ResAlertHelper {
   getTasks = async (team_id, project_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}/tasks`, {
       "method": "GET",
-      "headers": this.headers
+      "headers": {...this.headers,"Authorization": token,}
     })
       .then(
         response => this.resAlert(response)
@@ -41,7 +40,7 @@ class TaskService extends ResAlertHelper {
   getTask = async (team_id, project_id, task_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}/tasks/${task_id}`, {
       "method": "GET",
-      "headers": this.headers
+      "headers": {...this.headers,"Authorization": token,}
     })
       .then(
         response => this.resAlert(response)
@@ -55,7 +54,7 @@ class TaskService extends ResAlertHelper {
     const justFilledFields = FilterParams(params)
     return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}/tasks/${task_id}`, {
       "method": "PATCH",
-      "headers": this.headers,
+      "headers": {...this.headers,"Authorization": token,},
       "body": JSON.stringify({ "task": { ...justFilledFields } })
     })
       .then(
@@ -69,7 +68,7 @@ class TaskService extends ResAlertHelper {
   deleteTask = async (team_id, project_id, task_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}/tasks/${task_id}`, {
       "method": "DELETE",
-      "headers": this.headers
+      "headers": {...this.headers,"Authorization": token,}
     })
       .catch(err => {
         console.error(err);
