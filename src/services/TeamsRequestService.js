@@ -1,7 +1,7 @@
 import { baseUrl, origin } from "../utilities/Statics"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 class TeamsRequestService extends ResAlertHelper {
-  cconstructor(props) {
+  constructor(props) {
     super(props)
     this.headers = {
       "Content-Type": "application/json",
