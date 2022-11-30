@@ -8,8 +8,7 @@ export default function SignUp() {
   }
   const [formState, setFormState] = useState(formStates[1])
   return (
-    <>
-      <div>This is the signup page</div>
+    <div className='main'>
       <div className="formContainer">
         <form className="form">
           <UserForm
@@ -22,6 +21,6 @@ export default function SignUp() {
       </div>
 
 
-    </>
+    </div>
   )
 }

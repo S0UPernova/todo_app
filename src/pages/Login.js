@@ -18,7 +18,7 @@ export default function Login(props) {
             </label>
             <button type="submit">Log In</button>
           </form>
-        <p>Don't have an account?
+        <p id='signup'>Don't have an account?
           {' '}
           <NavLink to="/signup">
             {/* <button className='btn primary hover'>Teams</button> */}

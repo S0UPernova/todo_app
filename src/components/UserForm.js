@@ -174,6 +174,7 @@ export default function UserForm(props) {
           id="password"
           onChange={handleChange}
           value={formInput.password}
+          type="password"
           name="password"
         ></input>
       </label>
@@ -184,6 +185,7 @@ export default function UserForm(props) {
           id="passwordConfirmation"
           onChange={handleChange}
           value={formInput.passwordConfirmation}
+          type="password"
           name="passwordConfirmation"
         ></input>
       </label>
@@ -194,6 +196,7 @@ export default function UserForm(props) {
           id="currentPassword"
           onChange={handleChange}
           value={formInput.currentPassword}
+          type="password"
           name="currentPassword"
         ></input>
       </label>}
