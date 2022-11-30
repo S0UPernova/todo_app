@@ -5,7 +5,6 @@ import { useCookies } from 'react-cookie';
 import './App.scss';
 
 import Nav from "./layout/Nav"
-import Footer from './layout/Footer'
 
 import Home from './pages/home/Home'
 import HomeNotLoggedIn from './pages/StaticHome'
@@ -72,7 +71,7 @@ export default function App() {
         <Route path="/teams/:teamId" element={cookies.user ? <Team user={cookies.user} token={cookies.token} /> : <RedirectToLogin />} />
         <Route path="/signup" element={!cookies.user ? <SignUp /> : <Home user={cookies.user} token={cookies.token} />} />
       </Routes>
-      <Footer />
+      <footer><h4>Footer</h4></footer>
     </div>
   )
 }
