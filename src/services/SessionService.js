@@ -2,14 +2,16 @@ import { baseUrl } from "../utilities/Statics"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 
 class SessionService extends ResAlertHelper {
-
+  headers = {
+    "Content-Type": "application/json",
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Credentials': 'true'
+  }
   newSession = async (email, password) => {
     return fetch(`${baseUrl}/login`, {
       "method": "POST",
-      "headers": {
-        "Content-Type": "application/json"
-      },
-      "body": JSON.stringify({ "user": {email: email, password: password} })
+      "headers": headers,
+      "body": JSON.stringify({ "user": { email: email, password: password } })
     })
       .then(
         response => {

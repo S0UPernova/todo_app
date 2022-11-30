@@ -3,12 +3,15 @@ import ResAlertHelper from "../utilities/ResAlertHelper"
 class TeamsRequestService extends ResAlertHelper {
 
   getRequests = async (team_id, token) => {
+    headers = {
+      "Content-Type": "application/json",
+      "Authorization": token,
+      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Credentials': 'true'
+    }
     return fetch(`${baseUrl}/teams/${team_id}/requests`, {
       "method": "GET",
-      "headers": {
-        "Content-Type": "application/json",
-        "Authorization": token
-      }
+      "headers": headers
     })
       .then(
         response => this.resAlert(response)
@@ -21,10 +24,7 @@ class TeamsRequestService extends ResAlertHelper {
   getRequest = async (team_id, request_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}/requests/${request_id}`, {
       "method": "GET",
-      "headers": {
-        "Content-Type": "application/json",
-        "Authorization": token
-      }
+      "headers": headers
     })
       .then(
         response => this.resAlert(response)
@@ -37,10 +37,7 @@ class TeamsRequestService extends ResAlertHelper {
   createRequest = async (team_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}/requests`, {
       "method": "POST",
-      "headers": {
-        "Content-Type": "application/json",
-        "Authorization": token
-      }
+      "headers": headers
     })
       .then(
         response => this.resAlert(response)
@@ -53,10 +50,7 @@ class TeamsRequestService extends ResAlertHelper {
   accept = async (team_id, request_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}/requests/${request_id}/accept`, {
       "method": "PATCH",
-      "headers": {
-        "Content-Type": "application/json",
-        "Authorization": token
-      }
+      "headers": headers
     })
       .then(
         response => this.resAlert(response)
@@ -69,10 +63,7 @@ class TeamsRequestService extends ResAlertHelper {
   reject = async (team_id, request_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}/requests/${request_id}/reject`, {
       "method": "PATCH",
-      "headers": {
-        "Content-Type": "application/json",
-        "Authorization": token
-      }
+      "headers": headers
     })
       .then(
         response => this.resAlert(response)

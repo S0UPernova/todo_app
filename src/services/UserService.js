@@ -2,14 +2,17 @@ import { baseUrl } from "../utilities/Statics"
 import FilterParams from "../utilities/FilterParams"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 class UserService extends ResAlertHelper{
-
+  headers = {
+    "Content-Type": "application/json",
+    "Authorization": token,
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Credentials': 'true'
+  }
   postUser = async (params) => {
     const justFilledFields = FilterParams(params)
     return fetch(`${baseUrl}/users`, {
       "method": "POST",
-      "headers": {
-        "Content-Type": "application/json"
-      },
+      "headers": headers,
       "body": JSON.stringify({ "user": { ...justFilledFields } })
     })
       .then(
@@ -23,10 +26,7 @@ class UserService extends ResAlertHelper{
   getUsers = async (token) => {
     return fetch(`${baseUrl}/users`, {
       "method": "GET",
-      "headers": {
-        "Content-Type": "application/json",
-        "Authorization": token
-      }
+      "headers": headers
     })
       .then(
         response => this.resAlert(response)
@@ -39,10 +39,7 @@ class UserService extends ResAlertHelper{
   getUser = async (user_id, token) => {
     return fetch(`${baseUrl}/users/${user_id}`, {
       "method": "GET",
-      "headers": {
-        "Content-Type": "application/json",
-        "Authorization": token
-      }
+      "headers": headers
     })
       .then(
         response => this.resAlert(response)
@@ -56,10 +53,7 @@ class UserService extends ResAlertHelper{
     const justFilledFields = FilterParams(params)
     return fetch(`${baseUrl}/users/${user_id}`, {
       "method": "PATCH",
-      "headers": {
-        "Content-Type": "application/json",
-        "Authorization": token
-      },
+      "headers": headers,
       "body": JSON.stringify({ "user": { ...justFilledFields } })
     })
       .then(
@@ -73,10 +67,7 @@ class UserService extends ResAlertHelper{
   deleteUser = async (user_id, token) => {
     return fetch(`${baseUrl}/users/${user_id}`, {
       "method": "DELETE",
-      "headers": {
-        "Content-Type": "application/json",
-        "Authorization": token
-      }
+      "headers": headers
     })
       .then(
         response => this.resAlert(response)
