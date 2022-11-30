@@ -59,7 +59,7 @@ export default function ProjectForm(props) {
             )
           })
           return (
-            <ul className="border new-scrollbar">
+            <ul className="rounded border new-scrollbar">
               {rtnVal}
             </ul>
           )

@@ -6,7 +6,7 @@ export default function Login(props) {
   return (
     <>
       <div className="main d-flex flex-d-col">
-        <div className="formContainer">
+        <div className="formContainer d-flex flex-d-col">
           <form id="loginForm" className="form" onSubmit={handleLogIn}>
             <label>
               Email:
@@ -18,8 +18,6 @@ export default function Login(props) {
             </label>
             <button type="submit">Log In</button>
           </form>
-        </div>
-
         <p>Don't have an account?
           {' '}
           <NavLink to="/signup">
@@ -27,6 +25,7 @@ export default function Login(props) {
             Sign up
           </NavLink>
         </p>
+        </div>
       </div>
 
 
