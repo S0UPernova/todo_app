@@ -1,4 +1,4 @@
-import { baseUrl } from "../utilities/Statics";
+import { baseUrl, origin } from "../utilities/Statics";
 import FilterParams from "../utilities/FilterParams"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 class TeamService extends ResAlertHelper {

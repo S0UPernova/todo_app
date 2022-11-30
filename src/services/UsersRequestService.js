@@ -1,4 +1,4 @@
-import { baseUrl } from "../utilities/Statics"
+import { baseUrl, origin } from "../utilities/Statics"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 class UsersRequestService extends ResAlertHelper {
   headers = {
