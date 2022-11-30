@@ -1,5 +1,5 @@
 import { Route, Routes, useNavigate } from 'react-router-dom'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useCookies } from 'react-cookie';
 
 import './App.scss';
@@ -38,9 +38,8 @@ export default function App() {
         // res['token'] && setToken(res['token'])
         // res['user'] && setUser(res['user'])
         if (res['token'] && res['user']) {
-          console.log(res['user'])
           setCookie('token', res['token'], { sameSite: true })
-          setCookie('user',{id: res['user'].id}, { sameSite: true })
+          setCookie('user', res['user'], { sameSite: true })
         }
 
       })
