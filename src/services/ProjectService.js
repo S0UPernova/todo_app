@@ -2,7 +2,8 @@ import { baseUrl, origin } from "../utilities/Statics"
 import FilterParams from "../utilities/FilterParams"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 class ProjectService extends ResAlertHelper {
-  constructor() {
+  constructor(props) {
+    super(props)
     this.headers = {
       "Content-Type": "application/json",
       'Access-Control-Allow-Origin': origin,

@@ -1,7 +1,8 @@
 import { baseUrl, origin } from "../utilities/Statics"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 class TeamsRequestService extends ResAlertHelper {
-  constructor() {
+  cconstructor(props) {
+    super(props)
     this.headers = {
       "Content-Type": "application/json",
       'Access-Control-Allow-Origin': origin,
@@ -12,7 +13,7 @@ class TeamsRequestService extends ResAlertHelper {
 
     return fetch(`${baseUrl}/teams/${team_id}/requests`, {
       "method": "GET",
-      "headers": {...this.headers,"Authorization": token,}
+      "headers": { ...this.headers, "Authorization": token, }
     })
       .then(
         response => this.resAlert(response)
@@ -25,7 +26,7 @@ class TeamsRequestService extends ResAlertHelper {
   getRequest = async (team_id, request_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}/requests/${request_id}`, {
       "method": "GET",
-      "headers": {...this.headers,"Authorization": token,}
+      "headers": { ...this.headers, "Authorization": token, }
     })
       .then(
         response => this.resAlert(response)
@@ -38,7 +39,7 @@ class TeamsRequestService extends ResAlertHelper {
   createRequest = async (team_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}/requests`, {
       "method": "POST",
-      "headers": {...this.headers,"Authorization": token,}
+      "headers": { ...this.headers, "Authorization": token, }
     })
       .then(
         response => this.resAlert(response)
@@ -51,7 +52,7 @@ class TeamsRequestService extends ResAlertHelper {
   accept = async (team_id, request_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}/requests/${request_id}/accept`, {
       "method": "PATCH",
-      "headers": {...this.headers,"Authorization": token,}
+      "headers": { ...this.headers, "Authorization": token, }
     })
       .then(
         response => this.resAlert(response)
@@ -64,7 +65,7 @@ class TeamsRequestService extends ResAlertHelper {
   reject = async (team_id, request_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}/requests/${request_id}/reject`, {
       "method": "PATCH",
-      "headers": {...this.headers,"Authorization": token,}
+      "headers": { ...this.headers, "Authorization": token, }
     })
       .then(
         response => this.resAlert(response)

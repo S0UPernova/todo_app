@@ -1,7 +1,8 @@
 import { baseUrl, origin } from "../utilities/Statics"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 class UsersMembershipService extends ResAlertHelper {
-  constructor() {
+  constructor(props) {
+    super(props)
     this.headers = {
       "Content-Type": "application/json",
       'Access-Control-Allow-Origin': origin,
@@ -11,7 +12,7 @@ class UsersMembershipService extends ResAlertHelper {
   getMemberships = async (user_id, token) => {
     return fetch(`${baseUrl}/users/${user_id}/memberships`, {
       "method": "GET",
-      "headers": {...this.headers,"Authorization": token,} 
+      "headers": { ...this.headers, "Authorization": token, }
     })
       .then(
         response => this.resAlert(response)
@@ -24,7 +25,7 @@ class UsersMembershipService extends ResAlertHelper {
   getMembership = async (user_id, membership_id, token) => {
     return fetch(`${baseUrl}/users/${user_id}/memberships/${membership_id}`, {
       "method": "GET",
-      "headers": {...this.headers,"Authorization": token,} 
+      "headers": { ...this.headers, "Authorization": token, }
     })
       .then(
         response => this.resAlert(response)
@@ -37,7 +38,7 @@ class UsersMembershipService extends ResAlertHelper {
   deleteMembership = async (user_id, membership_id, token) => {
     return fetch(`${baseUrl}/users/${user_id}/memberships/${membership_id}`, {
       "method": "DELETE",
-      "headers": {...this.headers,"Authorization": token,} 
+      "headers": { ...this.headers, "Authorization": token, }
     })
       .then(
         response => response

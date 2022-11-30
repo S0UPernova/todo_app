@@ -2,13 +2,15 @@ import { baseUrl, origin } from "../utilities/Statics"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 
 class SessionService extends ResAlertHelper {
-  constructor() {
+  constructor(props) {
+    super(props)
     this.headers = {
       "Content-Type": "application/json",
       'Access-Control-Allow-Origin': origin,
       'Access-Control-Allow-Credentials': 'true'
     }
-  }Session = async (email, password) => {
+  }
+  Session = async (email, password) => {
     return fetch(`${baseUrl}/login`, {
       "method": "POST",
       "headers": this.headers,

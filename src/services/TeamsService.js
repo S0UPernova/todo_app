@@ -2,7 +2,8 @@ import { baseUrl, origin } from "../utilities/Statics";
 import FilterParams from "../utilities/FilterParams"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 class TeamService extends ResAlertHelper {
-  constructor() {
+  constructor(props) {
+    super(props)
     this.headers = {
       "Content-Type": "application/json",
       'Access-Control-Allow-Origin': origin,
@@ -13,7 +14,7 @@ class TeamService extends ResAlertHelper {
     const justFilledFields = FilterParams(params)
     return fetch(`${baseUrl}/teams/${team_id}`, {
       "method": "POST",
-      "headers": {...this.headers,"Authorization": token,} ,
+      "headers": { ...this.headers, "Authorization": token, },
       "body": JSON.stringify({ "team": { ...justFilledFields } })
     })
       .then(
@@ -23,11 +24,11 @@ class TeamService extends ResAlertHelper {
         console.error(err);
       })
   }
-  
+
   getTeams = async (token) => {
     return fetch(`${baseUrl}/teams`, {
       "method": "GET",
-      "headers": {...this.headers,"Authorization": token,} 
+      "headers": { ...this.headers, "Authorization": token, }
     })
       .then(
         response => this.resAlert(response)
@@ -40,7 +41,7 @@ class TeamService extends ResAlertHelper {
   discoverTeams = async (token) => {
     return fetch(`${baseUrl}/teams/discover`, {
       "method": "GET",
-      "headers": {...this.headers,"Authorization": token,} 
+      "headers": { ...this.headers, "Authorization": token, }
     })
       .then(
         response => this.resAlert(response)
@@ -53,7 +54,7 @@ class TeamService extends ResAlertHelper {
   getTeam = async (team_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}`, {
       "method": "GET",
-      "headers": {...this.headers,"Authorization": token,} 
+      "headers": { ...this.headers, "Authorization": token, }
     })
       .then(
         response => this.resAlert(response)
@@ -67,7 +68,7 @@ class TeamService extends ResAlertHelper {
     const justFilledFields = FilterParams(params)
     return fetch(`${baseUrl}/teams/${team_id}`, {
       "method": "PATCH",
-      "headers": {...this.headers,"Authorization": token,} ,
+      "headers": { ...this.headers, "Authorization": token, },
       "body": JSON.stringify({ "team": { ...justFilledFields } })
     })
       .then(
@@ -81,7 +82,7 @@ class TeamService extends ResAlertHelper {
   deleteTeam = async (team_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}`, {
       "method": "DELETE",
-      "headers": {...this.headers,"Authorization": token,} 
+      "headers": { ...this.headers, "Authorization": token, }
     })
       .then(
         response => this.resAlert(response)
