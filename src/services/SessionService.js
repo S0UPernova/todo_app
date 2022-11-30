@@ -10,7 +10,7 @@ class SessionService extends ResAlertHelper {
       'Access-Control-Allow-Credentials': 'true'
     }
   }
-  Session = async (email, password) => {
+  newSession = async (email, password) => {
     return fetch(`${baseUrl}/login`, {
       "method": "POST",
       "headers": this.headers,
