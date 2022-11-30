@@ -1,16 +1,18 @@
 import { baseUrl, origin } from "../utilities/Statics"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 class UsersRequestService extends ResAlertHelper {
-  headers = {
+  constructor() {
+    this.headers = {
     "Content-Type": "application/json",
     "Authorization": token,
     'Access-Control-Allow-Origin': origin,
     'Access-Control-Allow-Credentials': 'true'
   }
+  }
   getRequests = async (user_id, token) => {
     return fetch(`${baseUrl}/users/${user_id}/requests`, {
       "method": "GET",
-      "headers": headers
+      "headers": this.headers 
     })
       .then(
         response => this.resAlert(response)
@@ -23,7 +25,7 @@ class UsersRequestService extends ResAlertHelper {
   getRequest = async (user_id, request_id, token) => {
     return fetch(`${baseUrl}/users/${user_id}/requests/${request_id}`, {
       "method": "GET",
-      "headers": headers
+      "headers": this.headers 
     })
       .then(
         response => this.resAlert(response)
@@ -52,7 +54,7 @@ class UsersRequestService extends ResAlertHelper {
   accept = async (user_id, request_id, token) => {
     return fetch(`${baseUrl}/users/${user_id}/requests/${request_id}/accept`, {
       "method": "PATCH",
-      "headers": headers
+      "headers": this.headers 
     })
       .then(
         response => this.resAlert(response)
@@ -65,7 +67,7 @@ class UsersRequestService extends ResAlertHelper {
   reject = async (user_id, request_id, token) => {
     return fetch(`${baseUrl}/users/${user_id}/requests/${request_id}/reject`, {
       "method": "PATCH",
-      "headers": headers
+      "headers": this.headers 
     })
       .then(
         response => this.resAlert(response)
@@ -78,7 +80,7 @@ class UsersRequestService extends ResAlertHelper {
   deleteRequest = async (user_id, request_id, token) => {
     return fetch(`${baseUrl}/users/${user_id}/requests/${request_id}`, {
       "method": "DELETE",
-      "headers": headers
+      "headers": this.headers 
     })
       .then(
         response => this.resAlert(response)

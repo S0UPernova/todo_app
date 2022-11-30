@@ -2,15 +2,16 @@ import { baseUrl, origin } from "../utilities/Statics"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 
 class SessionService extends ResAlertHelper {
-  headers = {
-    "Content-Type": "application/json",
-    'Access-Control-Allow-Origin': origin,
-    'Access-Control-Allow-Credentials': 'true'
-  }
-  newSession = async (email, password) => {
+  constructor() {
+    this.headers = {
+      "Content-Type": "application/json",
+      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Credentials': 'true'
+    }
+  }Session = async (email, password) => {
     return fetch(`${baseUrl}/login`, {
       "method": "POST",
-      "headers": headers,
+      "headers": this.headers,
       "body": JSON.stringify({ "user": { email: email, password: password } })
     })
       .then(

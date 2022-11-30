@@ -1,17 +1,19 @@
 import { baseUrl, origin } from "../utilities/Statics"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 class TeamsRequestService extends ResAlertHelper {
-
-  getRequests = async (team_id, token) => {
-    headers = {
+  constructor() {
+    this.headers = {
       "Content-Type": "application/json",
       "Authorization": token,
       'Access-Control-Allow-Origin': origin,
       'Access-Control-Allow-Credentials': 'true'
     }
+  }
+  getRequests = async (team_id, token) => {
+
     return fetch(`${baseUrl}/teams/${team_id}/requests`, {
       "method": "GET",
-      "headers": headers
+      "headers": this.headers
     })
       .then(
         response => this.resAlert(response)
@@ -24,7 +26,7 @@ class TeamsRequestService extends ResAlertHelper {
   getRequest = async (team_id, request_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}/requests/${request_id}`, {
       "method": "GET",
-      "headers": headers
+      "headers": this.headers
     })
       .then(
         response => this.resAlert(response)
@@ -37,7 +39,7 @@ class TeamsRequestService extends ResAlertHelper {
   createRequest = async (team_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}/requests`, {
       "method": "POST",
-      "headers": headers
+      "headers": this.headers
     })
       .then(
         response => this.resAlert(response)
@@ -50,7 +52,7 @@ class TeamsRequestService extends ResAlertHelper {
   accept = async (team_id, request_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}/requests/${request_id}/accept`, {
       "method": "PATCH",
-      "headers": headers
+      "headers": this.headers
     })
       .then(
         response => this.resAlert(response)
@@ -63,7 +65,7 @@ class TeamsRequestService extends ResAlertHelper {
   reject = async (team_id, request_id, token) => {
     return fetch(`${baseUrl}/teams/${team_id}/requests/${request_id}/reject`, {
       "method": "PATCH",
-      "headers": headers
+      "headers": this.headersF
     })
       .then(
         response => this.resAlert(response)
