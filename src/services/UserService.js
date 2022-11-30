@@ -13,7 +13,7 @@ class UserService extends ResAlertHelper{
     const justFilledFields = FilterParams(params)
     return fetch(`${baseUrl}/users`, {
       "method": "POST",
-      "headers": {...this.headers,"Authorization": token,} ,
+      "headers": {...this.headers} ,
       "body": JSON.stringify({ "user": { ...justFilledFields } })
     })
       .then(
