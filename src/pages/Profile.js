@@ -25,10 +25,11 @@ export default function Profile(props) {
   }
   useEffect(() => {
     getUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.user.id, props.token])
   return (
     <>
-      <div id='profile' className='container d-flex flex-d-col align-items-center justify-content-center border bg-primary'>
+      <div id='profile' className='d-flex flex-d-col align-items-center justify-content-center border bg-primary p-1'>
         <h1 className='d-flex'>Profile <button
             onClick={() => setFormState(formStates[1])}
             className="icon-button ml-1 icon-button-no-background"><i className="icon"><BsGearWide /></i>

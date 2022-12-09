@@ -66,6 +66,7 @@ export default function Teams(props) {
     getDiscoverTeams()
     getTeams()
     getMemberships()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, token])
   return (
     <div id='teams' className='main'>

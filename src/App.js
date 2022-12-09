@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Link, Route, Routes, useNavigate } from 'react-router-dom'
 import React, { useEffect } from 'react'
 import { useCookies } from 'react-cookie';
 
@@ -14,6 +14,11 @@ import Teams from './pages/teams/Teams'
 import Profile from './pages/Profile'
 import sessionService from './services/SessionService'
 import SignUp from './pages/Signup';
+
+import Contact from './pages/Contact';
+import Disclaimer from './pages/Disclaimer';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 
 export function RedirectToLogin() {
@@ -59,7 +64,7 @@ export default function App() {
   // console.log(cookies.token)
 
   return (
-    <div className='container d-flex flex-d-col align-items-center'>
+    <div className='main d-flex flex-d-col align-items-center'>
       <header>
         <Nav user={cookies.user} token={cookies.token} handleLogOut={handleLogOut} />
       </header>
@@ -70,8 +75,37 @@ export default function App() {
         <Route exaxt path="/teams" element={cookies.user ? <Teams user={cookies.user} token={cookies.token} /> : <RedirectToLogin />} />
         <Route path="/teams/:teamId" element={cookies.user ? <Team user={cookies.user} token={cookies.token} /> : <RedirectToLogin />} />
         <Route path="/signup" element={!cookies.user ? <SignUp /> : <Home user={cookies.user} token={cookies.token} />} />
+        <Route path='/contact' element={<Contact />} />
+        <Route path='/disclaimer' element={<Disclaimer />} />
+        <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+        <Route path='/terms-of-service' element={<TermsOfService />} />
       </Routes>
-      <footer><h4>Footer</h4></footer>
+      <footer className='bg-secondary rounded border d-flex justify-content-center'>
+        <ul className='border-right d-flex flex-d-col align-items-end'>
+          <li>
+            <Link to="/contact">
+              Contact
+            </Link>
+          </li>
+          <li>
+            <Link to="/disclaimer">
+              Disclaimer
+            </Link>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <Link to="/privacy-policy">
+              Privacy Policy
+            </Link>
+          </li>
+          <li>
+            <Link to="/terms-of-service">
+              Terms of Service
+            </Link>
+          </li>
+        </ul>
+      </footer>
     </div>
   )
 }

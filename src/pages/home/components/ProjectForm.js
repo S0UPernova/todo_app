@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import projectService from "../../../services/ProjectService"
 // todo make json requirements optional
 export default function ProjectForm(props) {

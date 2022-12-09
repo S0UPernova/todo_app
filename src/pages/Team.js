@@ -24,6 +24,7 @@ export default function Team(props) {
   }
   useEffect(() => {
     getTeam()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, token, teamId])
 
   useEffect(() => {
@@ -41,17 +42,19 @@ export default function Team(props) {
         teamsRequestService.createRequest(team.id, token)
           // .then(res => { alert(res) })
           .catch(err => console.error(err))
-          getTeam()
+        getTeam()
         break
       case "acceptRequest":
         teamsRequestService.accept(team.id, e.target.dataset.request_id, token)
           // .then(res => { alert(res) })
           .catch(err => console.error(err))
-          getTeam()
+        getTeam()
         break
       case "rejectRequest":
         teamsRequestService.reject(team.id, e.target.dataset.request_id, token)
         getTeam()
+        break
+      default:
         break
     }
   }

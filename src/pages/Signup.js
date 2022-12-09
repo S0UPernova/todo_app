@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { RedirectToLogin } from '../App'
 import UserForm from '../components/UserForm'
 export default function SignUp() {
   const formStates = {

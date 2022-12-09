@@ -18,6 +18,7 @@ export default function Requests(props) {
 
   useEffect(() => {
     getRequests()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, token])
 
   const handleClick = async (e) => {
@@ -51,7 +52,7 @@ export default function Requests(props) {
       teamService.getTeam(request.team_id, token)
         .then(res => setTeam(res))
         .catch(err => console.error(err))
-    }, [])
+    }, [request.team_id, token])
     return (
       team && request && <div className={DivClassName}>
         {team.name && <Link className='team-name' to={`${team.id}`}><h3>{team.name}</h3></Link>}

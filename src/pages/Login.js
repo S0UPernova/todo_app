@@ -7,7 +7,7 @@ export default function Login(props) {
     <>
       <div className="main d-flex flex-d-col">
         <div className="formContainer d-flex flex-d-col">
-          <form id="loginForm" className="form" onSubmit={handleLogIn}>
+          <form className="form" onSubmit={handleLogIn}>
             <label>
               Email:
               <input required id="email" type="email" name="email"></input>
