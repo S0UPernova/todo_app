@@ -12,6 +12,7 @@ export default function Nav(props) {
       case "logout":
         if (window.confirm("are you sure")) {
           props.handleLogOut()
+          setHidden(true)
           navigate(`/`)
         }
         break
@@ -52,25 +53,25 @@ export default function Nav(props) {
       <nav>
         {!hidden | !smallWindow ? <ul>
           <li>
-            <NavLink to="/" className='btn primary hover'>
+            <NavLink to="/" onClick={() => {setHidden(true)}} className='btn primary hover'>
               {/* <button className='btn primary hover'>Home</button> */}
               Home
             </NavLink>
           </li>
           <li>
-            <NavLink to="/teams" className='btn primary hover'>
+            <NavLink to="/teams" onClick={() => {setHidden(true)}} className='btn primary hover'>
               {/* <button className='btn primary hover'>Teams</button> */}
               Teams
             </NavLink>
           </li>
           {props.user && <li className='ml-auto'>
-            <NavLink to={`/profile`} className='btn primary hover'>
+            <NavLink to={`/profile`} onClick={() => {setHidden(true)}} className='btn primary hover'>
               {/* <button className='btn primary hover'>Profile</button> */}
               Profile
             </NavLink>
           </li>}
           {!props.user && <li className='ml-auto'>
-            <NavLink to="/login" className='btn primary hover'>
+            <NavLink to="/login" onClick={() => {setHidden(true)}} className='btn primary hover'>
               {/* <button className='btn primary hover'>Log In</button> */}
               Log In
             </NavLink>

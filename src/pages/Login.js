@@ -5,8 +5,8 @@ export default function Login(props) {
   const { handleLogIn } = props
   return (
     <>
-      <div className="main d-flex flex-d-col">
-        <div className="formContainer d-flex flex-d-col">
+      <div className=" main d-flex flex-d-col">
+        <div className="login-contaner formContainer d-flex flex-d-col">
           <form className="form" onSubmit={handleLogIn}>
             <label>
               Email:
