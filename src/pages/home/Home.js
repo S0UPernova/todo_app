@@ -54,18 +54,19 @@ export default function Home(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTeam, selectedProject, user])
 
-  useEffect(() => {
-    setFormState(formStates[0])
-    window.addEventListener("resize", () => {
-      setFormState(formStates[0])
-    })
-    return () => {
-      window.removeEventListener("resize", () => {
-        setFormState(formStates[0])
-      })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // ? why did I have this again?
+  // useEffect(() => {
+  //   setFormState(formStates[0])
+  //   window.addEventListener("resize", () => {
+  //     setFormState(formStates[0])
+  //   })
+  //   return () => {
+  //     window.removeEventListener("resize", () => {
+  //       setFormState(formStates[0])
+  //     })
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
   useEffect(() => {
     if (user) {
