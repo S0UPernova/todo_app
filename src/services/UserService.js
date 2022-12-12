@@ -51,6 +51,19 @@ class UserService extends ResAlertHelper {
       })
   }
 
+  activateUser = async (email, activation_token) => {
+    return fetch(`${baseUrl}/account_activations/${activation_token}/edit?email=${email}`, {
+      "method": "GET",
+      "headers": { ...this.headers }
+    })
+      .then(
+        response => this.resAlert(response)
+      )
+      .catch(err => {
+        console.error(err);
+      })
+  }
+
   updateUser = async (user_id, params, token) => {
     const justFilledFields = FilterParams(params)
     return fetch(`${baseUrl}/users/${user_id}`, {

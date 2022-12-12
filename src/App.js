@@ -19,6 +19,7 @@ import Contact from './pages/Contact';
 import Disclaimer from './pages/Disclaimer';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import Activate from './pages/Activate';
 
 
 export function RedirectToLogin() {
@@ -79,6 +80,11 @@ export default function App() {
         <Route path='/disclaimer' element={<Disclaimer />} />
         <Route path='/privacy-policy' element={<PrivacyPolicy />} />
         <Route path='/terms-of-service' element={<TermsOfService />} />
+        <Route path='/activate' element={<RedirectToLogin />}>
+          <Route path=':activation' element={<RedirectToLogin />}>
+            <Route path=':email' element={<Activate />}></Route>
+          </Route>
+        </Route>
       </Routes>
       <footer className='bg-secondary rounded border d-flex justify-content-center'>
         <ul className='border-right d-flex flex-d-col align-items-end'>

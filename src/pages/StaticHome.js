@@ -7,9 +7,7 @@ export default function HomeNotLoggedIn() {
         <h3>Here is a list of some of the things you can do here</h3>
         <ol className='d-flex flex-d-col gap-1'>
           <li>
-            <s>
               Create a user
-            </s>
           </li>
           <li>
             Create a team

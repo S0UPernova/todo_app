@@ -16,16 +16,19 @@ footer {
   min-height: 4rem;
   width: 100%;
   margin: 1rem 0;
+
   ul {
     padding: 0 1rem;
     list-style: none;
   }
 }
+
 .border-right {
   border-right: 1px solid black;
 }
+
 #profile {
- min-height: 40vh; 
+  min-height: 40vh;
 }
 
 #signup {
@@ -60,6 +63,27 @@ footer {
 .ml-1 {
   margin-left: 1rem;
 }
+
+.mt-1 {
+  margin-top: 1rem;
+}
+
+.mt-2 {
+  margin-top: 2rem;
+}
+
+.mt-3 {
+  margin-top: 3rem;
+}
+
+.mt-4 {
+  margin-top: 4rem;
+}
+
+.mt-5 {
+  margin-top: 5rem;
+}
+
 
 .hamburger {
   // position: relative;
