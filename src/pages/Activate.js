@@ -9,14 +9,17 @@ export default function Activate() {
     const queryParams = new URLSearchParams(location.search)
     const email = queryParams.get('amp;email')
     const activation = queryParams.get('activation')
-    setParams({ email: email, activation: activation })
+    if (email && activation) setParams({ email: email, activation: activation })
   }, [])
   useEffect(() => {
     if (params) {
       userService.activateUser(params.email, params.activation).then(res => {
         setMessage("Your account has been activated")
       })
-        .catch(err => setMessage("Something might have gone wrong"))
+        .catch(err => setMessage("Something seems to have gone wrong"))
+    }
+    else {
+      setMessage("Something might have gone wrong")
     }
   }, [params])
   return (
