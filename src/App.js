@@ -80,9 +80,9 @@ export default function App() {
         <Route path='/disclaimer' element={<Disclaimer />} />
         <Route path='/privacy-policy' element={<PrivacyPolicy />} />
         <Route path='/terms-of-service' element={<TermsOfService />} />
-        <Route path='/activate'>
+        <Route path='/activate' element={<Activate />}>
           <Route path=':activation'>
-            <Route path=':email' element={<Activate />}></Route>
+            <Route path=':email'></Route>
           </Route>
         </Route>
       </Routes>

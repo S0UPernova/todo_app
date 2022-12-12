@@ -14,18 +14,16 @@ export default function Activate() {
   useEffect(() => {
     if (params) {
       userService.activateUser(params.email, params.activation).then(res => {
-        if(res.ok) {
-          setMessage("Your account has been activated")
-        }
+        setMessage("Your account has been activated")
       })
         .catch(err => setMessage("Something might have gone wrong"))
     }
   }, [params])
   return (
     <>
-    <div className="main d-flex justify-content-center">
-      <h1 className="mt-5">{message}</h1>
-    </div>
+      <div className="main d-flex justify-content-center">
+        <h1 className="mt-5">{message}</h1>
+      </div>
     </>
   )
 }
