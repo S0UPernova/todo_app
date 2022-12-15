@@ -106,7 +106,7 @@ export default function Home(props) {
         const teamTimer = setTimeout(() => {
           setSelectedTeam(e.target.value)
         }, 200)
-        
+
         return () => clearTimeout(teamTimer)
       case 'project':
         setSelectedProject("")
@@ -184,20 +184,26 @@ export default function Home(props) {
     await usersTeamService.getTeams(user.id, token)
       .then(res => {
         res?.length ? setTeams([...res]) : setTeams([res])
+        if (res.filter(team => Number(team.id) === Number(selectedTeam))[0]) {
+          setTeam(res.filter(team => Number(team.id) === Number(selectedTeam))[0])
+        }
       })
-
     // memberships
     usersMembershipService.getMemberships(user.id, token)
       .then(res => {
         res.forEach(relationship => {
           teamService.getTeam(relationship.team_id, token)
             .then(res => {
+              if (res.filter(team => Number(team.id) === Number(selectedTeam))[0]) {
+                setTeam(res.filter(team => Number(team.id) === Number(selectedTeam))[0])
+              }
+
               if (!memberships.find(membership => {
-                  if (membership.id === res.id) {
-                    return true
-                  }
-                  return false
-                })) {
+                if (membership.id === res.id) {
+                  return true
+                }
+                return false
+              })) {
                 setMemberships([...memberships, res])
               }
               else if (!memberships) {
@@ -208,9 +214,7 @@ export default function Home(props) {
             .catch(err => console.error(err))
         })
       })
-
   }
-
   const getProjects = async () => {
     if (user && selectedTeam) {
       const returnVal = await projectService.getProjects(selectedTeam, token)
@@ -218,7 +222,6 @@ export default function Home(props) {
       setProject(returnVal.filter(project => Number(project.id) === Number(selectedProject))[0])
     } else setProjects([])
   }
-
   const getTasks = async () => {
     setTask("")
     if (selectedProject

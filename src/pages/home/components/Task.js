@@ -15,6 +15,7 @@ export default function Task(props) {
       {
         task.completed !== null | undefined &&
         <button
+        title={task.completed === true ? "Mark not completed" : "Mark completed"}
           className="checkbox icon-button"
           onClick={handleClick}
           value={task.id}
@@ -28,6 +29,7 @@ export default function Task(props) {
       {task.name && <>
         <h4>
           <button
+            title="Edit task"
             name="editButton"
             onClick={handleClick}
             className="icon-button mr-1"

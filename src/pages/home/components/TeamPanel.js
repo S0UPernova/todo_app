@@ -8,13 +8,23 @@ export default function TeamPanel(props) {
       <div id="teamPanel" className="bg-secondary d-flex flex-d-col rounded new-scrollbar border">
         <div className='container'>
           <div className="button-container">
-            <button name="teamAddButton" onClick={handleClick} className="btn primary icon-button"><i className='icon'><MdGroupAdd /></i></button>
-            {selectedTeam && <button
-              name="teamEditButton"
+            <button
+              title='Create new team'
+              name="teamAddButton"
               onClick={handleClick}
-              className='btn primary icon-button'
-            ><i className='icon'><FiEdit /></i>
-            </button>}
+              className="btn primary icon-button"
+            >
+              <i className='icon'><MdGroupAdd /></i>
+            </button>
+            {selectedTeam &&
+              <button
+                title='Edit current team'
+                name="teamEditButton"
+                onClick={handleClick}
+                className='btn primary icon-button'
+              >
+                <i className='icon'><FiEdit /></i>
+              </button>}
           </div>
           <h2>About {team?.name ? team.name : ""}:</h2>
           <p>{team?.description ? team.description : "No description"}</p>

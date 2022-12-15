@@ -35,20 +35,20 @@ export default function TeamForm(props) {
           usersTeamService.postTeam(user.id, params, token)
             .then(() => {
               // setHidden2(true)
-              setFormState(formStates[0])
               getTeams()
               // setTeam("")
-              setFormInput(initialForm)
+              // setFormInput(initialForm)
+              setFormState(formStates[0])
             })
             .catch(err => console.error(err))
         } else if (!add) {
           usersTeamService.updateTeam(user.id, team.id, params, token)
             .then(() => {
               // setHidden2(true)
-              setFormState(formStates[0])
               getTeams()
               // setTeam("")
-              setFormInput(initialForm)
+              // setFormInput(initialForm)
+              setFormState(formStates[0])
             })
             .catch(err => console.error(err))
         }

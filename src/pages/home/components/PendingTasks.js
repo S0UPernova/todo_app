@@ -10,6 +10,7 @@ export default function PendingTasks(props) {
     <div className="pending bg-primary rounded border">
       {selectedProject && selectedProject !=="" &&
         <button
+          title="Create new task"
           name="addButton"
           id="addButton"
           className="addButton btn primary hover icon-button"

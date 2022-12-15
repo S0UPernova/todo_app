@@ -35,14 +35,23 @@ export default function ProjectPanel(props) {
       <div id="projectPanel" className="d-flex flex-d-col bg-secondary rounded new-scrollbar border">
         <div className="container">
           <div className="button-container">
-            {selectedTeam && <button name="projectAddButton" className="btn primary icon-button" onClick={handleClick}>
-              <i className="icon"><TbClipboardPlus /></i>
-            </button>}
-            {selectedProject !== "" && <button
+            {selectedTeam &&
+              <button
+                title="Create new project"
+                name="projectAddButton"
+                className="btn primary icon-button"
+                onClick={handleClick}
+                >
+                <i className="icon"><TbClipboardPlus /></i>
+              </button>
+            }
+            {selectedProject !== "" && 
+            <button
+              title="Edit current project"
               name="projectEditButton"
               onClick={handleClick}
               className="btn primary icon-button"
-            >
+              >
               <i className="icon"><FiEdit /></i>
             </button>}
           </div>

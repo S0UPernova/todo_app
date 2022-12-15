@@ -83,14 +83,14 @@ export default function Teams(props) {
       </div>
       <div id="my-teams" className='d-flex flex-d-col gap-1 bg-primary rounded border p-1 new-scrollbar'>
         <h2>My Teams</h2>
-        {teams?.length && teams.map((team, i) => {
+        {teams?.length ? teams.map((team, i) => {
           return (
             <div key={team.id} className="bg-primary rounded p-1 border">
               {team.name && <Link className='team-name' to={`${team.id}`} state={{ fromMyTeams: true }}><h3 key={`name ${i}`}>{team.name}</h3></Link>}
               {team.description && <p key={`description ${i}`}>{team.description && team.description}</p>}
             </div>
           )
-        })}
+        }): "No teams found"}
       </div>
         <MapMemberships
           teamMemberships={teamMemberships}
