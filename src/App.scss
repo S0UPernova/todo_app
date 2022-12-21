@@ -107,7 +107,7 @@ footer {
   // left: 50%;
   // top: -2.7rem;
   border: none;
-  z-index: 9;
+  z-index: 7;
 
   i {
     pointer-events: none;
@@ -124,7 +124,7 @@ footer {
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 7;
+  z-index: 8;
 }
 
 nav {
@@ -136,7 +136,7 @@ nav {
   top: 2rem;
   margin-left: auto;
   padding-top: 3rem;
-  z-index: 8;
+  z-index: 9;
 
   ul {
     border: 1px solid black;
@@ -365,7 +365,7 @@ nav {
     top: .5rem;
     width: 100%;
     padding-top: 0rem;
-    z-index: 8;
+    z-index: 6;
 
   }
 
