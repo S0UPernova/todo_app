@@ -14,9 +14,13 @@ export default function ResetPassword() {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search)
     setEmail(queryParams.get('email'))
-    setResetToken(queryParams.get('&amp;reset_token'))
-    if (!resetToken) setResetToken(queryParams.get('&reset_token')) //? why you do this to me sendgrid?
-  }, [location?.search])
+    if (queryParams.get('amp;reset_token')) {
+      setResetToken(queryParams.get('amp;reset_token'))
+    }
+    else { //? why you do this to me sendgrid?
+      setResetToken(queryParams.get('reset_token'))
+    } 
+  }, [location])
   const handleChange = (e) => {
     switch (e.target.name) {
       case "password":
