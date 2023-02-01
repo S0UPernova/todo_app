@@ -64,6 +64,33 @@ class UserService extends ResAlertHelper {
       })
   }
 
+  createPasswordReset = async   (email) => {
+    console.log('email', email)
+    return fetch(`${baseUrl}/password_resets/?email=${email}`, {
+      "method": "POST",
+    })
+      .then(
+        response => this.resAlert(response)
+      )
+      .catch(err => {
+        console.error(err);
+      })
+  }
+
+  resetPassword = async (email, reset_token, params) => {
+    return fetch(`${baseUrl}/password_resets/${reset_token}/?email=${email}`, {
+      "method": "PATCH",
+      "headers": { ...this.headers },
+      "body": JSON.stringify({"user": {...params}})
+    })
+      .then(
+        response => this.resAlert(response)
+      )
+      .catch(err => {
+        console.error(err);
+      })
+  }
+
   updateUser = async (user_id, params, token) => {
     const justFilledFields = FilterParams(params)
     return fetch(`${baseUrl}/users/${user_id}`, {

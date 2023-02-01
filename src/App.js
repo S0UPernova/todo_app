@@ -20,6 +20,8 @@ import Disclaimer from './pages/Disclaimer';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import Activate from './pages/Activate';
+import ResetPassword from './pages/Reset_Password';
+import CreateReset from './pages/CreateReset';
 
 
 export function RedirectToLogin() {
@@ -80,6 +82,12 @@ export default function App() {
         <Route path='/disclaimer' element={<Disclaimer />} />
         <Route path='/privacy-policy' element={<PrivacyPolicy />} />
         <Route path='/terms-of-service' element={<TermsOfService />} />
+        <Route path='/forgot-password' element={<CreateReset/>}/>
+        <Route path='/reset' element={<ResetPassword />}>
+          <Route path=':reset'>
+            <Route path=':email'></Route>
+          </Route>
+        </Route>
         <Route path='/activate' element={<Activate />}>
           <Route path=':activation'>
             <Route path=':email'></Route>
