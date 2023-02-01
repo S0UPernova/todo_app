@@ -14,7 +14,8 @@ export default function ResetPassword() {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search)
     setEmail(queryParams.get('email'))
-    setResetToken(queryParams.get('amp;reset_token'))
+    setResetToken(queryParams.get('&amp;reset_token'))
+    if (!resetToken) setResetToken(queryParams.get('&reset_token')) //? why you do this to me sendgrid?
   }, [location?.search])
   const handleChange = (e) => {
     switch (e.target.name) {
@@ -28,11 +29,8 @@ export default function ResetPassword() {
         break
     }
   }
-  // console.log('email', email)
-  // console.log('token', resetToken)
   const handleSubmit = (e) => {
     e.preventDefault()
-    // console.log('here')
     userService.resetPassword(
       email,
       resetToken,
@@ -43,18 +41,15 @@ export default function ResetPassword() {
     )
       .then(res => {
         if (res) {
-          // setPassword("")
-          // setPasswordConfirmation("")
           setRedirect(true)
         }
       })
   }
   return (
     <>
-      {redirect && <RedirectToLogin/>}
+      {redirect && <RedirectToLogin />}
       {!redirect && <div className="main d-flex justify-content-center">
-        <h1>this is the reset path</h1>
-        <div className="formContainer">
+        <div className="formContainerStatic d-flex flex-d-col mt-5">
 
           <form onSubmit={handleSubmit} className="form">
             <label>
@@ -65,7 +60,7 @@ export default function ResetPassword() {
               Please re-enter your new password
               <input name="password_confirmation" type='password' value={passwordConfirmation} onChange={handleChange} />
             </label>
-            <button>Submit</button>
+            <button className="btn success">Submit</button>
           </form>
         </div>
       </div>}
