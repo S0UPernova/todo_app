@@ -1,0 +1,26 @@
+.bg_list {
+  position: fixed;
+  left: 0;
+  top: 0;
+  // opacity: .5;
+  height: 100vh;
+}
+.todo_bg_ul {
+  display: flex;
+  position: relative;
+  top: -5px;
+
+  li {
+    font-size: 16px;
+    font-family: monospace;
+    margin: 0;
+    padding: 10px;
+    line-height: 30px;
+    word-break: break-all;
+  }
+}
+
+.solid_lines {
+  background-image: linear-gradient(#ccc 1px, transparent 1px);
+  background-size: 100% 30px;
+}

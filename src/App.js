@@ -22,6 +22,7 @@ import TermsOfService from './pages/TermsOfService';
 import Activate from './pages/Activate';
 import ResetPassword from './pages/Reset_Password';
 import CreateReset from './pages/CreateReset';
+import TodosBackground from './components/background/todos_background.jsx';
 
 
 export function RedirectToLogin() {
@@ -71,6 +72,7 @@ export default function App() {
       <header>
         <Nav user={cookies.user} token={cookies.token} handleLogOut={handleLogOut} />
       </header>
+      <TodosBackground/>
       <Routes>
         <Route path="/" element={cookies.user ? <Home user={cookies.user} token={cookies.token} /> : <HomeNotLoggedIn />} />
         <Route path="/login" element={<Login user={cookies.user} handleLogIn={handleLogIn} />} />
