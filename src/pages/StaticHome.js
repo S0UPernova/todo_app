@@ -1,6 +1,6 @@
 export default function HomeNotLoggedIn() {
   return (
-    <div className="main container d-flex flex-d-col align-items-center">
+    <div className="main container d-flex flex-d-col align-items-center bg-primary border blur">
 
       <h1>Welcome to my todo app</h1>
       <article>
