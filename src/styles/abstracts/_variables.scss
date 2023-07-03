@@ -1,12 +1,13 @@
 :root {
   --primary-gradient: linear-gradient(45deg, #8fc7ddbd, #7f9eeea8);
-  --secondary-gradient: linear-gradient(45deg, #bfd5deda, #bcc9e8d6);
+  --secondary-gradient: linear-gradient(45deg, #bfd5debe, #bcc9e8be);
+  --secondary-gradient-more-opaque: linear-gradient(45deg, #bfd5dee5, #bcc9e8de);
   --danger-gradient: linear-gradient(45deg, #dd9b8fbd, #dc9178bd);
   --success-gradient: linear-gradient(45deg, #8fddb3bd, #8fddc6bd);
   --inverted-gradient: linear-gradient(225deg, #8fc7ddbd, #7f9eeea8);
   --hue-rotation: hue-rotate(-20deg);
   --inverted-hue-rotation: hue-rotate(20deg);
   --select-border: #777;
-  --bg-primary: rgba(160, 209, 209, 0.5);
-  --bg-secondary: rgba(189, 210, 210, 0.5);
+  --bg-primary: rgb(160, 209, 209, .7);
+  --bg-secondary: rgba(189, 210, 210, .7);
 }

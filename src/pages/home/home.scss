@@ -101,6 +101,8 @@ select {
   font-size: 1.25rem;
   cursor: pointer;
   background-image: var(--primary-gradient);
+  opacity: 1;
+  z-index: 1;
 
   // line-height: 1.1;
   // &::after {

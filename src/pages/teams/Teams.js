@@ -70,7 +70,7 @@ export default function Teams(props) {
   }, [user, token])
   return (
     <div id='teams' className='main'>
-      <div id="discover" className='d-flex flex-d-col gap-1 bg-primary rounded border p-1 new-scrollbar'>
+      <div id="discover" className='d-flex flex-d-col gap-1 bg-primary rounded border p-1 new-scrollbar blur'>
         <h2>Discover new Teams</h2>
         {discoverTeams?.length ? discoverTeams.map((team, i) => {
           return (
@@ -81,11 +81,11 @@ export default function Teams(props) {
           )
         }) : "No teams found"}
       </div>
-      <div id="my-teams" className='d-flex flex-d-col gap-1 bg-primary rounded border p-1 new-scrollbar'>
+      <div id="my-teams" className='d-flex flex-d-col gap-1 bg-primary rounded border p-1 new-scrollbar blur'>
         <h2>My Teams</h2>
         {teams?.length ? teams.map((team, i) => {
           return (
-            <div key={team.id} className="bg-primary rounded p-1 border">
+            <div key={team.id} className="bg-primary rounded p-1 border blur">
               {team.name && <Link className='team-name' to={`${team.id}`} state={{ fromMyTeams: true }}><h3 key={`name ${i}`}>{team.name}</h3></Link>}
               {team.description && <p key={`description ${i}`}>{team.description && team.description}</p>}
             </div>

@@ -72,7 +72,6 @@ export default function App() {
       <header>
         <Nav user={cookies.user} token={cookies.token} handleLogOut={handleLogOut} />
       </header>
-      <TodosBackground/>
       <Routes>
         <Route path="/" element={cookies.user ? <Home user={cookies.user} token={cookies.token} /> : <HomeNotLoggedIn />} />
         <Route path="/login" element={<Login user={cookies.user} handleLogIn={handleLogIn} />} />
@@ -96,7 +95,7 @@ export default function App() {
           </Route>
         </Route>
       </Routes>
-      <footer className='bg-secondary rounded border d-flex justify-content-center'>
+      <footer className='bg-secondary rounded border d-flex justify-content-center blur'>
         <ul className='border-right d-flex flex-d-col align-items-end'>
           <li>
             <Link to="/contact">
@@ -122,6 +121,7 @@ export default function App() {
           </li>
         </ul>
       </footer>
+      <TodosBackground/>
     </div>
   )
 }

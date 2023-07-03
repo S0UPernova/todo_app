@@ -1,15 +1,16 @@
 header {
   margin-top: 1rem;
   width: 100%;
-  margin-bottom: 1rem;
   height: 4.5rem;
   display: flex;
   justify-content: center;
-
-  // border-radius: 10px;
-  // min-width: 100px;
+  margin-bottom: 1rem;
+  border: 1px solid black;
+  background: var(--secondary-gradient-more-opaque);
+  border-radius: 10px;
+  min-width: 100px;
   margin-right: 0;
-
+  z-index: 9;
 }
 
 footer {
@@ -128,12 +129,6 @@ footer {
 }
 
 nav {
-  border-radius: 10px;
-  background-image: var(--secondary-gradient);
-  border: 4 solid black;
-
-  backdrop-filter: blur(1.2px);
-
   min-width: 300px;
   display: flex;
   width: 60%;
@@ -143,9 +138,10 @@ nav {
   margin-left: auto;
   padding-top: 3rem;
   z-index: 9;
+
   ul {
     border: 1px solid black;
-    background-color: rgba(206, 235, 235, 0.914);
+    background-color: rgba(206, 235, 235, 0.838);
     border-radius: 10px;
     display: flex;
     width: 80%;
@@ -257,7 +253,7 @@ nav {
 }
 
 .bg-primary {
-  background-color: rgba(160, 209, 209, 0.5);
+  background-color: var(--bg-primary);
 }
 
 .bg-secondary {
@@ -355,6 +351,10 @@ nav {
   }
 }
 
+.blur {
+  backdrop-filter: blur(2px);
+}
+
 @media screen and (min-width: 1200px) {
   header {
     display: flex;
@@ -368,13 +368,12 @@ nav {
     position: relative;
     top: .5rem;
     width: 100%;
-    padding-top: 1rem;
+    padding-top: 0rem;
     z-index: 6;
 
   }
 
   nav ul {
-    backdrop-filter: blur(0);
     border-radius: none;
     border: none;
     background: none;

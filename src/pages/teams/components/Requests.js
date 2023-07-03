@@ -89,7 +89,7 @@ export default function Requests(props) {
   }
   return (
     <>
-      <div id="recieved-requests" className='d-flex flex-d-col gap-1 bg-primary rounded p-1 border new-scrollbar'>
+      <div id="recieved-requests" className='d-flex flex-d-col gap-1 bg-primary rounded p-1 border new-scrollbar blur'>
         <h2>Recieved requests</h2>
         {requests?.length ? requests.filter(req => req.from_team === true)
           .map((request, i) => {
@@ -105,7 +105,7 @@ export default function Requests(props) {
           })
           : <div className='bg-primary rounded p-2 border'>No recieved requests</div>}
       </div>
-      <div id="sent-requests" className='d-flex flex-d-col gap-1 bg-secondary rounded border p-1 new-scrollbar'>
+      <div id="sent-requests" className='d-flex flex-d-col gap-1 bg-secondary rounded border p-1 new-scrollbar blur'>
         <h2>Sent requests</h2>
         {requests.filter(req => req.from_team === false)?.length > 0
           ? requests.filter(req => req.from_team === false).map((request, i) => {
@@ -115,11 +115,11 @@ export default function Requests(props) {
                 request={request}
                 token={token}
                 handleClick={handleClick}
-                DivClassName="bg-secondary rounded p-1 border"
+                DivClassName="bg-secondary rounded p-1 border blur"
               />
             )
           })
-          : <div className='bg-secondary rounded p-2 border'>No sent requests</div>}
+          : <div className='bg-secondary rounded p-2 border blur'>No sent requests</div>}
       </div>
     </>
   )

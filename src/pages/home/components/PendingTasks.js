@@ -7,7 +7,7 @@ export default function PendingTasks(props) {
   const { tasks, selectedTeam, selectedProject, handleClick } = props
 
   return (
-    <div className="pending bg-primary rounded border">
+    <div className="pending bg-primary rounded border blur">
       {selectedProject && selectedProject !=="" &&
         <button
           title="Create new task"

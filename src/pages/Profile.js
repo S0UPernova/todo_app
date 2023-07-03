@@ -29,7 +29,7 @@ export default function Profile(props) {
   }, [props.user.id, props.token])
   return (
     <>
-      <div id='profile' className='d-flex flex-d-col align-items-center justify-content-center border bg-primary p-1'>
+      <div id='profile' className='d-flex flex-d-col align-items-center justify-content-center border bg-primary p-1 blur'>
         <h1 className='d-flex'>Profile <button
             onClick={() => setFormState(formStates[1])}
             className="icon-button ml-1 icon-button-no-background"><i className="icon"><BsGearWide /></i>

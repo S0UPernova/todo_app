@@ -5,7 +5,7 @@ export default function TeamPanel(props) {
   const { handleClick, selectedTeam, team } = props
   return (
     <>
-      <div id="teamPanel" className="bg-secondary d-flex flex-d-col rounded new-scrollbar border">
+      <div id="teamPanel" className="bg-secondary d-flex flex-d-col rounded new-scrollbar border blur">
         <div className='container'>
           <div className="button-container">
             <button

@@ -4,7 +4,7 @@ export default function CompletedTasks(props) {
   const { tasks, selectedTeam, selectedProject, handleClick } = props
 
   return (
-    <div id="completed" className="bg-secondary rounded border">
+    <div id="completed" className="bg-secondary rounded border blur">
       <h3>Completed</h3>
       {selectedTeam && selectedProject && <ul className="tasks">
         {tasks && tasks.map((task, i) => {
