@@ -1,7 +1,11 @@
-// import { time } from "console"
 import React, { useState, useEffect, memo, useRef, ElementType, HTMLAttributes } from "react"
 // import { useIsVisible } from "../hooks/useIsVisible"
 import styles from './typedText.module.scss'
+
+//todo add option to allow placeholder to be replaced like using insert replacing one char at a time,
+//todo instead of having it vanish all at once.
+//? maybe add an option for it to start without needing to be visible?
+// todo add reverse to take away.
 
 /**
  * @extends HTMLAttributes<HTMLOrSVGElement>
@@ -18,9 +22,7 @@ import styles from './typedText.module.scss'
  *  visible?: boolean
  * }} IInputParams extends HTMLAttributes<HTMLOrSVGElement>
 */
-//todo add option to allow placeholder to be replaced like using insert replacing one char at a time,
-//todo instead of having it vanish all at once.
-//? maybe add an option for it to start without needing to be visible?
+
 /**
  * 
  * @param {IInputParams}
@@ -48,16 +50,17 @@ function TypedText({
 
   useEffect(() => {
     let interval
+    let timeout
     if (duration === 0 && isVisible) {
       setRevealedLetters(children.length)
     }
     const setter = () => {
-      if (revealedLetters <= children.length) {
+      if (revealedLetters < children.length) {
         setRevealedLetters(l => l + 1)
       }
     }
     if (hasBeenSeen && revealedLetters === 0) {
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         if (curserStyle !== "none") {
           setShowCurser(true)
         }
@@ -72,13 +75,16 @@ function TypedText({
       }, totalDuration ? totalDuration : delay)
     }
 
-    return () => clearInterval(interval)
-  }, [hasBeenSeen, revealedLetters, children.length, curserStyle, delay, timeout, totalDuration])
+    return () => {
+      clearInterval(interval)
+      clearTimeout(timeout)
+    }
+  }, [hasBeenSeen, revealedLetters, children.length, curserStyle, delay, timeout, totalDuration, duration, isVisible])
 
   return (
     <Tag ref={ref} className={className}>
       {`${isVisible && !hasBeenSeen ? setHasBeenSeen(true) : ""}`}
-      {`${revealedLetters === 0 && placeHolder != false ? `${placeHolder}` : ""}`}
+      {`${revealedLetters === 0 && placeHolder !== false ? `${placeHolder}` : ""}`}
       {`${children.substring(0, revealedLetters)}`}
       {curserStyle !== "none" && (curserStyle === "static" || curserStyle === "blink")
         && revealedLetters < children.length

@@ -1,15 +1,12 @@
-import React, { useState, useEffect, useRef, useSyncExternalStore } from 'react';
-import TypedText from './typedText';
+import React, { useState, useEffect, memo } from 'react';
 import styles from './todos_background.module.scss'
+import MapArrayToElements from './mapArrayToElements';
+import STATICS from './statics';
+import { json } from 'react-router-dom';
 //! this is getting close to done!!!!
-
-// todo make this dispaly a list of todos
 
 // todo make the todos get marked as completed, and rewritten.
 
-// todo have it loop through once to see which ones are not visible, and add them to a list, and pop them off to make them visible
-
-// todo fix flicker
 // ? maybe when that list is empty start overwriting them at random
 
 // ? maybe use the typing function from portfolio to write them out, with randomized times
@@ -20,8 +17,16 @@ const TodosBackground = () => {
   const [screenWidth, setScreenWidth] = useState(0)
   const [screenHeight, setScreenHeight] = useState(0)
   const [bgArr, setBgArr] = useState([])
-  const [row, setRow] = useState(0)
-  const [col, setCol] = useState(0)
+  const [notVisible, setNotVisible] = useState([])
+  const todoPacing = 5000 // how long for each todo write
+  const todoDuration = 3000 // how long it takes to type each todo
+  const {
+    todoPadX,
+    todoPadY,
+    todoWidth,
+    todoHeight,
+    texts
+  } = STATICS
 
   // sets the screen height, and width with a debounce
   useEffect(() => {
@@ -57,44 +62,40 @@ const TodosBackground = () => {
   // handles making new todos visible
   useEffect(() => {
     const inter = setInterval(() => {
-      let temp = bgArr.slice()
+      const temp = bgArr.slice()
+      const visTemp = []
+
       // loops through all the indecies and any that are already visible it make sure they are drawn completely from the start
-      temp.forEach((r, i) => {
-        r.forEach((c, j) => {
-          if (temp[i][j].visible == true) {
-            temp[i][j].duration = 0
+      temp.forEach(r => {
+        r.forEach(c => {
+          if (c?.visible === true && c?.duration !== 0) {
+            c.duration = 0
+          }
+          else if (c?.visible === false) {
+            visTemp.push(c)
           }
         })
       })
 
-      // pickes a point at random
-      setRow(Math.floor(Math.random() * temp.length))
-      setCol(Math.floor(Math.random() * temp[row].length))
+      if (visTemp.length > 0) {
+        const indexToMakeVisible = Math.floor(Math.random() * visTemp.length)
+        const x = visTemp[indexToMakeVisible].row
+        const y = visTemp[indexToMakeVisible].col
 
-      // if it is not already seen it makes it so.
-      if (temp[row][col].visible !== true) {
-        temp[row][col].duration = 3000
-        temp[row][col].visible = true
+        const temp = bgArr.slice()
+        temp[x][y].visible = true
+        temp[x][y].duration = todoDuration
+        visTemp.splice(indexToMakeVisible, 1)
         setBgArr(temp.slice())
+        setNotVisible(visTemp.slice())
       }
-    }, 5000);
+    }, todoPacing);
     return () => {
       clearInterval(inter)
     }
-  }, [row, col, bgArr])
+  }, [notVisible, bgArr])
 
-  const todoPadX = 10
-  const todoPadY = 10
-  const todoWidth = 150
-  const todoHeight = 100
-  const texts = [
-    'wash laundry',
-    'do the dishes',
-    'get milk',
-    'get some aaa batteries for the television remote control',
-    'the that thing I was doing'
-    // Add more strings as needed
-  ];
+
 
 
   const MakeList = () => { // check twice
@@ -107,6 +108,8 @@ const TodosBackground = () => {
             text: texts[Math.floor(Math.random() * texts.length)],
             visible: Math.random() > .8,
             duration: 0,
+            row: i,
+            col: j,
           }
         )
       }
@@ -115,44 +118,13 @@ const TodosBackground = () => {
     return rtnArr
   }
 
-
-  function MapArrayToElements({ arr }) {
-    return arr.map((todoArr, i) => {
-      return (
-        <ul
-          key={i}
-          style={{
-            padding: '0',
-            display: 'flex',
-            margin: '0',
-            listStyle: 'none',
-          }}
-          className={styles.todo_bg_ul}>
-          {
-            todoArr.map((col, j) => {
-              return (
-                <li
-                  key={j}
-                  style={{
-                    height: `${todoHeight}px`,
-                    width: `${todoWidth}px`,
-                  }}
-                ><TypedText visible={col.visible} duration={col.duration} delay={0} children={col.text} /></li>
-              )
-            })
-          }
-        </ul>
-      )
-    })
-  }
-
   return (
     <>
       <div className={`${styles.bg_list} ${styles.solid_lines}`}>
-        <MapArrayToElements arr={bgArr} />
+        {bgArr.length > 0 && <MapArrayToElements arr={bgArr} height={todoHeight} width={todoWidth} />}
       </div>
     </>
   )
 }
 
-export default TodosBackground;
+export default memo(TodosBackground);
