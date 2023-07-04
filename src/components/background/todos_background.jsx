@@ -2,7 +2,6 @@ import React, { useState, useEffect, memo } from 'react';
 import styles from './todos_background.module.scss'
 import MapArrayToElements from './mapArrayToElements';
 import STATICS from './statics';
-import { json } from 'react-router-dom';
 //! this is getting close to done!!!!
 
 // todo make the todos get marked as completed, and rewritten.
