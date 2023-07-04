@@ -29,7 +29,7 @@ const TodosBackground = () => {
 
   // sets the screen height, and width with a debounce
   useEffect(() => {
-    const setHW = () => {
+    const setHW = () => { 
       setScreenHeight(window.screen.availHeight)
       setScreenWidth(window.screen.availWidth)
     }
@@ -47,15 +47,17 @@ const TodosBackground = () => {
     const throttled = debounce(() => setHW(), 100)
     window.addEventListener('resize', throttled)
     setHW()
+    // setBgArr(MakeList())
     return () => {
       window.removeEventListener('resize', throttled)
     }
+    
   }, [])
 
   // makes the initial array of todos
   useEffect(() => {
     setBgArr(MakeList())
-  }, [window.screen.availHeight, window.screen.availWidth])
+  }, [screenWidth, screenHeight])
 
 
   // handles making new todos visible
