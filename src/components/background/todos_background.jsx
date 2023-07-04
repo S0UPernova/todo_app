@@ -31,8 +31,8 @@ const TodosBackground = () => {
   // sets the screen height, and width with a debounce
   useEffect(() => {
     const setHW = () => {
-      setScreenHeight(window.innerHeight)
-      setScreenWidth(window.innerWidth)
+      setScreenHeight(window.screen.availHeight)
+      setScreenWidth(window.screen.availWidth)
     }
     const debounce = (func, delay) => {
       let timerId;
@@ -56,7 +56,7 @@ const TodosBackground = () => {
   // makes the initial array of todos
   useEffect(() => {
     setBgArr(MakeList())
-  }, [screenHeight, screenWidth])
+  }, [window.screen.availHeight, window.screen.availWidth])
 
 
   // handles making new todos visible
