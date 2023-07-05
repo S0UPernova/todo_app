@@ -21,15 +21,12 @@
   display: flex;
   position: relative;
   top: 5px;
-  padding: 0;
-  margin: 0;
-  list-style: none;
+  justify-content: space-around;
 
   li {
     font-size: 16px;
     font-family: monospace;
     margin: 0;
-    padding: 0;
     line-height: 30px;
     word-break: break-all;
   }

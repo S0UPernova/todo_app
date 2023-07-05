@@ -11,7 +11,7 @@ export default function Task(props) {
   })
     .format(due_at);
   return (
-    <li className="border">
+    <li className="border blur">
       {
         task.completed !== null | undefined &&
         <button

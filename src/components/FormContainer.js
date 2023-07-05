@@ -63,7 +63,7 @@ export default function FormContainer(props) {
       {formState !== formStates[0] && <>
           <div name="cancel" className="backdrop" onClick={handleBackdrop}></div>
           <div className="formContainer">
-            <form className="form">
+            <form className="form bg-primary rounded border blur">
               {childComponents}
             </form>
           </div>

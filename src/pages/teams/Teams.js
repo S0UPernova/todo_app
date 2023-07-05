@@ -85,7 +85,7 @@ export default function Teams(props) {
         <h2>My Teams</h2>
         {teams?.length ? teams.map((team, i) => {
           return (
-            <div key={team.id} className="bg-primary rounded p-1 border blur">
+            <div key={team.id} className="rounded p-1 border blur">
               {team.name && <Link className='team-name' to={`${team.id}`} state={{ fromMyTeams: true }}><h3 key={`name ${i}`}>{team.name}</h3></Link>}
               {team.description && <p key={`description ${i}`}>{team.description && team.description}</p>}
             </div>

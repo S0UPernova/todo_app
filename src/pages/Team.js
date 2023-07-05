@@ -71,7 +71,7 @@ export default function Team(props) {
 
   if (team) {
     return (
-      <div>
+      <main>
         <div className='bg-primary p-1 rounded blur'>
           {team.name && <p><b>Team name:</b> {team.name}</p>}
           {team.description && <p><b>Team description:</b><br></br>{team.description}</p>}
@@ -92,7 +92,7 @@ export default function Team(props) {
             })}
           </div> : null}
 
-      </div>
+      </main>
     )
   } else {
     return (

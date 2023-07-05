@@ -99,11 +99,11 @@ export default function Requests(props) {
                 request={request}
                 token={token}
                 handleClick={handleClick}
-                DivClassName="bg-primary rounded p-1 border"
+                DivClassName="rounded p-1 border blur"
               />
             )
           })
-          : <div className='bg-primary rounded p-2 border'>No recieved requests</div>}
+          : <div className='rounded p-2 border blur'>No recieved requests</div>}
       </div>
       <div id="sent-requests" className='d-flex flex-d-col gap-1 bg-secondary rounded border p-1 new-scrollbar blur'>
         <h2>Sent requests</h2>
@@ -115,11 +115,11 @@ export default function Requests(props) {
                 request={request}
                 token={token}
                 handleClick={handleClick}
-                DivClassName="bg-secondary rounded p-1 border blur"
+                DivClassName="rounded p-1 border blur"
               />
             )
           })
-          : <div className='bg-secondary rounded p-2 border blur'>No sent requests</div>}
+          : <div className='rounded p-2 border blur'>No sent requests</div>}
       </div>
     </>
   )
