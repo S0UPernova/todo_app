@@ -2,7 +2,8 @@ import { memo } from "react"
 import TypedText from './typedText';
 import styles from './todos_background.module.scss'
 
-function MapArrayToElements({ arr, height, width }) {
+function MapArrayToElements({ arr, height, width, todoPadX, todoPadY, }) {
+  
   //?  should this be from props?
   return arr.map((todoArr, i) => {
     return (
@@ -21,8 +22,9 @@ function MapArrayToElements({ arr, height, width }) {
               <li
                 key={j}
                 style={{
-                  height: `${width}px`,
-                  width: `${height}px`,
+                  // padding: `${todoPadX} ${todoPadY}`,
+                  height: `${height}px`,
+                  width: `${width}px`,
                 }}
               ><TypedText visible={col.visible} duration={col.duration} delay={0} children={col.text} /></li>
             )

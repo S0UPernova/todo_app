@@ -24,11 +24,14 @@
   justify-content: space-around;
 
   li {
-    font-size: 16px;
-    font-family: monospace;
+    span{
+
+      font-size: 16px;
+      font-family: cursive;
+      line-height: 30px;
+      // word-break: break-all;
+    }
     margin: 0;
-    line-height: 30px;
-    word-break: break-all;
   }
 }
 

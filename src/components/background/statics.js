@@ -1,8 +1,8 @@
 const STATICS = {
   todoPadX: 10,
   todoPadY: 10,
-  todoWidth: 150,
-  todoHeight: 100,
+  todoWidth: 210,
+  todoHeight: 210, //! should be a multiple of 30 i.e the distance between lines in the background 
   texts: [
     'wash laundry',
     'do the dishes',

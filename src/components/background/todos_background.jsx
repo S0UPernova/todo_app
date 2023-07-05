@@ -122,7 +122,7 @@ const TodosBackground = () => {
   return (
     <>
       <div className={`${styles.bg_list} ${styles.solid_lines}`}>
-        {bgArr.length > 0 && <MapArrayToElements arr={bgArr} height={todoHeight} width={todoWidth} />}
+        {bgArr.length > 0 && <MapArrayToElements arr={bgArr} todoPadX={todoPadX} todoPadY={todoPadY} height={todoHeight} width={todoWidth} />}
       </div>
     </>
   )
