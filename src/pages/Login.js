@@ -4,7 +4,7 @@ import "../styles/login.scss"
 export default function Login(props) {
   const { handleLogIn } = props
   return (
-    <>
+    <main>
       <div className=" main d-flex flex-d-col">
         <div className="login-contaner formContainerStatic d-flex flex-d-col">
           <form className="form blur" onSubmit={handleLogIn}>
@@ -40,7 +40,7 @@ export default function Login(props) {
 
 
 
-    </>
+    </main>
   )
 
 }
