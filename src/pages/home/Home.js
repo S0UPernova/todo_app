@@ -232,7 +232,7 @@ export default function Home(props) {
     } else setTasks([])
   }
   return (
-    <div id='home' className='main'>
+    <main id='home' className='main'>
       <TeamDropdowns
         tasks={tasks}
         teams={teams}
@@ -295,6 +295,6 @@ export default function Home(props) {
         selectedProject={selectedProject}
         handleClick={handleClick}
       />
-    </div>
+    </main>
   )
 }

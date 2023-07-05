@@ -6,11 +6,27 @@ header {
   justify-content: center;
   margin-bottom: 1rem;
   border: 1px solid black;
-  background: var(--secondary-gradient-more-opaque);
+  background: var(--secondary-gradient);
   border-radius: 10px;
-  min-width: 100px;
+  // min-width: 100px;
   margin-right: 0;
-  z-index: 9;
+  z-index: 8;
+  width: clamp(200px, 1600px, 95%);
+  // max-width: 80%;
+  position: absolute;
+  &::before {
+    content: "";
+    backdrop-filter: blur(2px);
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
+}
+
+main {
+  margin-top: 6.5rem;
 }
 
 footer {
@@ -360,7 +376,6 @@ nav {
     display: flex;
     justify-content: center;
     // margin-bottom: 1rem;
-
   }
 
   nav {
@@ -370,7 +385,6 @@ nav {
     width: 100%;
     padding-top: 0rem;
     z-index: 6;
-
   }
 
   nav ul {

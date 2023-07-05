@@ -69,7 +69,7 @@ export default function Teams(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, token])
   return (
-    <div id='teams' className='main'>
+    <main id='teams' className='main'>
       <div id="discover" className='d-flex flex-d-col gap-1 bg-primary rounded border p-1 new-scrollbar blur'>
         <h2>Discover new Teams</h2>
         {discoverTeams?.length ? discoverTeams.map((team, i) => {
@@ -106,6 +106,6 @@ export default function Teams(props) {
         getMemberships={getMemberships}
         getDiscoverTeams={getDiscoverTeams}
       />
-    </div >
+    </main >
   )
 }

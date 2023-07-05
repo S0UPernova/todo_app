@@ -1,7 +1,7 @@
 export default function PrivacyPolicy() {
   return (
-    <>
-      <div>Privacy policy goes here</div>
-    </>
+    <main>
+      <div className="bg-primary round blur">Privacy policy goes here</div>
+    </main>
   )
 }
