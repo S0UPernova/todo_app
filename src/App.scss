@@ -14,6 +14,7 @@ header {
   width: clamp(200px, 1600px, 95%);
   // max-width: 80%;
   position: absolute;
+
   &::before {
     content: "";
     backdrop-filter: blur(2px);
@@ -48,13 +49,12 @@ footer {
   min-height: 40vh;
 }
 
-#signup, #forgot-password {
+#signup,
+#forgot-password {
   pointer-events: all;
 }
 
-.main {
-  min-height: 100vh;
-}
+
 
 .rounded {
   border-radius: 10px;
@@ -339,9 +339,13 @@ nav {
 }
 
 .main {
-  width: clamp(200px, 1600px, 95%);
+  width: clamp(200px, 1600px, 90%);
   margin-left: auto;
   margin-right: auto;
+  min-height: 100vh;
+}
+.w-100 {
+  width: 100%;
 }
 
 .new-scrollbar {

@@ -6,9 +6,9 @@ export default function Login(props) {
   return (
 
     // <main className="main container bg-primary rounded border blur p-2"></main>
-    <main className=" main container bg-primary rounded border blur p-2 d-flex flex-d-col">
-      <div className="login-contaner formContainerStatic d-flex flex-d-col  rounded border blur">
-        <form className="form" onSubmit={handleLogIn}>
+    <main className="container bg-primary rounded border blur p-2 d-flex flex-d-col">
+      <div className="login-contaner formContainerStatic d-flex flex-d-col">
+        <form className="form p-1" onSubmit={handleLogIn}>
           <label>
             Email:
             <input required id="email" type="text" name="email"></input>
