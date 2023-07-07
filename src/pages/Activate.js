@@ -23,10 +23,10 @@ export default function Activate() {
     }
   }, [params])
   return (
-    <>
+    <main>
       <div className="main d-flex justify-content-center">
         <h1 className="mt-5">{message}</h1>
       </div>
-    </>
+    </main>
   )
 }

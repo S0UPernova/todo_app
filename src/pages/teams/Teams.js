@@ -8,7 +8,7 @@ import usersMembershipService from '../../services/UsersMembershipService'
 import Requests from './components/Requests'
 import MapMemberships from './components/MapMemberships'
 
-import './teams.scss'
+import styles from './teams.module.scss'
 
 export default function Teams(props) {
   const [discoverTeams, setDiscoverTeams] = useState([])
@@ -69,24 +69,24 @@ export default function Teams(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, token])
   return (
-    <main id='teams' className='main'>
-      <div id="discover" className='d-flex flex-d-col gap-1 bg-primary rounded border p-1 new-scrollbar blur'>
+    <main className={`${styles.teams} main`}>
+      <div id="discover" className={`${styles.discover} d-flex flex-d-col gap-1 bg-primary rounded border p-1 new-scrollbar blur`}>
         <h2>Discover new Teams</h2>
         {discoverTeams?.length ? discoverTeams.map((team, i) => {
           return (
-            <div key={team.id} className="bg-primary rounded p-1 border">
-              {team.name && <Link className='team-name' to={`${team.id}`} state={{ fromDiscover: true }}><h3 key={`name ${i}`}>{team.name}</h3></Link>}
+            <div key={team.id} className={`bg-primary rounded p-1 border`}>
+              {team.name && <Link className={`${styles.team_name}`} to={`${team.id}`} state={{ fromDiscover: true }}><h3 key={`name ${i}`}>{team.name}</h3></Link>}
               {team.description && <p key={`description ${i}`}>{team.description && team.description}</p>}
             </div>
           )
         }) : "No teams found"}
       </div>
-      <div id="my-teams" className='d-flex flex-d-col gap-1 bg-primary rounded border p-1 new-scrollbar blur'>
+      <div className={`${styles.my_teams} d-flex flex-d-col gap-1 bg-primary rounded border p-1 new-scrollbar blur`}>
         <h2>My Teams</h2>
         {teams?.length ? teams.map((team, i) => {
           return (
-            <div key={team.id} className="rounded p-1 border blur">
-              {team.name && <Link className='team-name' to={`${team.id}`} state={{ fromMyTeams: true }}><h3 key={`name ${i}`}>{team.name}</h3></Link>}
+            <div key={team.id} className={`rounded p-1 border blur`}>
+              {team.name && <Link className={`${styles.team_name}`} to={`${team.id}`} state={{ fromMyTeams: true }}><h3 key={`name ${i}`}>{team.name}</h3></Link>}
               {team.description && <p key={`description ${i}`}>{team.description && team.description}</p>}
             </div>
           )

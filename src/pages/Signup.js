@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import UserForm from '../components/UserForm'
+import styles from '../styles/form.module.scss'
 export default function SignUp() {
   const formStates = {
     0: "NONE",
@@ -7,9 +8,9 @@ export default function SignUp() {
   }
   const [formState, setFormState] = useState(formStates[1])
   return (
-    <div className='main'>
-      <div className="formContainer">
-        <form className="form">
+    <main className='main'>
+      <div className={styles.formContainer}>
+        <form className={`${styles.form} bg-primary blur rounded border`}>
           <UserForm
             formState={formState}
             formStates={formStates}
@@ -20,6 +21,6 @@ export default function SignUp() {
       </div>
 
 
-    </div>
+    </main>
   )
 }

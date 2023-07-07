@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { json } from "react-router-dom"
 import userService from "../services/UserService"
+import styles from "../styles/form.module.scss"
 export default function CreateReset() {
   // const [message, setMessage] = useState("")
   // const [params, setParams] = useState(null)
@@ -20,11 +21,11 @@ export default function CreateReset() {
       })
   }
   return (
-    <>
-      <div className="main d-flex justify-content-center">
-        {completed && <h1>Check your email</h1>}
-        {!completed && <div className="formContainer">
-          <form onSubmit={handleSubmit} className="form">
+    <main className="main">
+      <div className="d-flex justify-content-center">
+        {completed && <div className="bg-primary blur rounded border p-2"><h1>Check your email</h1></div>}
+        {!completed && <div className={styles.formContainer}>
+          <form onSubmit={handleSubmit} className={`${styles.form} bg-primary blur rounded border p-2`}>
             <label>
               Please enter your email
               <input name="email" type='text' value={email} onChange={handleChange} />
@@ -34,6 +35,6 @@ export default function CreateReset() {
           </form>
         </div>}
       </div>
-    </>
+    </main>
   )
 }

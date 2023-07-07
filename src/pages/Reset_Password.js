@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useLocation } from "react-router-dom"
 import { RedirectToLogin } from "../App"
 import userService from "../services/UserService"
+import styles from "../styles/form.module.scss"
 export default function ResetPassword() {
   // const [message, setMessage] = useState("")
   // const [params, setParams] = useState(null)
@@ -50,12 +51,12 @@ export default function ResetPassword() {
       })
   }
   return (
-    <>
+    <main>
       {redirect && <RedirectToLogin />}
       {!redirect && <div className="main d-flex justify-content-center">
-        <div className="formContainerStatic d-flex flex-d-col mt-5">
+        <div className={`${styles.formContainerStatic} d-flex flex-d-col mt-5`}>
 
-          <form onSubmit={handleSubmit} className="form">
+          <form onSubmit={handleSubmit} className={`${styles.form} bg-primary blur rounded border`}>
             <label>
               New password
               <input name="password" type='password' value={password} onChange={handleChange} />
@@ -68,6 +69,6 @@ export default function ResetPassword() {
           </form>
         </div>
       </div>}
-    </>
+    </main>
   )
 }

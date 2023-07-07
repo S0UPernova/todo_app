@@ -44,11 +44,6 @@ export default function UserForm(props) {
           ) {
             userService.postUser(params)
               .then((res) => {
-                // setHidden2(true)
-                // getTeams()
-                // setTeam("")
-
-                // getUser()
                 if (res) {
                   setFormState(formStates[0])
                   setFormInput(initialForm)
@@ -63,22 +58,14 @@ export default function UserForm(props) {
         } else if (add === false) {
           userService.updateUser(user.id, params, token)
             .then(() => {
-              // setHidden2(true)
-              // getTeams()
-              // setTeam("")
               getUser()
               setFormState(formStates[0])
               setFormInput(initialForm)
             })
             .catch(err => console.error(err))
         }
-
-
         break
       case "cancel":
-        // setHidden2(true)
-        // getTeams()
-        // setTeam("")
         setFormState(formStates[0])
         setFormInput(initialForm)
         break
@@ -99,10 +86,7 @@ export default function UserForm(props) {
       //   }
       // break
       default:
-        // setHidden2(true)
         setFormState(formStates[0])
-        // getTeams()
-        // setTeam(null)
         setFormInput(initialForm)
         break
     }
@@ -139,7 +123,6 @@ export default function UserForm(props) {
       <label>
         Name:
         <input
-          id="name"
           type="text"
           onChange={handleChange}
           value={formInput.name}
@@ -150,7 +133,6 @@ export default function UserForm(props) {
       <label>
         Handle:
         <input
-          id="handle"
           onChange={handleChange}
           value={formInput.handle}
           name="handle"
@@ -160,7 +142,6 @@ export default function UserForm(props) {
       <label>
         Email:
         <input
-          id="email"
           onChange={handleChange}
           value={formInput.email}
           name="email"
@@ -170,7 +151,6 @@ export default function UserForm(props) {
       <label>
         New Password:
         <input
-          id="password"
           onChange={handleChange}
           value={formInput.password}
           type="password"
@@ -181,7 +161,6 @@ export default function UserForm(props) {
       <label>
         Confirm New Password:
         <input
-          id="passwordConfirmation"
           onChange={handleChange}
           value={formInput.passwordConfirmation}
           type="password"
@@ -192,7 +171,6 @@ export default function UserForm(props) {
       {add === false && <label>
         Current Password:
         <input
-          id="currentPassword"
           onChange={handleChange}
           value={formInput.currentPassword}
           type="password"

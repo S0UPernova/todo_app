@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import usersMembershipService from '../../../services/UsersMembershipService'
+import styles from '../teams.module.scss'
+
 export default function MapMemberships(props) {
   const { teamMemberships, memberships, user, token, getMemberships, getDiscoverTeams } = props
 
@@ -30,7 +32,7 @@ export default function MapMemberships(props) {
     return (
       <>
         {relationship ? <div className="rounded p-1 border blur">
-          {team.name && <Link className='team-name' to={`${team.id}`} state={{ fromMyTeams: true }}><h3>{team.name}</h3></Link>}
+          {team.name && <Link className={`${styles.team_name}`} to={`${team.id}`} state={{ fromMyTeams: true }}><h3>{team.name}</h3></Link>}
           {team.description && <p>{team.description && team.description}</p>}
           <button name='leaveTeam' onClick={handleClick} value={relationship.id} className="btn danger hover p-05">Leave team</button>
         </div> : null}
@@ -68,7 +70,7 @@ export default function MapMemberships(props) {
     else return <></>
   }
   return (
-    <div id="memberships" className='bg-secondary border p-1 rounded new-scrollbar blur'>
+    <div className={`${styles.memberships} bg-secondary border p-1 rounded new-scrollbar blur`}>
       <h2>My Memberships</h2>
       <Memberships/>
     </div>

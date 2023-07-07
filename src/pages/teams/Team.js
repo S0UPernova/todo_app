@@ -1,11 +1,11 @@
 import { useParams, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
-import teamService from '../services/TeamsService'
-import teamsRequestService from '../services/TeamsRequestService'
-import userService from '../services/UserService'
+import teamService from '../../services/TeamsService'
+import teamsRequestService from '../../services/TeamsRequestService'
+import userService from '../../services/UserService'
 
-import '../styles/team.scss'
+import styles from './teams.module.scss'
 
 export default function Team(props) {
   const { user, token } = props
@@ -72,7 +72,7 @@ export default function Team(props) {
   if (team) {
     return (
       <main>
-        <div className='bg-primary p-1 rounded blur'>
+        <div className={`bg-primary p-1 rounded blur`}>
           {team.name && <p><b>Team name:</b> {team.name}</p>}
           {team.description && <p><b>Team description:</b><br></br>{team.description}</p>}
         </div>
@@ -80,13 +80,13 @@ export default function Team(props) {
         {location?.state?.fromDiscover && <button name='newRequest' onClick={handleClick}>Request membership</button>}
         <h3>Requests</h3>
         {requests?.length ?
-          <div className='d-flex flex-d-col gap-1'>
+          <div className={`d-flex flex-d-col gap-1`}>
             {requests.map(request => {
               return (
-                <div className='bg-secondary rounded p-1 d-flex gap-1'>
-                  {user && <h3 className='handle'>From: <br></br> <HandleFromRequest request={request} /></h3>} {/* // todo add link to user profile */}
-                  <button name='acceptRequest' className='btn success hover' data-request_id={request.id} onClick={handleClick}>Accept request</button>
-                  <button name='rejectRequest' className='btn danger hover' data-request_id={request.id} onClick={handleClick}>Reject request</button>
+                <div className={`bg-secondary rounded p-1 d-flex gap-1`}>
+                  {user && <h3 className={`${styles.handle}`}>From: <br></br> <HandleFromRequest request={request} /></h3>} {/* // todo add link to user profile */}
+                  <button name='acceptRequest' className={`btn success hover`} data-request_id={request.id} onClick={handleClick}>Accept request</button>
+                  <button name='rejectRequest' className={`btn danger hover`} data-request_id={request.id} onClick={handleClick}>Reject request</button>
                 </div>
               )
             })}

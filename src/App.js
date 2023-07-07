@@ -8,10 +8,10 @@ import Nav from "./layout/Nav"
 
 import Home from './pages/home/Home'
 import HomeNotLoggedIn from './pages/StaticHome'
-import Login from './pages/Login'
-import Team from './pages/Team'
+import Login from './pages/login/Login'
+import Team from './pages/teams/Team'
 import Teams from './pages/teams/Teams'
-import Profile from './pages/Profile'
+import Profile from './pages/profile/Profile'
 import sessionService from './services/SessionService'
 import SignUp from './pages/Signup';
 

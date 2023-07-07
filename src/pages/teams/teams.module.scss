@@ -1,4 +1,4 @@
-#teams {
+.teams {
   width: 100%;
   display: grid;
   // max-height: 200vh;
@@ -14,42 +14,57 @@
   ;
 }
 
-#memberships {
+.memberships {
   grid-area: memberships;
   overflow-y: scroll;
   // max-height: 25vh;
 
 }
 
-#sent-requests {
+.sent_requests {
   grid-area: sent;
   overflow-y: scroll;
   // max-height: 25vh;
 
 }
 
-#recieved-requests {
+.recieved_requests {
   grid-area: recieved;
   overflow-y: scroll;
   // max-height: 25vh;
 
 }
 
-#discover {
+.discover {
   grid-area: discover;
   overflow-y: scroll;
   // max-height: 25vh;
 }
 
-#my-teams {
+.my_teams {
   grid-area: teams;
   overflow-y: scroll;
 
   // max-height: 25vh;
 }
 
+.handle {
+  min-width: 20ch;
+}
+.team_name {
+  text-decoration: none;
+  color: black;
+  :visited {
+    color: black;
+  }
+  :hover {
+    color: navy;
+    text-decoration: underline;
+  }
+}
+
 @media screen and (min-width: 1200px) {
-  #teams {
+  .teams {
     // min-height: 50vh;
     // max-height: 95vh;
     grid-template-rows: 20vh 20vh 25vh 30vh;
