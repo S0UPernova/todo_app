@@ -1,4 +1,5 @@
 import React, { Children, cloneElement } from "react"
+import styles from '../styles/form.module.scss'
 export default function FormContainer(props) {
   const {
     user,
@@ -62,8 +63,8 @@ export default function FormContainer(props) {
     <>
       {formState !== formStates[0] && <>
           <div name="cancel" className="backdrop" onClick={handleBackdrop}></div>
-          <div className="formContainer">
-            <form className="form bg-primary rounded border blur">
+          <div className={styles.formContainer}>
+            <form className={`${styles.form} bg-primary rounded border blur`}>
               {childComponents}
             </form>
           </div>

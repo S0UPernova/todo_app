@@ -45,7 +45,7 @@ export default function Requests(props) {
     }
   }
 
-
+  // todo add abort signal in useEffect return
   function ShowTeamForRequest(props) {
     const { request, token, handleClick, DivClassName } = props
     const [team, setTeam] = useState({})

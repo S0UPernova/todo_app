@@ -1,6 +1,9 @@
 
 import { BsGearWide } from "react-icons/bs"
 import { GrCheckboxSelected, GrCheckbox } from "react-icons/gr"
+
+import styles from "../home.module.scss"
+
 export default function Task(props) {
   const { task, handleClick } = props
   const due_at = task?.duedate && new Date(task.duedate)
@@ -16,7 +19,7 @@ export default function Task(props) {
         task.completed !== null | undefined &&
         <button
         title={task.completed === true ? "Mark not completed" : "Mark completed"}
-          className="checkbox icon-button"
+          className={`${styles.checkbox} icon-button`}
           onClick={handleClick}
           value={task.id}
           data-completed={!task.completed}

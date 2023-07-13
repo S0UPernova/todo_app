@@ -1,12 +1,14 @@
 import Task from "./Task"
 
+import styles from "../home.module.scss"
+
 export default function CompletedTasks(props) {
   const { tasks, selectedTeam, selectedProject, handleClick } = props
 
   return (
     <div id="completed" className="bg-secondary rounded border blur">
       <h3>Completed</h3>
-      {selectedTeam && selectedProject && <ul className="tasks">
+      {selectedTeam && selectedProject && <ul className={styles.tasks}>
         {tasks && tasks.map((task, i) => {
           return task && task.completed === true &&
             <Task

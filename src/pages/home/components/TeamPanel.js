@@ -1,13 +1,14 @@
 import { MdGroupAdd } from 'react-icons/md'
 import { FiEdit } from 'react-icons/fi'
+import styles from '../home.module.scss'
 // todo add memberships support to this
 export default function TeamPanel(props) {
   const { handleClick, selectedTeam, team } = props
   return (
     <>
-      <div id="teamPanel" className="bg-secondary d-flex flex-d-col rounded new-scrollbar border blur">
+      <div id={styles.teamPanel} className="bg-secondary d-flex flex-d-col rounded new-scrollbar border blur">
         <div className='container'>
-          <div className="button-container">
+          <div className={styles.button_container}>
             <button
               title='Create new team'
               name="teamAddButton"

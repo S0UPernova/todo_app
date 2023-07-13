@@ -17,7 +17,7 @@ import TaskForm from "./components/TaskForm"
 import TeamPanel from './components/TeamPanel'
 import ProjectPanel from './components/ProjectPanel'
 
-import './home.scss'
+import styles from './home.module.scss'
 import teamService from '../../services/TeamsService'
 
 // todo refactor icons to make sure they are all compatible licences
@@ -183,7 +183,7 @@ export default function Home(props) {
     // teams
     await usersTeamService.getTeams(user.id, token)
       .then(res => {
-        res?.length ? setTeams([...res]) : setTeams([res])
+        res?.length > 0 ? setTeams([...res]) : setTeams([res])
         if (res.filter(team => Number(team.id) === Number(selectedTeam))[0]) {
           setTeam(res.filter(team => Number(team.id) === Number(selectedTeam))[0])
         }
@@ -194,7 +194,7 @@ export default function Home(props) {
         res.forEach(relationship => {
           teamService.getTeam(relationship.team_id, token)
             .then(res => {
-              if (res.filter(team => Number(team.id) === Number(selectedTeam))[0]) {
+              if (res?.length > 0 && res.filter(team => Number(team.id) === Number(selectedTeam))[0]) {
                 setTeam(res.filter(team => Number(team.id) === Number(selectedTeam))[0])
               }
 
@@ -232,7 +232,7 @@ export default function Home(props) {
     } else setTasks([])
   }
   return (
-    <main id='home' className='main'>
+    <main id={styles.home} className='main'>
       <TeamDropdowns
         tasks={tasks}
         teams={teams}

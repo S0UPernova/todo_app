@@ -1,6 +1,8 @@
 import { TbClipboardPlus } from "react-icons/tb"
 import { FiEdit } from "react-icons/fi"
 
+import styles from "../home.module.scss"
+
 export default function ProjectPanel(props) {
   const { handleClick, selectedProject, selectedTeam, project } = props
   const rtnRequirements = () => {
@@ -32,9 +34,9 @@ export default function ProjectPanel(props) {
   }
   return (
     <>
-      <div id="projectPanel" className="d-flex flex-d-col bg-secondary rounded new-scrollbar border blur">
+      <div id={styles.projectPanel} className="d-flex flex-d-col bg-secondary rounded new-scrollbar border blur">
         <div className="container">
-          <div className="button-container">
+          <div className={styles.button_container}>
             {selectedTeam &&
               <button
                 title="Create new project"

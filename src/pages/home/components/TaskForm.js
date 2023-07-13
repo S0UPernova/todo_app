@@ -1,6 +1,7 @@
 import { useState } from "react"
-
 import taskService from "../../../services/TaskService"
+
+import styles from "../../../styles/form.module.scss"
 
 export default function TaskForm(props) {
   const {
@@ -131,10 +132,10 @@ export default function TaskForm(props) {
       </label>
 
 
-      {formInput.completed !== undefined && <label className="completed-label">
+      {formInput.completed !== undefined && <label className={styles.completed_label}>
         Completed?:
         <input
-          className="completed-checkbox"
+          className={styles.completed_checkbox}
           type="checkbox"
           onChange={handleChange}
           checked={formInput.completed}
