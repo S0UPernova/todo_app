@@ -1,4 +1,3 @@
-import { baseUrl, origin } from "../utilities/Statics"
 import FilterParams from "../utilities/FilterParams"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 class TaskService extends ResAlertHelper {
@@ -6,13 +5,13 @@ class TaskService extends ResAlertHelper {
     super(props)
     this.headers = {
       "Content-Type": "application/json",
-      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Origin': process.env.REACT_APP_ORIGIN,
       'Access-Control-Allow-Credentials': 'true'
     }
   }
   postTask = async (team_id, project_id, params, token) => {
     const justFilledFields = FilterParams(params)
-    return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}/tasks`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/teams/${team_id}/projects/${project_id}/tasks`, {
       "method": "POST",
       "headers": { ...this.headers, "Authorization": token, },
       "body": JSON.stringify({ "task": { ...justFilledFields } })
@@ -26,7 +25,7 @@ class TaskService extends ResAlertHelper {
   }
 
   getTasks = async (team_id, project_id, token) => {
-    return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}/tasks`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/teams/${team_id}/projects/${project_id}/tasks`, {
       "method": "GET",
       "headers": { ...this.headers, "Authorization": token, }
     })
@@ -39,7 +38,7 @@ class TaskService extends ResAlertHelper {
   }
 
   getTask = async (team_id, project_id, task_id, token) => {
-    return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}/tasks/${task_id}`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/teams/${team_id}/projects/${project_id}/tasks/${task_id}`, {
       "method": "GET",
       "headers": { ...this.headers, "Authorization": token, }
     })
@@ -53,7 +52,7 @@ class TaskService extends ResAlertHelper {
 
   updateTask = async (team_id, project_id, task_id, params, token) => {
     const justFilledFields = FilterParams(params)
-    return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}/tasks/${task_id}`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/teams/${team_id}/projects/${project_id}/tasks/${task_id}`, {
       "method": "PATCH",
       "headers": { ...this.headers, "Authorization": token, },
       "body": JSON.stringify({ "task": { ...justFilledFields } })
@@ -67,7 +66,7 @@ class TaskService extends ResAlertHelper {
   }
 
   deleteTask = async (team_id, project_id, task_id, token) => {
-    return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}/tasks/${task_id}`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/teams/${team_id}/projects/${project_id}/tasks/${task_id}`, {
       "method": "DELETE",
       "headers": { ...this.headers, "Authorization": token, }
     })

@@ -1,4 +1,3 @@
-import { baseUrl, origin } from "../utilities/Statics"
 import FilterParams from "../utilities/FilterParams"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 class ProjectService extends ResAlertHelper {
@@ -6,7 +5,7 @@ class ProjectService extends ResAlertHelper {
     super(props)
     this.headers = {
       "Content-Type": "application/json",
-      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Origin': process.env.REACT_APP_ORIGIN,
       'Access-Control-Allow-Credentials': 'true'
     }
   }
@@ -14,7 +13,7 @@ class ProjectService extends ResAlertHelper {
   postProject = async (team_id, params, token) => {
 
     const justFilledFields = FilterParams(params)
-    return fetch(`${baseUrl}/teams/${team_id}/projects`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/teams/${team_id}/projects`, {
       "method": "POST",
 
       "headers": { ...this.headers, "Authorization": token, },
@@ -28,7 +27,7 @@ class ProjectService extends ResAlertHelper {
       })
   }
   getProjects = async (team_id, token) => {
-    return fetch(`${baseUrl}/teams/${team_id}/projects`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/teams/${team_id}/projects`, {
       "method": "GET",
       "headers": { ...this.headers, "Authorization": token, },
     })
@@ -41,7 +40,7 @@ class ProjectService extends ResAlertHelper {
   }
 
   getProject = async (team_id, project_id, token) => {
-    return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/teams/${team_id}/projects/${project_id}`, {
       "method": "GET",
       "headers": { ...this.headers, "Authorization": token, },
     })
@@ -55,7 +54,7 @@ class ProjectService extends ResAlertHelper {
 
   updateProject = async (team_id, project_id, params, token) => {
     const justFilledFields = FilterParams(params)
-    return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/teams/${team_id}/projects/${project_id}`, {
       "method": "PATCH",
       "headers": { ...this.headers, "Authorization": token, },
       "body": JSON.stringify({ "project": { ...justFilledFields } })
@@ -69,7 +68,7 @@ class ProjectService extends ResAlertHelper {
   }
 
   deleteProject = async (team_id, project_id, token) => {
-    return fetch(`${baseUrl}/teams/${team_id}/projects/${project_id}`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/teams/${team_id}/projects/${project_id}`, {
       "method": "DELETE",
       "headers": { ...this.headers, "Authorization": token, },
     })

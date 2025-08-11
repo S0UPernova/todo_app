@@ -1,16 +1,15 @@
-import { baseUrl, origin } from "../utilities/Statics"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 class UsersRequestService extends ResAlertHelper {
   constructor(props) {
     super(props)
     this.headers = {
       "Content-Type": "application/json",
-      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Origin': process.env.REACT_APP_ORIGIN,
       'Access-Control-Allow-Credentials': 'true'
     }
   }
   getRequests = async (user_id, token) => {
-    return fetch(`${baseUrl}/users/${user_id}/requests`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/users/${user_id}/requests`, {
       "method": "GET",
       "headers": { ...this.headers, "Authorization": token, }
     })
@@ -23,7 +22,7 @@ class UsersRequestService extends ResAlertHelper {
   }
 
   getRequest = async (user_id, request_id, token) => {
-    return fetch(`${baseUrl}/users/${user_id}/requests/${request_id}`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/users/${user_id}/requests/${request_id}`, {
       "method": "GET",
       "headers": { ...this.headers, "Authorization": token, }
     })
@@ -36,7 +35,7 @@ class UsersRequestService extends ResAlertHelper {
   }
   // todo get users version working
   // createRequest = async (user_id, request_id, token) => {
-  //   return fetch(`${baseUrl}/teams/${user_id}/requests`, {
+  //   return fetch(`${process.env.REACT_APP_BASE_URL}/teams/${user_id}/requests`, {
   //     "method": "POST",
   //     "headers": {
   //       "Content-Type": "application/json",
@@ -52,7 +51,7 @@ class UsersRequestService extends ResAlertHelper {
   // }
 
   accept = async (user_id, request_id, token) => {
-    return fetch(`${baseUrl}/users/${user_id}/requests/${request_id}/accept`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/users/${user_id}/requests/${request_id}/accept`, {
       "method": "PATCH",
       "headers": { ...this.headers, "Authorization": token, }
     })
@@ -65,7 +64,7 @@ class UsersRequestService extends ResAlertHelper {
   }
 
   reject = async (user_id, request_id, token) => {
-    return fetch(`${baseUrl}/users/${user_id}/requests/${request_id}/reject`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/users/${user_id}/requests/${request_id}/reject`, {
       "method": "PATCH",
       "headers": { ...this.headers, "Authorization": token, }
     })
@@ -78,7 +77,7 @@ class UsersRequestService extends ResAlertHelper {
   }
 
   deleteRequest = async (user_id, request_id, token) => {
-    return fetch(`${baseUrl}/users/${user_id}/requests/${request_id}`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/users/${user_id}/requests/${request_id}`, {
       "method": "DELETE",
       "headers": { ...this.headers, "Authorization": token, }
     })

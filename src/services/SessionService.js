@@ -1,4 +1,3 @@
-import { baseUrl, origin } from "../utilities/Statics"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 
 class SessionService extends ResAlertHelper {
@@ -6,12 +5,12 @@ class SessionService extends ResAlertHelper {
     super(props)
     this.headers = {
       "Content-Type": "application/json",
-      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-process.env.REACT_APP_ORIGIN': process.env.REACT_APP_ORIGIN,
       'Access-Control-Allow-Credentials': 'true'
     }
   }
   newSession = async (email, password) => {
-    return fetch(`${baseUrl}/login`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/login`, {
       "method": "POST",
       "headers": this.headers,
       "body": JSON.stringify({ "user": { email: email, password: password } })

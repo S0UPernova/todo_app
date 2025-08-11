@@ -1,4 +1,3 @@
-import { baseUrl, origin } from "../utilities/Statics"
 import FilterParams from "../utilities/FilterParams"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 class UserService extends ResAlertHelper {
@@ -6,13 +5,13 @@ class UserService extends ResAlertHelper {
     super(props)
     this.headers = {
       "Content-Type": "application/json",
-      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Origin': process.env.REACT_APP_ORIGIN,
       'Access-Control-Allow-Credentials': 'true'
     }
   }
   postUser = async (params) => {
     const justFilledFields = FilterParams(params)
-    return fetch(`${baseUrl}/users`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/users`, {
       "method": "POST",
       "headers": { ...this.headers },
       "body": JSON.stringify({ "user": { ...justFilledFields } })
@@ -26,7 +25,7 @@ class UserService extends ResAlertHelper {
   }
 
   getUsers = async (token) => {
-    return fetch(`${baseUrl}/users`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/users`, {
       "method": "GET",
       "headers": { ...this.headers, "Authorization": token, }
     })
@@ -39,7 +38,7 @@ class UserService extends ResAlertHelper {
   }
 
   getUser = async (user_id, token) => {
-    return fetch(`${baseUrl}/users/${user_id}`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/users/${user_id}`, {
       "method": "GET",
       "headers": { ...this.headers, "Authorization": token, }
     })
@@ -52,7 +51,7 @@ class UserService extends ResAlertHelper {
   }
 
   activateUser = async (email, activation_token) => {
-    return fetch(`${baseUrl}/account_activations/${activation_token}/edit?email=${email}`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/account_activations/${activation_token}/edit?email=${email}`, {
       "method": "GET",
       "headers": { ...this.headers }
     })
@@ -66,7 +65,7 @@ class UserService extends ResAlertHelper {
 
   createPasswordReset = async   (email) => {
     console.log('email', email)
-    return fetch(`${baseUrl}/password_resets/?email=${email}`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/password_resets/?email=${email}`, {
       "method": "POST",
     })
       .then(
@@ -78,7 +77,7 @@ class UserService extends ResAlertHelper {
   }
 
   resetPassword = async (email, reset_token, params) => {
-    return fetch(`${baseUrl}/password_resets/${reset_token}/?email=${email}`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/password_resets/${reset_token}/?email=${email}`, {
       "method": "PATCH",
       "headers": { ...this.headers },
       "body": JSON.stringify({"user": {...params}})
@@ -93,7 +92,7 @@ class UserService extends ResAlertHelper {
 
   updateUser = async (user_id, params, token) => {
     const justFilledFields = FilterParams(params)
-    return fetch(`${baseUrl}/users/${user_id}`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/users/${user_id}`, {
       "method": "PATCH",
       "headers": { ...this.headers, "Authorization": token, },
       "body": JSON.stringify({ "user": { ...justFilledFields } })
@@ -107,7 +106,7 @@ class UserService extends ResAlertHelper {
   }
 
   deleteUser = async (user_id, token) => {
-    return fetch(`${baseUrl}/users/${user_id}`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/users/${user_id}`, {
       "method": "DELETE",
       "headers": { ...this.headers, "Authorization": token, }
     })

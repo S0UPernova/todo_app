@@ -1,16 +1,15 @@
-import { baseUrl, origin } from "../utilities/Statics"
 import ResAlertHelper from "../utilities/ResAlertHelper"
 class UsersMembershipService extends ResAlertHelper {
   constructor(props) {
     super(props)
     this.headers = {
       "Content-Type": "application/json",
-      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Origin': process.env.REACT_APP_ORIGIN,
       'Access-Control-Allow-Credentials': 'true'
     }
   }
   getMemberships = async (user_id, token) => {
-    return fetch(`${baseUrl}/users/${user_id}/memberships`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/users/${user_id}/memberships`, {
       "method": "GET",
       "headers": { ...this.headers, "Authorization": token, }
     })
@@ -23,7 +22,7 @@ class UsersMembershipService extends ResAlertHelper {
   }
 
   getMembership = async (user_id, membership_id, token) => {
-    return fetch(`${baseUrl}/users/${user_id}/memberships/${membership_id}`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/users/${user_id}/memberships/${membership_id}`, {
       "method": "GET",
       "headers": { ...this.headers, "Authorization": token, }
     })
@@ -36,7 +35,7 @@ class UsersMembershipService extends ResAlertHelper {
   }
 
   deleteMembership = async (user_id, membership_id, token) => {
-    return fetch(`${baseUrl}/users/${user_id}/memberships/${membership_id}`, {
+    return fetch(`${process.env.REACT_APP_BASE_URL}/users/${user_id}/memberships/${membership_id}`, {
       "method": "DELETE",
       "headers": { ...this.headers, "Authorization": token, }
     })
